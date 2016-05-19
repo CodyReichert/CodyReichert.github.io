@@ -1,0 +1,32 @@
+{
+  "name": "react-blog",
+  "version": "1.0.0",
+  "description": "Cody Reichert's website",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Cody Reichert",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.9.0",
+    "babel-eslint": "^6.0.4",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "blog-loader": "file:///home/cody/workspace/projects/assertible/frontend/lib/blog-loader",
+    "eslint": "^2.10.2",
+    "react": "^15.0.2",
+    "react-router": "^2.4.0",
+    "static-site-generator-webpack-plugin": "^2.0.1",
+    "webpack": "^1.13.0",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "dependencies": {
+    "ejs": "^2.4.1",
+    "history": "^2.1.1",
+    "react-dom": "^15.0.2",
+    "react-router": "^2.4.0"
+  }
+}
