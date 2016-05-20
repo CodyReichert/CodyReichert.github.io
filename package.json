@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "test",
-    "build":"webpack --progress --colors",
-    "watch":"webpack --watch --progress --colors"
+    "build": "webpack --progress --colors",
+    "watch": "webpack --watch --progress --colors"
   },
   "author": "Cody Reichert",
   "license": "MIT",
@@ -18,12 +18,17 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "blog-loader": "file:///home/cody/workspace/projects/assertible/frontend/lib/blog-loader",
+    "css-loader": "^0.23.1",
     "eslint": "^2.10.2",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.8.5",
     "static-site-generator-webpack-plugin": "^2.0.1",
+    "style-loader": "^0.13.1",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
+    "bootstrap": "^4.0.0-alpha.2",
     "ejs": "^2.4.1",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
