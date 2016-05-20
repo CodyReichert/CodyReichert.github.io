@@ -3,7 +3,7 @@ const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin'
 const fs = require('fs')
 const ejs = require('ejs')
 const template = ejs.compile(fs.readFileSync(`${__dirname}/template.ejs`, 'utf-8'))
-
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const blogPaths = fs.readdirSync('./posts')
 const blogNames = blogPaths.map(path => `posts/${path.replace('.md', '')}`)
 
@@ -14,11 +14,9 @@ const paths = [
 ];
 
 module.exports = {
-
     entry: {
         main: './index.js'
     },
-
     module: {
         loaders: [
             {
@@ -40,7 +38,41 @@ module.exports = {
                     name: '[name].[ext]'
                 }
             },
+            /* Style loaders (supports css, sass/scss, less) */
+            {
+                test: /\.css$/,
+                loader: ExtractTextPlugin.extract(
+                    "style-loader", "css-loader"
+                )
+            },
+            {
+                test: /\.scss$/,
+                loader: ExtractTextPlugin.extract(
+                    "style-loader", "css-loader!sass-loader"
+                )
+            },
 
+            /* Loads font files (eg, from bootstrap, etc) */
+            {
+                test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+                loader: "file?name=/fonts/[name].[hash].[ext]"
+            },
+            {
+                test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+                loader: "file?name=/fonts/[name].[hash].[ext]"
+            },
+            {
+                test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+                loader: "file?name=/fonts/[name].[hash].[ext]"
+            },
+            {
+                test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+                loader: "file?name=/fonts/[name].[hash].[ext]"
+            },
+            {
+                test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+                loader: "file?name=/fonts/[name].[hash].[ext]"
+            }
         ]
     },
     output: {
@@ -48,8 +80,13 @@ module.exports = {
         path: 'dist',
         libraryTarget: 'umd'
     },
-
     plugins: [
+        new ExtractTextPlugin('css/bundle.css'),
         new StaticSiteGeneratorPlugin('main', paths, { template })
-    ]
+    ],
+    devServer: {
+        hot: true,
+        noInfo: true,
+        contentBase: './dist/'
+    }
 }
