@@ -5,6 +5,8 @@ import ReactDOMServer from 'react-dom/server'
 import { Router, createMemoryHistory } from 'react-router'
 import { routes }   from './lib/routes'
 
+import 'bootstrap/dist/css/bootstrap.css'
+
 /*
  * Client side render
  */
