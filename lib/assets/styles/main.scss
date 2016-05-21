@@ -1,3 +1,8 @@
 
 $fa-font-path: '../../../node_modules/font-awesome/fonts';
 @import "../../../node_modules/font-awesome/scss/font-awesome";
+
+pre {
+    box-shadow: 0px 1px 1px 1px #dedede;
+    border: solid 1px rgba(252, 252, 252, 0);
+}
