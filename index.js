@@ -7,6 +7,8 @@ import { routes }   from './lib/routes'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import './lib/assets/styles/main.scss'
+import 'highlightjs/styles/default.css'
+
 
 /*
  * Client side render
