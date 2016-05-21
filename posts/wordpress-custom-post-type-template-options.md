@@ -239,8 +239,8 @@ flows pretty linearly. Let's take a look code:
 
       // create an array of default templates
       $default_templates    = array();
-      $default_templates[]  = 'single-{$object->post_type}-{$object->post_name}.php';
-      $default_templates[]  = 'single-{$object->post_type}.php';
+      $default_templates[]  = 'single-{$query_object->post_type}-{$query_object->post_name}.php';
+      $default_templates[]  = 'single-{$query_object->post_type}.php';
       $default_templates[]  = 'single.php';
 
       // only apply our template to our CPT pages.
