@@ -53,6 +53,12 @@ module.exports = {
                 )
             },
 
+            /* Loads image files */
+            {
+                test: /\.(jpg|png|gif)$/,
+                loader: "file?name=/images/[name].[hash].[ext]"
+            },
+
             /* Loads font files (eg, from bootstrap, etc) */
             {
                 test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
