@@ -2,7 +2,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import ReactDOMServer from 'react-dom/server'
-import { Router, createMemoryHistory } from 'react-router'
+import { Router, browserHistory, createMemoryHistory } from 'react-router'
 import { routes }   from './lib/routes'
 
 import 'bootstrap/dist/css/bootstrap.css'
@@ -14,9 +14,8 @@ import 'highlightjs/styles/default.css'
  * Client side render
  */
 if (typeof window !== 'undefined') {
-    const history = createHistory();
     const outlet = document.getElementById('outlet');
-    ReactDOM.render(<Router history={history} routes={routes} />, outlet);
+    ReactDOM.render(<Router history={browserHistory} routes={routes} />, outlet);
 }
 
 /*
