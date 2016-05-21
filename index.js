@@ -6,6 +6,7 @@ import { Router, createMemoryHistory } from 'react-router'
 import { routes }   from './lib/routes'
 
 import 'bootstrap/dist/css/bootstrap.css'
+import './lib/assets/styles/main.scss'
 
 /*
  * Client side render

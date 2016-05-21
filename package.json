@@ -22,6 +22,7 @@
     "eslint": "^2.10.2",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
+    "font-awesome": "^4.6.1",
     "static-site-generator-webpack-plugin": "^2.0.1",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.0",
