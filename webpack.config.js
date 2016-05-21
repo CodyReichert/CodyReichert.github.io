@@ -9,6 +9,7 @@ const blogNames = blogPaths.map(path => `posts/${path.replace('.md', '')}`)
 
 const paths = [
     '/',
+    'about',
     'posts',
     ...blogNames,
 ];
