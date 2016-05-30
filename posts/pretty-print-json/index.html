@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,700" rel="stylesheet" type="text/css">
+    <link href="/css/bundle.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <div id="outlet"><nav class="navbar navbar-full navbar-dark bg-inverse"><div class="container"><div class="collapse navbar-toggleable-xs" id="navbar"><a class="navbar-brand" href="/">Cody Reichert <small>The one true blog</small></a><ul class="nav navbar-nav pull-md-right"><li class="nav-item"><a class="nav-link" href="/about">About</a></li><li class="nav-item"><a class="nav-link" href="/posts">Posts</a></li></ul></div></div></nav><div class="container"><div><h1 style="padding-top:25px;padding-bottom:10px;"><a href="/posts/pretty-print-json">Pretty Printing JSON in JavaScript</a></h1><small class="text-muted"><span style="margin-right:10px;"><i class="fa fa-calendar" style="margin-right:5px;"></i>5/3/2016</span><span style="margin-right:10px;"><i class="fa fa-folder" style="margin-right:5px;"></i>programming, javascript</span><span style="margin-right:10px;"><i class="fa fa-pencil" style="margin-right:5px;"></i>Cody Reichert</span><span class="pull-xs-right"><a href="/posts">Back to blogs</a></span></small><hr/><div><p>I frequently look up how to pretty pring JSON in JavaScript. Whether it be
+for debugging in the console, to display some output to the user, or any other
+reason.</p>
+<p><code>JSON.stringify()</code> is usually used to simply convert a JSON object to a string
+for use elsewhere in the application. It also takes 2 additional parameters:
+<code>replacer</code> and <code>space</code>.</p>
+<p><strong>Replacer</strong></p>
+<p>The replacer argument tells JSON.stringify to parse your JSON object in a
+custom way -- eg, replace all <code>&quot;true&quot;</code> and <code>&quot;false&quot;</code> strings with the
+Boolean version <code>true</code> or <code>false</code>. You can do a million other things here,
+but we&#39;re not too concered about this parameter when all we want to do is
+pretty print.</p>
+<p><strong>Space</strong></p>
+<p>The <code>space</code> argument, though a little oddly named, tells JSON.stringify() to
+add spacing to the string output -- like a newline, tab, or single space.</p>
+<p>Using this parameter, we can print out our stringified JSON in a readable
+format:</p>
+<pre><code class="hljs lang-javascript"><span class="hljs-built_in">JSON</span>.stringify({ a: <span class="hljs-number">1</span>, b:<span class="hljs-number">2</span> }, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>)
+
+<span class="hljs-comment">// "{</span>
+<span class="hljs-comment">//    "a": 1,</span>
+<span class="hljs-comment">//    "b": 2</span>
+<span class="hljs-comment">//  }"</span></code></pre><p>And there we go - a nice, readable JSON object as a string. There&#39;s more
+information on the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">MDN</a> page about what you can pass to
+this function - so check those out and start pretty printing!</p>
+<p>:: Cody Reichert</p>
+</div><div title="Pretty Printing JSON in JavaScript"><div id="disqus_thread"></div><noscript><span>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></span></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by<span class="logo-disqus">Disqus</span></a></div></div></div><br/><footer class="navbar navbar-full navbar-dark bg-inverse"><div class="container"><div class="collapse navbar-toggleable-xs" id="navbar"><ul class="nav navbar-nav pull-md-left"><li class="nav-item"><span class="nav-link">Cody Reichert - Copyright © 2016</span></li></ul><ul class="nav navbar-nav pull-md-right"><li class="nav-item"><a class="nav-link" target="_blank" href="https://github.com/CodyReichert"><i class="fa fa-github-alt" style="margin-right:5px;"></i></a></li><li class="nav-item"><a class="nav-link" target="_blank" href="https://twitter.com/CodyReichert"><i class="fa fa-twitter" style="margin-right:5px;"></i></a></li></ul></div></div></footer></div>
+    <script type="text/javascript" src="/index.js">
+    </script>
+  </body>
+</html>

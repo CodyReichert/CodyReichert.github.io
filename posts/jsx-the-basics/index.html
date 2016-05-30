@@ -1,0 +1,175 @@
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,700" rel="stylesheet" type="text/css">
+    <link href="/css/bundle.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <div id="outlet"><nav class="navbar navbar-full navbar-dark bg-inverse"><div class="container"><div class="collapse navbar-toggleable-xs" id="navbar"><a class="navbar-brand" href="/">Cody Reichert <small>The one true blog</small></a><ul class="nav navbar-nav pull-md-right"><li class="nav-item"><a class="nav-link" href="/about">About</a></li><li class="nav-item"><a class="nav-link" href="/posts">Posts</a></li></ul></div></div></nav><div class="container"><div><h1 style="padding-top:25px;padding-bottom:10px;"><a href="/posts/jsx-the-basics">JSX - The Basics</a></h1><small class="text-muted"><span style="margin-right:10px;"><i class="fa fa-calendar" style="margin-right:5px;"></i>3/5/2016</span><span style="margin-right:10px;"><i class="fa fa-folder" style="margin-right:5px;"></i>programming, javascript</span><span style="margin-right:10px;"><i class="fa fa-pencil" style="margin-right:5px;"></i>Cody Reichert</span><span class="pull-xs-right"><a href="/posts">Back to blogs</a></span></small><hr/><div><p>When most people get started with
+<a href="https://facebook.github.io/react/">React.js</a>, JSX is the first thing
+that comes as a surprise. JSX is a templating language inside
+JavaScript. Remeber all those string template you to write with
+<em>(insert frontend framework here)</em>?, well JSX to the rescue.</p>
+<p><strong>Table of Contents:</strong></p>
+<ul>
+<li><a href="#what-is-jsx">What is JSX</a></li>
+<li><a href="#comments-in-jsx">Comments in JSX</a></li>
+<li><a href="#passing-props">Passing Props</a></li>
+<li><a href="#boolean-props">Boolean Props</a></li>
+</ul>
+<h3 id="what-is-jsx">  <a class="heading-anchor" style="display:none;" href="#what-is-jsx">    <i class="fa fa-link"></i>  </a>What is JSX</h3><blockquote class="blockquote"><p>JSX is a JavaScript syntax extension that looks similar to XML. You
+can use a simple JSX syntactic transform with React.</p>
+</blockquote><p>Picture this. Instead of writing HTML strings within your code, you
+can use a preprocessor that allow you to write (basically) pure HTML
+with some compile-time checking? Brilliant, let&#39;s look at the examples
+from Facebook&#39;s
+<a href="https://facebook.github.io/react/docs/displaying-data.html">Displaying Data</a>
+post:</p>
+<p>Without JSX:</p>
+<pre><code class="hljs lang-javascript">React.createElement(<span class="hljs-string">'a'</span>, {href: <span class="hljs-string">'https://facebook.github.io/react/'</span>}, <span class="hljs-string">'Hello!'</span>)</code></pre><p>With JSX:</p>
+<pre><code class="hljs lang-javascript">&lt;a href=<span class="hljs-string">"https://facebook.github.io/react/"</span>&gt;Hello!<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span></span></code></pre><p>Great! We&#39;ve improved readability by 10,000%.</p>
+<p>Now that we&#39;ve got a solid introduction<sup>;)</sup> to JSX, let&#39;s
+take a look at some common gotchas.</p>
+<h2 id="comments-in-jsx">  <a class="heading-anchor" style="display:none;" href="#comments-in-jsx">    <i class="fa fa-link"></i>  </a>Comments in JSX</h2><p>It&#39;s common to want to write comments within your markup. Inside of
+JSX, there are a couple of &#39;rules&#39; to follow:</p>
+<h3 id="in-between-jsx-elements,-wrap-your-comments-in">  <a class="heading-anchor" style="display:none;" href="#in-between-jsx-elements,-wrap-your-comments-in">    <i class="fa fa-link"></i>  </a>In between JSX elements, wrap your comments in <code>{}</code></h3><p><em>valid</em>:</p>
+<pre><code class="hljs lang-javascript">&lt;div&gt;
+    {/** A comment about the component below */}
+    &lt;span&gt;Hello, JSX&lt;/span&gt;
+&lt;/div&gt;</code></pre><p><em>invalid</em>:</p>
+<pre><code class="hljs lang-javascript">&lt;div&gt;
+    /** A comment about the component below */
+    &lt;span&gt;Hello, JSX&lt;/span&gt;
+&lt;/div&gt;</code></pre><h3 id="inside-of-a-jsx-tag-you-can-use-normal-comments:">  <a class="heading-anchor" style="display:none;" href="#inside-of-a-jsx-tag-you-can-use-normal-comments:">    <i class="fa fa-link"></i>  </a>Inside of a JSX tag you can use normal comments:</h3><p><em>valid</em>:</p>
+<pre><code class="hljs lang-javascript">&lt;div&gt;
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">AwesomeComponent</span>
+        /** <span class="hljs-attribute">Some</span> <span class="hljs-attribute">commentsabout</span> <span class="hljs-attribute">the</span> <span class="hljs-attribute">props</span> <span class="hljs-attribute">below</span> */
+        <span class="hljs-attribute">prop1</span>=<span class="hljs-value">"jsxRocks"</span>
+        <span class="hljs-attribute">booly</span>=<span class="hljs-value">{true}</span>
+    /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span></span></code></pre><p><em>invalid</em>:</p>
+<pre><code class="hljs lang-javascript">&lt;div&gt;
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">AwesomeComponent</span>
+        {/** <span class="hljs-attribute">Some</span> <span class="hljs-attribute">commentsabout</span> <span class="hljs-attribute">the</span> <span class="hljs-attribute">props</span> <span class="hljs-attribute">below</span> */}
+        <span class="hljs-attribute">prop1</span>=<span class="hljs-value">"jsxRocks"</span>
+        <span class="hljs-attribute">booly</span>=<span class="hljs-value">{true}</span>
+    /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span></span></code></pre><h2 id="passing-props">  <a class="heading-anchor" style="display:none;" href="#passing-props">    <i class="fa fa-link"></i>  </a>Passing Props</h2><p>JSX also makes passing <code>props</code> (arguments) to other components with
+simple HTML-like syntax. If you&#39;re not familiar with nesting
+components and receiving components, you should check out
+<a href="https://facebook.github.io/react/docs/jsx-in-depth.html">JSX In Depth</a>
+first.</p>
+<h3 id="string-props">  <a class="heading-anchor" style="display:none;" href="#string-props">    <i class="fa fa-link"></i>  </a>String Props</h3><p>Normal, string value props are easy to pass to child components:</p>
+<pre><code class="hljs lang-javascript">&lt;AwesomeComponent
+    name=<span class="hljs-string">"jsxRocks"</span>
+/&gt;</code></pre><p>Now inside of <code>AwesomeComponent</code> you have access to <code>this.props.name</code>
+that references the value <code>jsxRocks</code>.</p>
+<h3 id="functions">  <a class="heading-anchor" style="display:none;" href="#functions">    <i class="fa fa-link"></i>  </a>Functions</h3><p>Passing functions as callback is also common practice when writing JSX components.
+A basic example would look like:</p>
+<pre><code class="hljs lang-javascript">&lt;AwesomeComponent
+    handleNameChange={data =&gt; myAction(data)}
+/&gt;</code></pre><p>Whoah, let&#39;s not a couple of things here:</p>
+<ul>
+<li><p><code>{}</code>. Where did that come from?
+JSX can take JavaScript expressions as arguments to props. This
+means that you&#39;re not restricted to string props. You can pas
+functions to children that make handling callback easier.</p>
+<p>To extend the example, this means we can use any logic we want inside of component&#39;s attributes.
+Need computed data at render time? Not problem</p>
+</li>
+</ul>
+<pre><code class="hljs lang-javascript">&lt;AwesomeComponent
+    conditionalProp={thing === <span class="hljs-literal">true</span> ? <span class="hljs-string">'thisprop'</span> : <span class="hljs-string">'thatprop'</span>}
+/&gt;</code></pre><ul>
+<li>No quotes?
+When using expressions as a value to a prop, you don&#39;t need to do
+any fancy string interpolation - React will take care of rendering
+the result of the expression.</li>
+</ul>
+<h3 id="basic-function-optimizations">  <a class="heading-anchor" style="display:none;" href="#basic-function-optimizations">    <i class="fa fa-link"></i>  </a>Basic function optimizations</h3><p>Keep in mind that when creating functions inside of components
+<code>render</code> method (like we&#39;re doing with the expressions in props), that
+a new function is created on each re-render.</p>
+<p>This is a pretty minor thing for most apps, but as the size of
+application grows and you start thinking about performance, minimizing
+the amount of work on the client can be idea.</p>
+<p>If we take our two examples from above, they would be better written
+so a new function is not created and the class intsance can take care
+of re-computing the value:</p>
+<pre><code class="hljs lang-javascript"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AwesomeComponent</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+
+    conditionalProp() {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.props.thing ? <span class="hljs-string">'prop1'</span> : <span class="hljs-string">'prop2'</span>
+    }
+
+    render() {
+
+        <span class="hljs-keyword">const</span> { thing } = <span class="hljs-keyword">this</span>.props
+
+        <span class="hljs-keyword">return</span> (
+            <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">AwesomeComponent</span>
+                <span class="hljs-attribute">conditionalProp</span>=<span class="hljs-value">{this.conditionalProp()}</span>
+            /&gt;</span>
+        )</span>
+    }
+}</code></pre><h3 id="function-reference-vs-function-unwrapping">  <a class="heading-anchor" style="display:none;" href="#function-reference-vs-function-unwrapping">    <i class="fa fa-link"></i>  </a>Function reference vs Function unwrapping</h3><p>When the <code>render</code> method of a component is called, functions inside of
+the JSX are executed and their return values are used in place of the
+props. That brings up two common use-cases for using expression in
+components:</p>
+<p><strong>Using a reference to a function</strong></p>
+<p>Sometimes you will need to provide a callback method to child
+component - and sometimes you will need to provide the first argument
+to a function and let the child provide the rest. In those cases,
+anonymouse functions work perfectly:</p>
+<pre><code class="hljs lang-javascript">&lt;AwesomeComponent
+    conditionalProp={data =&gt; myCallback(id, data)}
+/&gt;</code></pre><p>What we&#39;re doing in the above example is called <em>partial function
+application</em>. In a nutshell, we create a <code>unary</code> function that returns
+a <code>binary</code> function with the first argument already given (so really,
+we get a <code>unary</code> function again).</p>
+<p>When the <code>render</code> method of the component is called, functions are
+executed. With the example above again, what we actually get <em>after</em>
+the render is:</p>
+<pre><code class="hljs lang-javascript">&lt;AwesomeComponent
+    handleCallback={data =&gt; myCallback(id, data)}
+/&gt;</code></pre><p>And inside of <code>AwesomeComponent</code>, you can simply call:</p>
+<pre><code class="hljs lang-javascript"><span class="hljs-keyword">this</span>.props.handleCallback(arg)</code></pre><p><strong>Using the value of a function</strong></p>
+<pre><code class="hljs lang-`javascript">class AwesomeComponent extends React.Component {
+
+    conditionalProp() {
+        return this.props.thing ? 'prop1' : 'prop2'
+    }
+
+    render() {
+
+        const { thing } = this.props
+
+        return (
+            &lt;AwesomeComponent
+                conditionalProp={this.conditionalProp()}
+            /&gt;
+        )
+    }
+}</code></pre><h2 id="boolean-props">  <a class="heading-anchor" style="display:none;" href="#boolean-props">    <i class="fa fa-link"></i>  </a>Boolean Props</h2><p>Passing boolean properties to JSX components is simple. The only thing
+you need to know is that they are <em>JavaScript Booleans</em>, not <em>String
+Booleans</em>. In other words:</p>
+<p>This is correct:</p>
+<pre><code class="hljs lang-javascript">&lt;AwesomeComponent
+    handleCallback={<span class="hljs-literal">true</span>}
+/&gt;</code></pre><p>This is not:</p>
+<pre><code class="hljs lang-javascript">&lt;AwesomeComponent
+    handleCallback=<span class="hljs-string">"true"</span>
+/&gt;</code></pre><p><small>
+<em>Just a quick note that the second one actually <em>is</em> valid, but it&#39;s
+not considered a <code>boolean</code> it&#39;s considered a <code>string</code>.</em>
+</small></p>
+<h3 id="alternative-syntax">  <a class="heading-anchor" style="display:none;" href="#alternative-syntax">    <i class="fa fa-link"></i>  </a>Alternative syntax</h3><p>An alternative for passing <code>true</code> is to simply provide the prop name without a value:</p>
+<pre><code class="hljs lang-javascript">&lt;Input disabled/&gt;</code></pre><p>My professional opinion is to always use the full <code>true</code> or <code>false</code>
+value for the sake of readability.</p>
+<h2 id="final-thoughts">  <a class="heading-anchor" style="display:none;" href="#final-thoughts">    <i class="fa fa-link"></i>  </a>Final Thoughts</h2><p>Are there any pieces of JSX where you got caught up first starting?
+Let&#39;s chat - shoot me a message on twitter
+<a href="https://twitter.com/CodyReichert">@CodyReichert</a> and I&#39;ll add it!</p>
+<p>:: Cody Reichert</p>
+</div><div title="JSX - The Basics"><div id="disqus_thread"></div><noscript><span>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></span></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by<span class="logo-disqus">Disqus</span></a></div></div></div><br/><footer class="navbar navbar-full navbar-dark bg-inverse"><div class="container"><div class="collapse navbar-toggleable-xs" id="navbar"><ul class="nav navbar-nav pull-md-left"><li class="nav-item"><span class="nav-link">Cody Reichert - Copyright © 2016</span></li></ul><ul class="nav navbar-nav pull-md-right"><li class="nav-item"><a class="nav-link" target="_blank" href="https://github.com/CodyReichert"><i class="fa fa-github-alt" style="margin-right:5px;"></i></a></li><li class="nav-item"><a class="nav-link" target="_blank" href="https://twitter.com/CodyReichert"><i class="fa fa-twitter" style="margin-right:5px;"></i></a></li></ul></div></div></footer></div>
+    <script type="text/javascript" src="/index.js">
+    </script>
+  </body>
+</html>
