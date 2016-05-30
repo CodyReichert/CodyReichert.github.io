@@ -1,0 +1,67 @@
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,700" rel="stylesheet" type="text/css">
+    <link href="/css/bundle.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <div id="outlet"><nav class="navbar navbar-full navbar-dark bg-inverse"><div class="container"><div class="collapse navbar-toggleable-xs" id="navbar"><a class="navbar-brand" href="/">Cody Reichert <small>The one true blog</small></a><ul class="nav navbar-nav pull-md-right"><li class="nav-item"><a class="nav-link" href="/about">About</a></li><li class="nav-item"><a class="nav-link" href="/posts">Posts</a></li></ul></div></div></nav><div class="container"><div><h1 style="padding-top:25px;padding-bottom:10px;"><a href="/posts/cl-ses">cl-ses - Sending Emails from Common Lisp with AWS SES</a></h1><small class="text-muted"><span style="margin-right:10px;"><i class="fa fa-calendar" style="margin-right:5px;"></i>8/6/2015</span><span style="margin-right:10px;"><i class="fa fa-folder" style="margin-right:5px;"></i>programming, common lisp</span><span style="margin-right:10px;"><i class="fa fa-pencil" style="margin-right:5px;"></i>Cody Reichert</span><span class="pull-xs-right"><a href="/posts">Back to blogs</a></span></small><hr/><div><p>I&#39;ve been enjoying using Common Lisp lately. After going through the
+first half of
+<a href="http://www.gigamonkeys.com/book/">Practical Common Lisp</a> (highly
+recommended), I wanted to write some scripts to automate some of my
+own tasks. We use AWS for most of our infrastraucture at
+<a href="https://simplyrets.com">SimplyRETS</a> and
+<a href="http://reichertbrothers.com">Reichert Brothers</a>, and run jobs to
+check how our API&#39;s are holding up. Naturally, I wanted to automate
+some of that and send out an email when reports are generated.</p>
+<p>In case you don&#39;t want to read the rest:
+<a href="https://github.com/CodyReichert/cl-ses">Here&#39;s the code</a></p>
+<h2 id="options">  <a class="heading-anchor" style="display:none;" href="#options">    <i class="fa fa-link"></i>  </a>Options</h2><p>There are a few AWS libraries out there for Common Lisp<sup>1</sup>, but I
+couldn&#39;t find one that supported SES - except for
+<a href="http://www.obrezan.com/lisp/aws-ses/">aws-ses</a>. The problem I had
+with aws-ses is that it only works with LispWorks - which is perfectly
+fine, but I&#39;ve been using SBCL and wanted something with a bit more
+flexibility.</p>
+<p>One a side note, if you <em>are</em> using LispWorks - <code>aws-ses</code> is really
+cool since the author wrote his own hmac, sha1, and base64 algorithms
+with 0 dependencies.</p>
+<h2 id="cl-ses">  <a class="heading-anchor" style="display:none;" href="#cl-ses">    <i class="fa fa-link"></i>  </a>CL-SES</h2><p>The app I wanted to send email from was running in SBCL - so I decided
+a port of aws-ses would be the right thing to do.</p>
+<p>I put up <a href="https://github.com/CodyReichert/cl-ses">cl-ses</a> on GithHub
+the other day after porting all of the LispWorks specific
+function. Specifically, the use of <code>comm</code> for the tcp connection was
+the major blocker. I decided against porting <code>comm</code> to <code>sb-bsd-ports</code>
+and opted for bringing in <a href="http://weitz.de/drakma/">Drakma</a>, which is
+an awesome HTTP Library that has already hashed out the differences
+between Lisp implementations.</p>
+<p>Losing the &quot;no dependency&quot; badge and adding the &quot;1 dependency, but
+multiple implementations&quot; badge was the best route - especially since
+there seems to be a lack of any high level email libraries.</p>
+<h3 id="usage">  <a class="heading-anchor" style="display:none;" href="#usage">    <i class="fa fa-link"></i>  </a>Usage</h3><p>I changed up a bit of code in order to get the signing algorthims to
+work with Drakma&#39;s headers, but the library stayed very simple - only
+exposing one <code>send-email</code> function. Here&#39;s all it takes to send an
+email:</p>
+<pre><code class="hljs lang-lisp">  <span class="hljs-list">(<span class="hljs-keyword">cl-ses</span><span class="hljs-keyword">:send-email</span> <span class="hljs-keyword">:from</span> <span class="hljs-string">"me@example.com"</span>
+                     <span class="hljs-keyword">:to</span> <span class="hljs-string">"you@example.com"</span>
+                     <span class="hljs-keyword">:subject</span> <span class="hljs-string">"Hello from CL-SES"</span>
+                     <span class="hljs-keyword">:message</span> <span class="hljs-string">"The body of the email message"</span>
+                     <span class="hljs-keyword">:aws-access-key</span> <span class="hljs-string">"XXXXXX"</span></span></code></pre><p><code>send-email</code> returns <code>T</code> if the status was 200 (OK), and <code>NIL</code>
+otherwise. In the future I&#39;ll hopefully have implemented better
+error reporting.</p>
+<p>You can easily send to multiple recipients:</p>
+<pre><code class="hljs lang-lisp">  <span class="hljs-list">(<span class="hljs-keyword">cl-ses</span><span class="hljs-keyword">:send-email</span> <span class="hljs-keyword">:from</span> <span class="hljs-string">"me@example.com"</span>
+                     <span class="hljs-keyword">:to</span> <span class="hljs-string">"first@example.com,second@example.com,third@example.com"</span>
+                     <span class="hljs-keyword">:subject</span> <span class="hljs-string">"Hello from CL-SES"</span>
+                     <span class="hljs-keyword">:message</span> <span class="hljs-string">"The body of the email message"</span>
+                     <span class="hljs-keyword">:aws-access-key</span> <span class="hljs-string">"XXXXXX"</span>
+                     <span class="hljs-keyword">:aws-secret-key</span> <span class="hljs-string">"XXXXXXXXXXX"</span>)</span></code></pre><p>I&#39;m working on extending this to support more of AWS&#39;s features, allow
+for a lot of the obvious settings (like the AWS region), provide
+better error hanlding, and built in support for HTML emails - but
+other than that it&#39;s working great so far.</p>
+<h2 id="footnotes">  <a class="heading-anchor" style="display:none;" href="#footnotes">    <i class="fa fa-link"></i>  </a>Footnotes</h2><p>1 - <a href="https://github.com/xach/zpb-aws">zpb-aws</a> and
+<a href="https://github.com/hargettp/hh-aws">hh-aws</a> are the two I found.</p>
+<p>:: Cody Reichert</p>
+</div><div title="cl-ses - Sending Emails from Common Lisp with AWS SES"><div id="disqus_thread"></div><noscript><span>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></span></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by<span class="logo-disqus">Disqus</span></a></div></div></div><br/><footer class="navbar navbar-full navbar-dark bg-inverse"><div class="container"><div class="collapse navbar-toggleable-xs" id="navbar"><ul class="nav navbar-nav pull-md-left"><li class="nav-item"><span class="nav-link">Cody Reichert - Copyright © 2016</span></li></ul><ul class="nav navbar-nav pull-md-right"><li class="nav-item"><a class="nav-link" target="_blank" href="https://github.com/CodyReichert"><i class="fa fa-github-alt" style="margin-right:5px;"></i></a></li><li class="nav-item"><a class="nav-link" target="_blank" href="https://twitter.com/CodyReichert"><i class="fa fa-twitter" style="margin-right:5px;"></i></a></li></ul></div></div></footer></div>
+    <script type="text/javascript" src="/index.js">
+    </script>
+  </body>
+</html>
