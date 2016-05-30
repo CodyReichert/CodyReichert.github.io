@@ -241,9 +241,9 @@ class AwesomeComponent extends React.Component {
         const { thing } = this.props
 
         return (
-            <AwesomeComponent
+            &lt;AwesomeComponent
                 conditionalProp={this.conditionalProp()}
-            />
+            /&gt;
         )
     }
 }
