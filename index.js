@@ -17,10 +17,10 @@ imgContext.keys().map(imgContext)
 /*
  * Client side render
  */
-if (typeof window !== 'undefined') {
-    const outlet = document.getElementById('outlet');
-    ReactDOM.render(<Router history={browserHistory} routes={routes} />, outlet);
-}
+// if (typeof window !== 'undefined') {
+//     const outlet = document.getElementById('outlet');
+//     ReactDOM.render(<Router history={browserHistory} routes={routes} />, outlet);
+// }
 
 /*
  * Server side render (default)
