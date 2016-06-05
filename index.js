@@ -9,6 +9,10 @@ import 'bootstrap/dist/css/bootstrap.css'
 import './lib/assets/styles/main.scss'
 import 'highlightjs/styles/default.css'
 
+const imgContext = require.context('./posts/images/', true, /png/)
+imgContext.keys().map(imgContext)
+
+
 
 /*
  * Client side render

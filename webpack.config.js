@@ -56,7 +56,7 @@ module.exports = {
             /* Loads image files */
             {
                 test: /\.(jpg|png|gif)$/,
-                loader: "file?name=/images/[name].[hash].[ext]"
+                loader: "file?name=/images/[name].[ext]"
             },
 
             /* Loads font files (eg, from bootstrap, etc) */
