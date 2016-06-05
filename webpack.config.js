@@ -62,23 +62,23 @@ module.exports = {
             /* Loads font files (eg, from bootstrap, etc) */
             {
                 test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-                loader: "file?name=/fonts/[name].[hash].[ext]"
+                loader: "file?name=/fonts/[name].[ext]"
             },
             {
                 test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-                loader: "file?name=/fonts/[name].[hash].[ext]"
+                loader: "file?name=/fonts/[name].[ext]"
             },
             {
                 test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-                loader: "file?name=/fonts/[name].[hash].[ext]"
+                loader: "file?name=/fonts/[name].[ext]"
             },
             {
                 test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-                loader: "file?name=/fonts/[name].[hash].[ext]"
+                loader: "file?name=/fonts/[name].[ext]"
             },
             {
                 test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-                loader: "file?name=/fonts/[name].[hash].[ext]"
+                loader: "file?name=/fonts/[name].[ext]"
             }
         ]
     },

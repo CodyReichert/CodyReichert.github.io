@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "test",
-    "build": "webpack --progress --colors",
+    "build": "webpack --progress --colors -p",
     "start": "webpack --watch --progress --colors"
   },
   "author": "Cody Reichert",
