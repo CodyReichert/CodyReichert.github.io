@@ -48,7 +48,7 @@ wanted my users to be able to pick a template offered by their active
 theme on a page-by-page basis.
 
 <div style="text-align:center">
-![*fig 1.1*](../img/wp-page-attributes.png)
+![*fig 1.1*](./images/wp-page-attributes.png)
 </div>
 
 The most common solution I found was to register a setting for the
@@ -179,7 +179,7 @@ Post Type Pages. It's not saving any settings yet, but now we can
 start persisting the selection. (See fig 1.2)
 
 <div style="text-align:center">
-![*fig 1.2*](../img/wp-page-template-meta-box.png)
+![*fig 1.2*](./images/wp-page-template-meta-box.png)
 </div>
 
 

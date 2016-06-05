@@ -8387,6 +8387,12 @@ pre {
   box-shadow: 0px 1px 1px 1px #dedede;
   border: solid 1px rgba(252, 252, 252, 0); }
 
+img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2); }
+
 h1 .heading-anchor, h2 .heading-anchor, h3 .heading-anchor, h4 .heading-anchor, h5 .heading-anchor, h6 .heading-anchor {
   display: none;
   padding-right: 4px;

@@ -2,9 +2,51 @@
   <head>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,700" rel="stylesheet" type="text/css">
     <link href="/css/bundle.css" rel="stylesheet"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
-    <div id="outlet"><nav class="navbar navbar-full navbar-dark bg-inverse"><div class="container"><div class="collapse navbar-toggleable-xs" id="navbar"><a class="navbar-brand" href="/">Cody Reichert <small>The one true blog</small></a><ul class="nav navbar-nav pull-md-right"><li class="nav-item"><a class="nav-link" href="/about">About</a></li><li class="nav-item"><a class="nav-link" href="/posts">Posts</a></li></ul></div></div></nav><div class="container"><div><div><h1 style="padding-top:25px;padding-bottom:10px;"><a href="/posts/pretty-print-json">Pretty Printing JSON in JavaScript</a></h1><small class="text-muted"><span style="margin-right:10px;"><i class="fa fa-calendar" style="margin-right:5px;"></i>5/3/2016</span><span style="margin-right:10px;"><i class="fa fa-folder" style="margin-right:5px;"></i>programming, javascript</span><span style="margin-right:10px;"><i class="fa fa-pencil" style="margin-right:5px;"></i>Cody Reichert</span></small><hr/><div><p>I frequently look up how to pretty pring JSON in JavaScript. Whether it be
+    <div id="outlet"><nav class="navbar navbar-full navbar-dark bg-inverse"><div class="container"><div id="navbar"><a class="navbar-brand" href="/">Cody Reichert <small>The one true blog</small></a><ul class="nav navbar-nav pull-md-right"><li class="nav-item"><a class="nav-link" href="/about">About</a></li><li class="nav-item"><a class="nav-link" href="/posts">Posts</a></li></ul></div></div></nav><div class="container"><div><div><h1 style="padding-top:25px;padding-bottom:10px;"><a href="/posts/device-screenshots-in-chrome-canary">Chrome Canary: Take mobile device screenshots</a></h1><small class="text-muted"><span style="margin-right:10px;"><i class="fa fa-calendar" style="margin-right:5px;"></i>6/6/2016</span><span style="margin-right:10px;"><i class="fa fa-folder" style="margin-right:5px;"></i>programming, tips</span><span style="margin-right:10px;"><i class="fa fa-pencil" style="margin-right:5px;"></i>Cody Reichert</span></small><hr/><div><p>I came across a
+<a href="https://twitter.com/ChromeDevTools/status/738864794497753088">tweet</a>
+the other day by <a href="https://twitter.com/ChromeDevTools">@ChromeDevTool</a>
+that I had to share - super cool.</p>
+<p>In the latest
+<a href="https://www.google.com/chrome/browser/canary.html">Chrome Canary build</a>
+you can not only view your website on different mobile device sizes,
+but you can now also view the device and take a screenshot of the
+whole thing! Here&#39;s an example:</p>
+<p><div style="max-width:100%;text-align:center">
+<img src="/images/chrome-canary-screenshot.png" alt="*fig 1.2*"/>
+</div>
+<br/>
+<i>So meta</i></p>
+<p>I&#39;ll leave you to play with all the different devices and take your
+own screenshots - go download the latest Chrome Canary build and get
+started!</p>
+<p>:: <a href="https://twitter.com/CodyReichert">@CodyReichert</a></p>
+</div></div><div><h1 style="padding-top:25px;padding-bottom:10px;"><a href="/posts/javascript-boolean-anything">JavaScript: Anything to boolean</a></h1><small class="text-muted"><span style="margin-right:10px;"><i class="fa fa-calendar" style="margin-right:5px;"></i>6/4/2016</span><span style="margin-right:10px;"><i class="fa fa-folder" style="margin-right:5px;"></i>javascript, tips</span><span style="margin-right:10px;"><i class="fa fa-pencil" style="margin-right:5px;"></i>Cody Reichert</span></small><hr/><div><p>Double negatives aren&#39;t <em>not</em> bad, but the
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_Operators#Logical_NOT">Logical NOT</a>
+operator is pretty cool. You&#39;re probably familiar with it, <code>!</code>. It&#39;s a
+unary operator that returns <code>false</code> if it&#39;s argument can be coerced to
+<code>true</code>, and vice versa:</p>
+<pre><code class="hljs lang-javascript">    !<span class="hljs-literal">true</span> <span class="hljs-comment">// false</span>
+    !<span class="hljs-literal">false</span> <span class="hljs-comment">// true</span>
+
+    <span class="hljs-comment">// with coercion</span>
+    !<span class="hljs-number">1</span> = <span class="hljs-comment">// false</span>
+    !<span class="hljs-number">0</span> = <span class="hljs-comment">// true</span>
+    ![] = <span class="hljs-comment">// false</span></code></pre><p>And since <code>!</code> returns a single boolean, we can pass it&#39;s result to another <code>!</code>: <code>!!</code>:</p>
+<pre><code class="hljs lang-javascript">    !!<span class="hljs-literal">true</span> <span class="hljs-comment">// true</span>
+    !!<span class="hljs-literal">false</span> <span class="hljs-comment">// false</span>
+
+    <span class="hljs-comment">// with coercion</span>
+    !!<span class="hljs-number">1</span> = <span class="hljs-comment">// true</span>
+    !!<span class="hljs-number">0</span> = <span class="hljs-comment">// false</span>
+    !![] = <span class="hljs-comment">// true</span></code></pre><p>You should know the rules of what can be converted to <code>true</code>
+(<a href="https://developer.mozilla.org/en-US/docs/Glossary/truthy">truthy</a>)
+and to <code>false</code>
+(<a href="https://developer.mozilla.org/en-US/docs/Glossary/falsy">falsy</a>).</p>
+</div></div><div><h1 style="padding-top:25px;padding-bottom:10px;"><a href="/posts/pretty-print-json">Pretty Printing JSON in JavaScript</a></h1><small class="text-muted"><span style="margin-right:10px;"><i class="fa fa-calendar" style="margin-right:5px;"></i>5/3/2016</span><span style="margin-right:10px;"><i class="fa fa-folder" style="margin-right:5px;"></i>programming, javascript</span><span style="margin-right:10px;"><i class="fa fa-pencil" style="margin-right:5px;"></i>Cody Reichert</span></small><hr/><div><p>I frequently look up how to pretty pring JSON in JavaScript. Whether it be
 for debugging in the console, to display some output to the user, or any other
 reason.</p>
 <p><code>JSON.stringify()</code> is usually used to simply convert a JSON object to a string
@@ -604,7 +646,7 @@ explicity hardcode it to only be allowed on <code>page</code> post types. Well, 
 wanted my users to be able to pick a template offered by their active
 theme on a page-by-page basis.</p>
 <div style="text-align:center">
-<img src="../img/wp-page-attributes.png" alt="*fig 1.1*"/>
+<img src="./images/wp-page-attributes.png" alt="*fig 1.1*"/>
 </div>
 
 <p>The most common solution I found was to register a setting for the
@@ -710,7 +752,7 @@ function. Now we should have a fully rendered meta box on our Custom
 Post Type Pages. It&#39;s not saving any settings yet, but now we can
 start persisting the selection. (See fig 1.2)</p>
 <div style="text-align:center">
-<img src="../img/wp-page-template-meta-box.png" alt="*fig 1.2*"/>
+<img src="./images/wp-page-template-meta-box.png" alt="*fig 1.2*"/>
 </div>
 
 

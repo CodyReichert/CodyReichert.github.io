@@ -2,9 +2,11 @@
   <head>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,700" rel="stylesheet" type="text/css">
     <link href="/css/bundle.css" rel="stylesheet"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
-    <div id="outlet"><nav class="navbar navbar-full navbar-dark bg-inverse"><div class="container"><div class="collapse navbar-toggleable-xs" id="navbar"><a class="navbar-brand" href="/">Cody Reichert <small>The one true blog</small></a><ul class="nav navbar-nav pull-md-right"><li class="nav-item"><a class="nav-link" href="/about">About</a></li><li class="nav-item"><a class="nav-link" href="/posts">Posts</a></li></ul></div></div></nav><div class="container"><div><h1 style="padding-top:25px;padding-bottom:10px;"><a href="/posts/wordpress-custom-post-type-template-options">Adding Template Options to a Wordpress Custom Post Type</a></h1><small class="text-muted"><span style="margin-right:10px;"><i class="fa fa-calendar" style="margin-right:5px;"></i>12/6/2014</span><span style="margin-right:10px;"><i class="fa fa-folder" style="margin-right:5px;"></i>wordpress, php</span><span style="margin-right:10px;"><i class="fa fa-pencil" style="margin-right:5px;"></i>Cody Reichert</span><span class="pull-xs-right"><a href="/posts">Back to blogs</a></span></small><hr/><div><h2 id="about-the-task">  <a class="heading-anchor" style="display:none;" href="#about-the-task">    <i class="fa fa-link"></i>  </a>About the Task</h2><p>I&#39;ve recently been working on a Wordpress plugin for a new service
+    <div id="outlet"><nav class="navbar navbar-full navbar-dark bg-inverse"><div class="container"><div id="navbar"><a class="navbar-brand" href="/">Cody Reichert <small>The one true blog</small></a><ul class="nav navbar-nav pull-md-right"><li class="nav-item"><a class="nav-link" href="/about">About</a></li><li class="nav-item"><a class="nav-link" href="/posts">Posts</a></li></ul></div></div></nav><div class="container"><div><h1 style="padding-top:25px;padding-bottom:10px;"><a href="/posts/wordpress-custom-post-type-template-options">Adding Template Options to a Wordpress Custom Post Type</a></h1><small class="text-muted"><span style="margin-right:10px;"><i class="fa fa-calendar" style="margin-right:5px;"></i>12/6/2014</span><span style="margin-right:10px;"><i class="fa fa-folder" style="margin-right:5px;"></i>wordpress, php</span><span style="margin-right:10px;"><i class="fa fa-pencil" style="margin-right:5px;"></i>Cody Reichert</span><span class="pull-xs-right"><a href="/posts">Back to blogs</a></span></small><hr/><div><h2 id="about-the-task">  <a class="heading-anchor" style="display:none;" href="#about-the-task">    <i class="fa fa-link"></i>  </a>About the Task</h2><p>I&#39;ve recently been working on a Wordpress plugin for a new service
 we&#39;ll be releasing at Reichert Brothers in the next couple of
 months. Although I haven&#39;t ever done too much in Wordpress, it
 allows for some really cool things and lends itself well to rapid
@@ -38,7 +40,7 @@ explicity hardcode it to only be allowed on <code>page</code> post types. Well, 
 wanted my users to be able to pick a template offered by their active
 theme on a page-by-page basis.</p>
 <div style="text-align:center">
-<img src="../img/wp-page-attributes.png" alt="*fig 1.1*"/>
+<img src="./images/wp-page-attributes.png" alt="*fig 1.1*"/>
 </div>
 
 <p>The most common solution I found was to register a setting for the
@@ -144,7 +146,7 @@ function. Now we should have a fully rendered meta box on our Custom
 Post Type Pages. It&#39;s not saving any settings yet, but now we can
 start persisting the selection. (See fig 1.2)</p>
 <div style="text-align:center">
-<img src="../img/wp-page-template-meta-box.png" alt="*fig 1.2*"/>
+<img src="./images/wp-page-template-meta-box.png" alt="*fig 1.2*"/>
 </div>
 
 

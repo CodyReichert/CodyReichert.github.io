@@ -78,13 +78,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _routes = __webpack_require__(234);
 
-	__webpack_require__(257);
+	__webpack_require__(259);
 
-	__webpack_require__(261);
+	__webpack_require__(263);
 
-	__webpack_require__(269);
+	__webpack_require__(271);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var imgContext = __webpack_require__(273);
+	imgContext.keys().map(imgContext);
 
 	/*
 	 * Client side render
@@ -25940,15 +25943,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Root2 = _interopRequireDefault(_Root);
 
-	var _About = __webpack_require__(238);
+	var _About = __webpack_require__(239);
 
 	var _About2 = _interopRequireDefault(_About);
 
-	var _Blogroll = __webpack_require__(240);
+	var _Blogroll = __webpack_require__(241);
 
 	var _Blogroll2 = _interopRequireDefault(_Blogroll);
 
-	var _BlogPost = __webpack_require__(252);
+	var _BlogPost = __webpack_require__(255);
 
 	var _BlogPost2 = _interopRequireDefault(_BlogPost);
 
@@ -26060,7 +26063,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            { className: "container" },
 	            _react2.default.createElement(
 	                "div",
-	                { className: "collapse navbar-toggleable-xs", id: "navbar" },
+	                { id: "navbar" },
 	                _react2.default.createElement(
 	                    "a",
 	                    { className: "navbar-brand", href: "/" },
@@ -26114,7 +26117,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Icon = __webpack_require__(253);
+	var _Icon = __webpack_require__(238);
 
 	var _Icon2 = _interopRequireDefault(_Icon);
 
@@ -26184,13 +26187,49 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	exports.default = Icon;
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	function Icon(_ref) {
+	    var glyph = _ref.glyph;
+
+	    var rest = _objectWithoutProperties(_ref, ['glyph']);
+
+	    return _react2.default.createElement('i', _extends({ className: 'fa fa-' + glyph,
+	        style: { marginRight: 5 }
+	    }, rest));
+	}
+
+	Icon.propTypes = {
+	    glyph: _react.PropTypes.string.isRequired
+	};
+
+/***/ },
+/* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _avatar = __webpack_require__(239);
+	var _avatar = __webpack_require__(240);
 
 	var _avatar2 = _interopRequireDefault(_avatar);
 
@@ -26493,13 +26532,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 239 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/images/avatar.035f07ff64242c7470d4c3f77a5dd2a6.jpg";
+	module.exports = __webpack_require__.p + "/images/avatar.jpg";
 
 /***/ },
-/* 240 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26514,9 +26553,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _blogs = __webpack_require__(241);
+	var _blogs = __webpack_require__(242);
 
-	var _BlogPreview = __webpack_require__(251);
+	var _BlogPreview = __webpack_require__(254);
 
 	var _BlogPreview2 = _interopRequireDefault(_BlogPreview);
 
@@ -26556,7 +26595,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Blogroll;
 
 /***/ },
-/* 241 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26566,7 +26605,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	exports.getBlogById = getBlogById;
 
-	var blogContext = __webpack_require__(242);
+	var blogContext = __webpack_require__(243);
 
 	var blogs = exports.blogs = blogContext.keys().map(blogContext).sort(function (a, b) {
 	    return(
@@ -26582,18 +26621,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 242 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./blogging-with-emacs-and-org-mode.md": 243,
-		"./cl-ses.md": 244,
-		"./january-2016-reading-list.md": 245,
-		"./jsx-the-basics.md": 246,
-		"./managing-dotfiles-with-gnu-stow.md": 247,
-		"./pretty-print-json.md": 248,
-		"./webpack-entry-points.md": 249,
-		"./wordpress-custom-post-type-template-options.md": 250
+		"./blogging-with-emacs-and-org-mode.md": 244,
+		"./cl-ses.md": 245,
+		"./device-screenshots-in-chrome-canary.md": 246,
+		"./january-2016-reading-list.md": 247,
+		"./javascript-boolean-anything.md": 248,
+		"./jsx-the-basics.md": 249,
+		"./managing-dotfiles-with-gnu-stow.md": 250,
+		"./pretty-print-json.md": 251,
+		"./webpack-entry-points.md": 252,
+		"./wordpress-custom-post-type-template-options.md": 253
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -26606,11 +26647,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 242;
+	webpackContext.id = 243;
 
 
 /***/ },
-/* 243 */
+/* 244 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -26626,7 +26667,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 244 */
+/* 245 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -26642,7 +26683,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 245 */
+/* 246 */
+/***/ function(module, exports) {
+
+	module.exports = {
+		"path": "device-screenshots-in-chrome-canary.md",
+		"meta": {
+			"author": "Cody Reichert",
+			"category": "programming, tips",
+			"date": "2016-06-05T00:00:00.000Z",
+			"title": "Chrome Canary: Take mobile device screenshots"
+		},
+		"content": "<p>I came across a\n<a href=\"https://twitter.com/ChromeDevTools/status/738864794497753088\">tweet</a>\nthe other day by <a href=\"https://twitter.com/ChromeDevTools\">@ChromeDevTool</a>\nthat I had to share - super cool.</p>\n<p>In the latest\n<a href=\"https://www.google.com/chrome/browser/canary.html\">Chrome Canary build</a>\nyou can not only view your website on different mobile device sizes,\nbut you can now also view the device and take a screenshot of the\nwhole thing! Here&#39;s an example:</p>\n<p><div style=\"max-width:100%;text-align:center\">\n<img src=\"/images/chrome-canary-screenshot.png\" alt=\"*fig 1.2*\"/>\n</div>\n<br/>\n<i>So meta</i></p>\n<p>I&#39;ll leave you to play with all the different devices and take your\nown screenshots - go download the latest Chrome Canary build and get\nstarted!</p>\n<p>:: <a href=\"https://twitter.com/CodyReichert\">@CodyReichert</a></p>\n",
+		"id": "device-screenshots-in-chrome-canary"
+	};
+
+/***/ },
+/* 247 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -26658,7 +26715,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 246 */
+/* 248 */
+/***/ function(module, exports) {
+
+	module.exports = {
+		"path": "javascript-boolean-anything.md",
+		"meta": {
+			"author": "Cody Reichert",
+			"category": "javascript, tips",
+			"date": "2016-06-03T00:00:00.000Z",
+			"title": "JavaScript: Anything to boolean"
+		},
+		"content": "<p>Double negatives aren&#39;t <em>not</em> bad, but the\n<a href=\"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_Operators#Logical_NOT\">Logical NOT</a>\noperator is pretty cool. You&#39;re probably familiar with it, <code>!</code>. It&#39;s a\nunary operator that returns <code>false</code> if it&#39;s argument can be coerced to\n<code>true</code>, and vice versa:</p>\n<pre><code class=\"hljs lang-javascript\">    !<span class=\"hljs-literal\">true</span> <span class=\"hljs-comment\">// false</span>\n    !<span class=\"hljs-literal\">false</span> <span class=\"hljs-comment\">// true</span>\n\n    <span class=\"hljs-comment\">// with coercion</span>\n    !<span class=\"hljs-number\">1</span> = <span class=\"hljs-comment\">// false</span>\n    !<span class=\"hljs-number\">0</span> = <span class=\"hljs-comment\">// true</span>\n    ![] = <span class=\"hljs-comment\">// false</span></code></pre><p>And since <code>!</code> returns a single boolean, we can pass it&#39;s result to another <code>!</code>: <code>!!</code>:</p>\n<pre><code class=\"hljs lang-javascript\">    !!<span class=\"hljs-literal\">true</span> <span class=\"hljs-comment\">// true</span>\n    !!<span class=\"hljs-literal\">false</span> <span class=\"hljs-comment\">// false</span>\n\n    <span class=\"hljs-comment\">// with coercion</span>\n    !!<span class=\"hljs-number\">1</span> = <span class=\"hljs-comment\">// true</span>\n    !!<span class=\"hljs-number\">0</span> = <span class=\"hljs-comment\">// false</span>\n    !![] = <span class=\"hljs-comment\">// true</span></code></pre><p>You should know the rules of what can be converted to <code>true</code>\n(<a href=\"https://developer.mozilla.org/en-US/docs/Glossary/truthy\">truthy</a>)\nand to <code>false</code>\n(<a href=\"https://developer.mozilla.org/en-US/docs/Glossary/falsy\">falsy</a>).</p>\n",
+		"id": "javascript-boolean-anything"
+	};
+
+/***/ },
+/* 249 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -26674,7 +26747,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 247 */
+/* 250 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -26690,7 +26763,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 248 */
+/* 251 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -26706,7 +26779,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 249 */
+/* 252 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -26722,7 +26795,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 250 */
+/* 253 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -26733,12 +26806,12 @@ return /******/ (function(modules) { // webpackBootstrap
 			"date": "2014-12-28T00:00:00.000Z",
 			"title": "Adding Template Options to a Wordpress Custom Post Type"
 		},
-		"content": "<h2 id=\"about-the-task\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#about-the-task\">    <i class=\"fa fa-link\"></i>  </a>About the Task</h2><p>I&#39;ve recently been working on a Wordpress plugin for a new service\nwe&#39;ll be releasing at Reichert Brothers in the next couple of\nmonths. Although I haven&#39;t ever done too much in Wordpress, it\nallows for some really cool things and lends itself well to rapid\ndevelopment. I ran into a couple of problems when developing out\nthe plugin that I think might be valuable enough to get documented\nand help anyone else out that may come across the same issues.</p>\n<h3 id=\"background\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#background\">    <i class=\"fa fa-link\"></i>  </a>Background</h3><p>For the sake of making this easier to understand, I&#39;ll give a\nlittle background on what I needed my plugin to accomplish. In a\nnutshell, I ventured to write a &#39;simple&#39; plugin that would\nretrieve JSON from an external API, format it, and display it on a\nCustom Post Type Page I created. I wanted to write as few of my\nown custom templates as possible and inherit the templates that\nthe active theme makes available. The following things needed to\nbe achieved:</p>\n<ul>\n<li><em>Create a Custom Post Type</em>: to display the data from an API on\n our custom pages. (not covered here)</li>\n<li><em>Add meta boxes</em>: to filter the requests to our third part API\n (not covered here)</li>\n<li><em>Allow the user to pick a template</em>: for their Custom Post Type\n Pages. These templates should not be hardcoded and should be\n the same templates that the active theme offers (full-width,\n left-sidebar, etc).</li>\n</ul>\n<p>We&#39;ll be covering the third bullet - allowing the admin to pick a\ndifferent template for each of our Custom Post Type pages.</p>\n<h3 id=\"the-problem\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#the-problem\">    <i class=\"fa fa-link\"></i>  </a>The Problem</h3><p>When creating a new custom post type, Wordpress does allow for authors\nto add the <code>page-attributes</code> capabilities to their posts. But they don&#39;t\ninclude the Template dropdown (see fig 1.1). As a matter of fact, they\nexplicity hardcode it to only be allowed on <code>page</code> post types. Well, I\nwanted my users to be able to pick a template offered by their active\ntheme on a page-by-page basis.</p>\n<div style=\"text-align:center\">\n<img src=\"../img/wp-page-attributes.png\" alt=\"*fig 1.1*\"/>\n</div>\n\n<p>The most common solution I found was to register a setting for the\nadmin where they could pick one template to take effect on all of\nthose custom post type pages. But let&#39;s say my custom post type is for\nrestaraunt menus. Well, now the restaraunt needs two pages: one for\ntheir lunch menu and one for the dinner menu. The lunch menu is much\nsmaller and thus doesn&#39;t need a &#39;full-width&#39; layout. But the dinner\nmenu is large and the admin doesn&#39;t want anything else on that\npage. Now do you see why we might need the ability to choose a\ntemplate on a page-by-page basis. At least this was my though process.</p>\n<h2 id=\"diving-in\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#diving-in\">    <i class=\"fa fa-link\"></i>  </a>Diving In</h2><p>Well in the end, I ended up figuring out what I think is a decent\nsolution. I don&#39;t think I &#39;invented&#39; this solution, because I bet\nthere a many other people out there doing the same thing, but let&#39;s\ntake a look.</p>\n<h3 id=\"tl;dr-solution\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#tl;dr-solution\">    <i class=\"fa fa-link\"></i>  </a>TL;DR Solution</h3><p>We&#39;ll leverage the use of Meta Boxes to provide our own dropdown\nmenu. Then we&#39;ll save that setting in our <code>post_meta</code>, retrieve that\nsetting when our CPT pages are loaded, and show the correct\ntemplate. Pretty simple!</p>\n<h3 id=\"registering-the-meta-box\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#registering-the-meta-box\">    <i class=\"fa fa-link\"></i>  </a>Registering the Meta Box</h3><p>First, we&#39;ll start off by creating our meta box for our Custom Post\nType. If you&#39;ve never used meta boxes before, I recommend taking a\nlook at the\n<a href=\"WP Codex\nFunction Reference for =add_meta_box=\">http://codex.wordpress.org/Function_Reference/add_meta_box</a>. It gives some great examples\nand provides plenty of info on how to set one up. Keep in mind all of\nthis is from a plugin. I won&#39;t go into setting all of that up in this\nblog, but that&#39;s where we&#39;ll be working from.</p>\n<p>Let&#39;s set up our meta box! I&#39;ll touch on the important methods and\nsettings, but I&#39;ll leave out explaining the irrelevant ones. Our code:</p>\n<pre><code class=\"hljs lang-php\">  <span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">cptTemplateMetaBox</span><span class=\"hljs-params\">()</span> </span>{\n    add_meta_box(\n      <span class=\"hljs-string\">'cpt-template-meta-box'</span>\n      , __( <span class=\"hljs-string\">'Page Template'</span>, <span class=\"hljs-string\">'my-cpt-textdomain'</span> )\n      , <span class=\"hljs-string\">'postTemplateMetaBoxMarkup'</span>\n      , <span class=\"hljs-string\">'my-cpt-name'</span>\n      , <span class=\"hljs-string\">'side'</span>\n      , <span class=\"hljs-string\">'core'</span>\n    );\n  }\n  add_action( <span class=\"hljs-string\">'add_meta_boxes'</span>, <span class=\"hljs-string\">'cptTemplateMetaBox'</span> );</code></pre><p>Ok so we&#39;ve successfully created our Meta Box (even if it&#39;s not doing\nanything yet.) Let&#39;s go through these the <code>add_meta_box</code> function and\nsee what we&#39;re setting up.</p>\n<ul>\n<li><em>cpt-template-meta-box</em>: is simply the html ID that wordpress will give our meta box when it&#39;s put on the page.</li>\n<li><em>__( &#39;Page Template, &#39;cpt-textdomain&#39; )</em>: is the title that wordpress will give our meta box when it&#39;s rendered.</li>\n<li><em>postTemplateMetaBoxMarkup</em>: is the name of the function we&#39;re\nabout to define that will render the markup to go inside of our\nmeta box.</li>\n<li><em>my-cpt-name</em>: is the name of our custom post type for which to load our meta box.</li>\n<li><em>side</em>: is where our meta box will go. On the side, since that&#39;s\nwhere the normal one would be.</li>\n<li><em>core</em>: This field is the &#39;priority&#39; of the meta box.</li>\n<li><em>add_action</em>: registers the meta box.</li>\n</ul>\n<h3 id=\"rendering-the-meta-box\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#rendering-the-meta-box\">    <i class=\"fa fa-link\"></i>  </a>Rendering the Meta Box</h3><p>Now that we have registered our Meta Box, it&#39;s time to give it\nsome markup. Basically, we&#39;ll just generate one simple dropdown\nbox that has a list of all the currently available\ntemplates. Since this part is a little more detailed than the\nprevious code snippet, I commented inline what everything is\ndoing. Here&#39;s the code:</p>\n<pre><code class=\"hljs lang-php\">  <span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">postTemplateMetaBoxMarkup</span><span class=\"hljs-params\">( <span class=\"hljs-variable\">$post</span> )</span> </span>{\n      <span class=\"hljs-comment\">// create a nonce for verification (not covered in this post)</span>\n      wp_nonce_field( basename(<span class=\"hljs-keyword\">__FILE__</span>), <span class=\"hljs-string\">'cpt_template_meta_nonce'</span> );\n\n      <span class=\"hljs-comment\">// we get the cpt_page_template meta field from the database when we load</span>\n      <span class=\"hljs-comment\">// the admin panel. We haven't saved on yet, but when we do it'll be here.</span>\n      <span class=\"hljs-variable\">$current_template</span> = get_post_meta( <span class=\"hljs-variable\">$post</span>-&gt;ID, <span class=\"hljs-string\">'cpt_page_template'</span>, <span class=\"hljs-keyword\">true</span>);\n      <span class=\"hljs-comment\">// the get_page_templates() function retrieves all of the currently enabled</span>\n      <span class=\"hljs-comment\">// templates.</span>\n      <span class=\"hljs-variable\">$template_options</span> = get_page_templates();\n\n      <span class=\"hljs-comment\">// start creating our markup</span>\n      <span class=\"hljs-comment\">// first we create a label, the 'for' attribute should match the 'name' of the &lt;input&gt; we</span>\n      <span class=\"hljs-comment\">// want to save.</span>\n      <span class=\"hljs-variable\">$box_label</span> = <span class=\"hljs-string\">'&lt;label for=\"cpt_page_template\"&gt;Page Template&lt;/label&gt;'</span>;\n      <span class=\"hljs-comment\">// &lt;select&gt; wrapper around our options. notice the 'name' == 'for' from above</span>\n      <span class=\"hljs-variable\">$box_select</span> = <span class=\"hljs-string\">'&lt;select name=\"cpt_page_template\"&gt;'</span>;\n\n      <span class=\"hljs-comment\">// we give a Default option which will default to whatever the theme's default</span>\n      <span class=\"hljs-comment\">// template is.</span>\n      <span class=\"hljs-variable\">$box_default_option</span> = <span class=\"hljs-string\">'&lt;option value=\"\"&gt;Default Template&lt;/option&gt;'</span>;\n      <span class=\"hljs-variable\">$box_options</span> = <span class=\"hljs-string\">''</span>;\n\n      <span class=\"hljs-comment\">// here's the meat. For EACH of the available templates, create an &lt;option&gt; for it,</span>\n      <span class=\"hljs-comment\">// and put it in our &lt;select&gt; box.</span>\n      <span class=\"hljs-keyword\">foreach</span> (  <span class=\"hljs-variable\">$template_options</span> <span class=\"hljs-keyword\">as</span> <span class=\"hljs-variable\">$name</span>=&gt;<span class=\"hljs-variable\">$file</span> ) {\n          <span class=\"hljs-keyword\">if</span> ( <span class=\"hljs-variable\">$current_template</span> == <span class=\"hljs-variable\">$file</span> ) {\n              <span class=\"hljs-variable\">$box_options</span> .= <span class=\"hljs-string\">'&lt;option value=\"'</span> . <span class=\"hljs-variable\">$file</span> . <span class=\"hljs-string\">'\" selected=\"selected\"&gt;'</span> . <span class=\"hljs-variable\">$name</span> . <span class=\"hljs-string\">'&lt;/option&gt;'</span>;\n          } <span class=\"hljs-keyword\">else</span> {\n              <span class=\"hljs-variable\">$box_options</span> .= <span class=\"hljs-string\">'&lt;option value=\"'</span> . <span class=\"hljs-variable\">$file</span> . <span class=\"hljs-string\">'\"&gt;'</span> . <span class=\"hljs-variable\">$name</span> . <span class=\"hljs-string\">'&lt;/option&gt;'</span>;\n          }\n      }\n\n      <span class=\"hljs-comment\">// echo our markup (you should return it, but we won't do that here).</span>\n      <span class=\"hljs-keyword\">echo</span> <span class=\"hljs-variable\">$box_label</span>;\n      <span class=\"hljs-keyword\">echo</span> <span class=\"hljs-variable\">$box_select</span>;\n      <span class=\"hljs-keyword\">echo</span> <span class=\"hljs-variable\">$box_default_option</span>;\n      <span class=\"hljs-keyword\">echo</span> <span class=\"hljs-variable\">$box_options</span>;\n      <span class=\"hljs-keyword\">echo</span> <span class=\"hljs-string\">'&lt;/select&gt;'</span>;\n  }</code></pre><p>Note, we don&#39;t have to register this function with any hooks or\nfilters because it&#39;s called directory from the =add_meta_box=\nfunction. Now we should have a fully rendered meta box on our Custom\nPost Type Pages. It&#39;s not saving any settings yet, but now we can\nstart persisting the selection. (See fig 1.2)</p>\n<div style=\"text-align:center\">\n<img src=\"../img/wp-page-template-meta-box.png\" alt=\"*fig 1.2*\"/>\n</div>\n\n\n<h3 id=\"persisting-the-meta-box-data\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#persisting-the-meta-box-data\">    <i class=\"fa fa-link\"></i>  </a>Persisting the Meta Box Data</h3><p>Wordpress makes saving the data from the Meta Box really\nsimple. In our case, it&#39;s going to see our select box and look for\nthe =selected= option. Since this isn&#39;t a meta box tutorial, I&#39;ll\nleave out the details of how the saving works. All we need to know\nis that the field saved, and what the name of the saved field\nis. Here&#39;s the code:</p>\n<pre><code class=\"hljs lang-php\">  <span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">postTemplateMetaBoxSave</span><span class=\"hljs-params\">( <span class=\"hljs-variable\">$post_id</span> )</span> </span>{\n      <span class=\"hljs-variable\">$current_nonce</span> = <span class=\"hljs-variable\">$_POST</span>[<span class=\"hljs-string\">'cpt_template_meta_nonce'</span>];\n      <span class=\"hljs-variable\">$is_autosaving</span> = wp_is_post_autosave( <span class=\"hljs-variable\">$post_id</span> );\n      <span class=\"hljs-variable\">$is_revision</span>   = wp_is_post_revision( <span class=\"hljs-variable\">$post_id</span> );\n      <span class=\"hljs-variable\">$valid_nonce</span>   = ( <span class=\"hljs-keyword\">isset</span>( <span class=\"hljs-variable\">$current_nonce</span> ) &amp;&amp; wp_verify_nonce( <span class=\"hljs-variable\">$current_nonce</span>, basename( <span class=\"hljs-keyword\">__FILE__</span> ) ) ) ? <span class=\"hljs-string\">'true'</span> : <span class=\"hljs-string\">'false'</span>;\n\n      <span class=\"hljs-comment\">// if the post is autosaving, a revision, or the nonce is not valid</span>\n      <span class=\"hljs-comment\">// do not save any changed settings.</span>\n      <span class=\"hljs-keyword\">if</span> ( <span class=\"hljs-variable\">$is_autosaving</span> || <span class=\"hljs-variable\">$is_revision</span> || !<span class=\"hljs-variable\">$valid_nonce</span> ) {\n          <span class=\"hljs-keyword\">return</span>;\n      }\n\n      <span class=\"hljs-comment\">// Find our 'cpt_page_template' field in the POST request, and save it</span>\n      <span class=\"hljs-comment\">// when the post is updated. Note that the POST field matches the</span>\n      <span class=\"hljs-comment\">// name of the select box in the markup.</span>\n      <span class=\"hljs-variable\">$cpt_page_template</span> = <span class=\"hljs-variable\">$_POST</span>[<span class=\"hljs-string\">'cpt_page_template'</span>];\n      update_post_meta( <span class=\"hljs-variable\">$post_id</span>, <span class=\"hljs-string\">'cpt_page_template'</span>, <span class=\"hljs-variable\">$cpt_page_template</span> );\n  }\n  add_action( <span class=\"hljs-string\">'save_post'</span>, <span class=\"hljs-string\">'postTemplateMetaBoxSave'</span> );</code></pre><p>Add the end we hook into <code>save_post</code> with <code>add_action</code>, and run this\nfunction when the post is saved. This saves a field called\n<code>cpt_page_templates</code> in our database for this specific post. We can\naccess this field when the page is loaded.</p>\n<h3 id=\"retrieving-the-template-on-the-front-end\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#retrieving-the-template-on-the-front-end\">    <i class=\"fa fa-link\"></i>  </a>Retrieving the template on the front end</h3><p>This is the fun part. Now we have a shiny new meta box on our\nadmin post pages, and a field in the database for each post\ntelling us what template to show. So let&#39;s show it!</p>\n<p>Fortunately this part is also pretty straightforward, and only\nrequires a single function. Again I commented this inline since it\nflows pretty linearly. Let&#39;s take a look code:</p>\n<pre><code class=\"hljs lang-php\">  <span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">loadMyCptPostTemplate</span><span class=\"hljs-params\">()</span> </span>{\n      <span class=\"hljs-comment\">// get the queried object which contains the information we need to</span>\n      <span class=\"hljs-comment\">// access our post meta data</span>\n      <span class=\"hljs-variable\">$query_object</span> = get_queried_object();\n      <span class=\"hljs-variable\">$page_template</span> = get_post_meta( <span class=\"hljs-variable\">$query_object</span>-&gt;ID, <span class=\"hljs-string\">'cpt_page_template'</span>, <span class=\"hljs-keyword\">true</span> );\n\n      <span class=\"hljs-comment\">// the name of our custom post type for which we'll load a template</span>\n      <span class=\"hljs-variable\">$my_post_type</span> = <span class=\"hljs-string\">'my-cpt-name'</span>;\n\n      <span class=\"hljs-comment\">// create an array of default templates</span>\n      <span class=\"hljs-variable\">$default_templates</span>    = <span class=\"hljs-keyword\">array</span>();\n      <span class=\"hljs-variable\">$default_templates</span>[]  = <span class=\"hljs-string\">'single-{$query_object-&gt;post_type}-{$query_object-&gt;post_name}.php'</span>;\n      <span class=\"hljs-variable\">$default_templates</span>[]  = <span class=\"hljs-string\">'single-{$query_object-&gt;post_type}.php'</span>;\n      <span class=\"hljs-variable\">$default_templates</span>[]  = <span class=\"hljs-string\">'single.php'</span>;\n\n      <span class=\"hljs-comment\">// only apply our template to our CPT pages.</span>\n      <span class=\"hljs-keyword\">if</span> ( <span class=\"hljs-variable\">$query_object</span>-&gt;post_type == <span class=\"hljs-variable\">$my_post_type</span> ) {\n          <span class=\"hljs-comment\">// if the page_template isn't empty, set it as the default_template</span>\n          <span class=\"hljs-keyword\">if</span> ( !<span class=\"hljs-keyword\">empty</span>( <span class=\"hljs-variable\">$page_template</span> ) ) {\n              <span class=\"hljs-keyword\">echo</span> <span class=\"hljs-string\">'need to load '</span> . <span class=\"hljs-variable\">$page_template</span>;\n              <span class=\"hljs-variable\">$default_templates</span> = <span class=\"hljs-variable\">$page_template</span>;\n          }\n      }\n\n      <span class=\"hljs-comment\">// locate the template and return it</span>\n      <span class=\"hljs-variable\">$new_template</span> = locate_template( <span class=\"hljs-variable\">$default_templates</span>, <span class=\"hljs-keyword\">false</span> );\n      <span class=\"hljs-keyword\">return</span> <span class=\"hljs-variable\">$new_template</span>;\n  }\n  add_filter( <span class=\"hljs-string\">'single_template'</span>, <span class=\"hljs-string\">'loadMyCptPostTemplate'</span> );</code></pre><p>The <code>add_filter()</code> function at the end is important. It allows to hook\ninto the query and change the template to be displayed. In our case,\nwe intercept the query, run a function to see which template we had\nsaved, and load that instead. Also notice that we set a default\ntemplate. So if the post had no saved option, or something went wrong\nwhen trying to find it, it won&#39;t fail.</p>\n<h2 id=\"summary\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#summary\">    <i class=\"fa fa-link\"></i>  </a>Summary</h2><p>So that&#39;s about it. The new template should load with all of the\nregular post content in the body. The only problem I&#39;ve noticed is\nthat some themes won&#39;t show the page&#39;s content on more specialized\ntemplates (like a Contact Page template), but this is pretty much\nexpected and it has always worked for the more commen Full Width, Left\nSidebar, etc, templates. This code is a little out of context, but the\ngeneral idea is there and easy to adapt to any plugin.</p>\n<p>:: Cody Reichert</p>\n",
+		"content": "<h2 id=\"about-the-task\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#about-the-task\">    <i class=\"fa fa-link\"></i>  </a>About the Task</h2><p>I&#39;ve recently been working on a Wordpress plugin for a new service\nwe&#39;ll be releasing at Reichert Brothers in the next couple of\nmonths. Although I haven&#39;t ever done too much in Wordpress, it\nallows for some really cool things and lends itself well to rapid\ndevelopment. I ran into a couple of problems when developing out\nthe plugin that I think might be valuable enough to get documented\nand help anyone else out that may come across the same issues.</p>\n<h3 id=\"background\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#background\">    <i class=\"fa fa-link\"></i>  </a>Background</h3><p>For the sake of making this easier to understand, I&#39;ll give a\nlittle background on what I needed my plugin to accomplish. In a\nnutshell, I ventured to write a &#39;simple&#39; plugin that would\nretrieve JSON from an external API, format it, and display it on a\nCustom Post Type Page I created. I wanted to write as few of my\nown custom templates as possible and inherit the templates that\nthe active theme makes available. The following things needed to\nbe achieved:</p>\n<ul>\n<li><em>Create a Custom Post Type</em>: to display the data from an API on\n our custom pages. (not covered here)</li>\n<li><em>Add meta boxes</em>: to filter the requests to our third part API\n (not covered here)</li>\n<li><em>Allow the user to pick a template</em>: for their Custom Post Type\n Pages. These templates should not be hardcoded and should be\n the same templates that the active theme offers (full-width,\n left-sidebar, etc).</li>\n</ul>\n<p>We&#39;ll be covering the third bullet - allowing the admin to pick a\ndifferent template for each of our Custom Post Type pages.</p>\n<h3 id=\"the-problem\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#the-problem\">    <i class=\"fa fa-link\"></i>  </a>The Problem</h3><p>When creating a new custom post type, Wordpress does allow for authors\nto add the <code>page-attributes</code> capabilities to their posts. But they don&#39;t\ninclude the Template dropdown (see fig 1.1). As a matter of fact, they\nexplicity hardcode it to only be allowed on <code>page</code> post types. Well, I\nwanted my users to be able to pick a template offered by their active\ntheme on a page-by-page basis.</p>\n<div style=\"text-align:center\">\n<img src=\"./images/wp-page-attributes.png\" alt=\"*fig 1.1*\"/>\n</div>\n\n<p>The most common solution I found was to register a setting for the\nadmin where they could pick one template to take effect on all of\nthose custom post type pages. But let&#39;s say my custom post type is for\nrestaraunt menus. Well, now the restaraunt needs two pages: one for\ntheir lunch menu and one for the dinner menu. The lunch menu is much\nsmaller and thus doesn&#39;t need a &#39;full-width&#39; layout. But the dinner\nmenu is large and the admin doesn&#39;t want anything else on that\npage. Now do you see why we might need the ability to choose a\ntemplate on a page-by-page basis. At least this was my though process.</p>\n<h2 id=\"diving-in\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#diving-in\">    <i class=\"fa fa-link\"></i>  </a>Diving In</h2><p>Well in the end, I ended up figuring out what I think is a decent\nsolution. I don&#39;t think I &#39;invented&#39; this solution, because I bet\nthere a many other people out there doing the same thing, but let&#39;s\ntake a look.</p>\n<h3 id=\"tl;dr-solution\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#tl;dr-solution\">    <i class=\"fa fa-link\"></i>  </a>TL;DR Solution</h3><p>We&#39;ll leverage the use of Meta Boxes to provide our own dropdown\nmenu. Then we&#39;ll save that setting in our <code>post_meta</code>, retrieve that\nsetting when our CPT pages are loaded, and show the correct\ntemplate. Pretty simple!</p>\n<h3 id=\"registering-the-meta-box\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#registering-the-meta-box\">    <i class=\"fa fa-link\"></i>  </a>Registering the Meta Box</h3><p>First, we&#39;ll start off by creating our meta box for our Custom Post\nType. If you&#39;ve never used meta boxes before, I recommend taking a\nlook at the\n<a href=\"WP Codex\nFunction Reference for =add_meta_box=\">http://codex.wordpress.org/Function_Reference/add_meta_box</a>. It gives some great examples\nand provides plenty of info on how to set one up. Keep in mind all of\nthis is from a plugin. I won&#39;t go into setting all of that up in this\nblog, but that&#39;s where we&#39;ll be working from.</p>\n<p>Let&#39;s set up our meta box! I&#39;ll touch on the important methods and\nsettings, but I&#39;ll leave out explaining the irrelevant ones. Our code:</p>\n<pre><code class=\"hljs lang-php\">  <span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">cptTemplateMetaBox</span><span class=\"hljs-params\">()</span> </span>{\n    add_meta_box(\n      <span class=\"hljs-string\">'cpt-template-meta-box'</span>\n      , __( <span class=\"hljs-string\">'Page Template'</span>, <span class=\"hljs-string\">'my-cpt-textdomain'</span> )\n      , <span class=\"hljs-string\">'postTemplateMetaBoxMarkup'</span>\n      , <span class=\"hljs-string\">'my-cpt-name'</span>\n      , <span class=\"hljs-string\">'side'</span>\n      , <span class=\"hljs-string\">'core'</span>\n    );\n  }\n  add_action( <span class=\"hljs-string\">'add_meta_boxes'</span>, <span class=\"hljs-string\">'cptTemplateMetaBox'</span> );</code></pre><p>Ok so we&#39;ve successfully created our Meta Box (even if it&#39;s not doing\nanything yet.) Let&#39;s go through these the <code>add_meta_box</code> function and\nsee what we&#39;re setting up.</p>\n<ul>\n<li><em>cpt-template-meta-box</em>: is simply the html ID that wordpress will give our meta box when it&#39;s put on the page.</li>\n<li><em>__( &#39;Page Template, &#39;cpt-textdomain&#39; )</em>: is the title that wordpress will give our meta box when it&#39;s rendered.</li>\n<li><em>postTemplateMetaBoxMarkup</em>: is the name of the function we&#39;re\nabout to define that will render the markup to go inside of our\nmeta box.</li>\n<li><em>my-cpt-name</em>: is the name of our custom post type for which to load our meta box.</li>\n<li><em>side</em>: is where our meta box will go. On the side, since that&#39;s\nwhere the normal one would be.</li>\n<li><em>core</em>: This field is the &#39;priority&#39; of the meta box.</li>\n<li><em>add_action</em>: registers the meta box.</li>\n</ul>\n<h3 id=\"rendering-the-meta-box\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#rendering-the-meta-box\">    <i class=\"fa fa-link\"></i>  </a>Rendering the Meta Box</h3><p>Now that we have registered our Meta Box, it&#39;s time to give it\nsome markup. Basically, we&#39;ll just generate one simple dropdown\nbox that has a list of all the currently available\ntemplates. Since this part is a little more detailed than the\nprevious code snippet, I commented inline what everything is\ndoing. Here&#39;s the code:</p>\n<pre><code class=\"hljs lang-php\">  <span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">postTemplateMetaBoxMarkup</span><span class=\"hljs-params\">( <span class=\"hljs-variable\">$post</span> )</span> </span>{\n      <span class=\"hljs-comment\">// create a nonce for verification (not covered in this post)</span>\n      wp_nonce_field( basename(<span class=\"hljs-keyword\">__FILE__</span>), <span class=\"hljs-string\">'cpt_template_meta_nonce'</span> );\n\n      <span class=\"hljs-comment\">// we get the cpt_page_template meta field from the database when we load</span>\n      <span class=\"hljs-comment\">// the admin panel. We haven't saved on yet, but when we do it'll be here.</span>\n      <span class=\"hljs-variable\">$current_template</span> = get_post_meta( <span class=\"hljs-variable\">$post</span>-&gt;ID, <span class=\"hljs-string\">'cpt_page_template'</span>, <span class=\"hljs-keyword\">true</span>);\n      <span class=\"hljs-comment\">// the get_page_templates() function retrieves all of the currently enabled</span>\n      <span class=\"hljs-comment\">// templates.</span>\n      <span class=\"hljs-variable\">$template_options</span> = get_page_templates();\n\n      <span class=\"hljs-comment\">// start creating our markup</span>\n      <span class=\"hljs-comment\">// first we create a label, the 'for' attribute should match the 'name' of the &lt;input&gt; we</span>\n      <span class=\"hljs-comment\">// want to save.</span>\n      <span class=\"hljs-variable\">$box_label</span> = <span class=\"hljs-string\">'&lt;label for=\"cpt_page_template\"&gt;Page Template&lt;/label&gt;'</span>;\n      <span class=\"hljs-comment\">// &lt;select&gt; wrapper around our options. notice the 'name' == 'for' from above</span>\n      <span class=\"hljs-variable\">$box_select</span> = <span class=\"hljs-string\">'&lt;select name=\"cpt_page_template\"&gt;'</span>;\n\n      <span class=\"hljs-comment\">// we give a Default option which will default to whatever the theme's default</span>\n      <span class=\"hljs-comment\">// template is.</span>\n      <span class=\"hljs-variable\">$box_default_option</span> = <span class=\"hljs-string\">'&lt;option value=\"\"&gt;Default Template&lt;/option&gt;'</span>;\n      <span class=\"hljs-variable\">$box_options</span> = <span class=\"hljs-string\">''</span>;\n\n      <span class=\"hljs-comment\">// here's the meat. For EACH of the available templates, create an &lt;option&gt; for it,</span>\n      <span class=\"hljs-comment\">// and put it in our &lt;select&gt; box.</span>\n      <span class=\"hljs-keyword\">foreach</span> (  <span class=\"hljs-variable\">$template_options</span> <span class=\"hljs-keyword\">as</span> <span class=\"hljs-variable\">$name</span>=&gt;<span class=\"hljs-variable\">$file</span> ) {\n          <span class=\"hljs-keyword\">if</span> ( <span class=\"hljs-variable\">$current_template</span> == <span class=\"hljs-variable\">$file</span> ) {\n              <span class=\"hljs-variable\">$box_options</span> .= <span class=\"hljs-string\">'&lt;option value=\"'</span> . <span class=\"hljs-variable\">$file</span> . <span class=\"hljs-string\">'\" selected=\"selected\"&gt;'</span> . <span class=\"hljs-variable\">$name</span> . <span class=\"hljs-string\">'&lt;/option&gt;'</span>;\n          } <span class=\"hljs-keyword\">else</span> {\n              <span class=\"hljs-variable\">$box_options</span> .= <span class=\"hljs-string\">'&lt;option value=\"'</span> . <span class=\"hljs-variable\">$file</span> . <span class=\"hljs-string\">'\"&gt;'</span> . <span class=\"hljs-variable\">$name</span> . <span class=\"hljs-string\">'&lt;/option&gt;'</span>;\n          }\n      }\n\n      <span class=\"hljs-comment\">// echo our markup (you should return it, but we won't do that here).</span>\n      <span class=\"hljs-keyword\">echo</span> <span class=\"hljs-variable\">$box_label</span>;\n      <span class=\"hljs-keyword\">echo</span> <span class=\"hljs-variable\">$box_select</span>;\n      <span class=\"hljs-keyword\">echo</span> <span class=\"hljs-variable\">$box_default_option</span>;\n      <span class=\"hljs-keyword\">echo</span> <span class=\"hljs-variable\">$box_options</span>;\n      <span class=\"hljs-keyword\">echo</span> <span class=\"hljs-string\">'&lt;/select&gt;'</span>;\n  }</code></pre><p>Note, we don&#39;t have to register this function with any hooks or\nfilters because it&#39;s called directory from the =add_meta_box=\nfunction. Now we should have a fully rendered meta box on our Custom\nPost Type Pages. It&#39;s not saving any settings yet, but now we can\nstart persisting the selection. (See fig 1.2)</p>\n<div style=\"text-align:center\">\n<img src=\"./images/wp-page-template-meta-box.png\" alt=\"*fig 1.2*\"/>\n</div>\n\n\n<h3 id=\"persisting-the-meta-box-data\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#persisting-the-meta-box-data\">    <i class=\"fa fa-link\"></i>  </a>Persisting the Meta Box Data</h3><p>Wordpress makes saving the data from the Meta Box really\nsimple. In our case, it&#39;s going to see our select box and look for\nthe =selected= option. Since this isn&#39;t a meta box tutorial, I&#39;ll\nleave out the details of how the saving works. All we need to know\nis that the field saved, and what the name of the saved field\nis. Here&#39;s the code:</p>\n<pre><code class=\"hljs lang-php\">  <span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">postTemplateMetaBoxSave</span><span class=\"hljs-params\">( <span class=\"hljs-variable\">$post_id</span> )</span> </span>{\n      <span class=\"hljs-variable\">$current_nonce</span> = <span class=\"hljs-variable\">$_POST</span>[<span class=\"hljs-string\">'cpt_template_meta_nonce'</span>];\n      <span class=\"hljs-variable\">$is_autosaving</span> = wp_is_post_autosave( <span class=\"hljs-variable\">$post_id</span> );\n      <span class=\"hljs-variable\">$is_revision</span>   = wp_is_post_revision( <span class=\"hljs-variable\">$post_id</span> );\n      <span class=\"hljs-variable\">$valid_nonce</span>   = ( <span class=\"hljs-keyword\">isset</span>( <span class=\"hljs-variable\">$current_nonce</span> ) &amp;&amp; wp_verify_nonce( <span class=\"hljs-variable\">$current_nonce</span>, basename( <span class=\"hljs-keyword\">__FILE__</span> ) ) ) ? <span class=\"hljs-string\">'true'</span> : <span class=\"hljs-string\">'false'</span>;\n\n      <span class=\"hljs-comment\">// if the post is autosaving, a revision, or the nonce is not valid</span>\n      <span class=\"hljs-comment\">// do not save any changed settings.</span>\n      <span class=\"hljs-keyword\">if</span> ( <span class=\"hljs-variable\">$is_autosaving</span> || <span class=\"hljs-variable\">$is_revision</span> || !<span class=\"hljs-variable\">$valid_nonce</span> ) {\n          <span class=\"hljs-keyword\">return</span>;\n      }\n\n      <span class=\"hljs-comment\">// Find our 'cpt_page_template' field in the POST request, and save it</span>\n      <span class=\"hljs-comment\">// when the post is updated. Note that the POST field matches the</span>\n      <span class=\"hljs-comment\">// name of the select box in the markup.</span>\n      <span class=\"hljs-variable\">$cpt_page_template</span> = <span class=\"hljs-variable\">$_POST</span>[<span class=\"hljs-string\">'cpt_page_template'</span>];\n      update_post_meta( <span class=\"hljs-variable\">$post_id</span>, <span class=\"hljs-string\">'cpt_page_template'</span>, <span class=\"hljs-variable\">$cpt_page_template</span> );\n  }\n  add_action( <span class=\"hljs-string\">'save_post'</span>, <span class=\"hljs-string\">'postTemplateMetaBoxSave'</span> );</code></pre><p>Add the end we hook into <code>save_post</code> with <code>add_action</code>, and run this\nfunction when the post is saved. This saves a field called\n<code>cpt_page_templates</code> in our database for this specific post. We can\naccess this field when the page is loaded.</p>\n<h3 id=\"retrieving-the-template-on-the-front-end\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#retrieving-the-template-on-the-front-end\">    <i class=\"fa fa-link\"></i>  </a>Retrieving the template on the front end</h3><p>This is the fun part. Now we have a shiny new meta box on our\nadmin post pages, and a field in the database for each post\ntelling us what template to show. So let&#39;s show it!</p>\n<p>Fortunately this part is also pretty straightforward, and only\nrequires a single function. Again I commented this inline since it\nflows pretty linearly. Let&#39;s take a look code:</p>\n<pre><code class=\"hljs lang-php\">  <span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">loadMyCptPostTemplate</span><span class=\"hljs-params\">()</span> </span>{\n      <span class=\"hljs-comment\">// get the queried object which contains the information we need to</span>\n      <span class=\"hljs-comment\">// access our post meta data</span>\n      <span class=\"hljs-variable\">$query_object</span> = get_queried_object();\n      <span class=\"hljs-variable\">$page_template</span> = get_post_meta( <span class=\"hljs-variable\">$query_object</span>-&gt;ID, <span class=\"hljs-string\">'cpt_page_template'</span>, <span class=\"hljs-keyword\">true</span> );\n\n      <span class=\"hljs-comment\">// the name of our custom post type for which we'll load a template</span>\n      <span class=\"hljs-variable\">$my_post_type</span> = <span class=\"hljs-string\">'my-cpt-name'</span>;\n\n      <span class=\"hljs-comment\">// create an array of default templates</span>\n      <span class=\"hljs-variable\">$default_templates</span>    = <span class=\"hljs-keyword\">array</span>();\n      <span class=\"hljs-variable\">$default_templates</span>[]  = <span class=\"hljs-string\">'single-{$query_object-&gt;post_type}-{$query_object-&gt;post_name}.php'</span>;\n      <span class=\"hljs-variable\">$default_templates</span>[]  = <span class=\"hljs-string\">'single-{$query_object-&gt;post_type}.php'</span>;\n      <span class=\"hljs-variable\">$default_templates</span>[]  = <span class=\"hljs-string\">'single.php'</span>;\n\n      <span class=\"hljs-comment\">// only apply our template to our CPT pages.</span>\n      <span class=\"hljs-keyword\">if</span> ( <span class=\"hljs-variable\">$query_object</span>-&gt;post_type == <span class=\"hljs-variable\">$my_post_type</span> ) {\n          <span class=\"hljs-comment\">// if the page_template isn't empty, set it as the default_template</span>\n          <span class=\"hljs-keyword\">if</span> ( !<span class=\"hljs-keyword\">empty</span>( <span class=\"hljs-variable\">$page_template</span> ) ) {\n              <span class=\"hljs-keyword\">echo</span> <span class=\"hljs-string\">'need to load '</span> . <span class=\"hljs-variable\">$page_template</span>;\n              <span class=\"hljs-variable\">$default_templates</span> = <span class=\"hljs-variable\">$page_template</span>;\n          }\n      }\n\n      <span class=\"hljs-comment\">// locate the template and return it</span>\n      <span class=\"hljs-variable\">$new_template</span> = locate_template( <span class=\"hljs-variable\">$default_templates</span>, <span class=\"hljs-keyword\">false</span> );\n      <span class=\"hljs-keyword\">return</span> <span class=\"hljs-variable\">$new_template</span>;\n  }\n  add_filter( <span class=\"hljs-string\">'single_template'</span>, <span class=\"hljs-string\">'loadMyCptPostTemplate'</span> );</code></pre><p>The <code>add_filter()</code> function at the end is important. It allows to hook\ninto the query and change the template to be displayed. In our case,\nwe intercept the query, run a function to see which template we had\nsaved, and load that instead. Also notice that we set a default\ntemplate. So if the post had no saved option, or something went wrong\nwhen trying to find it, it won&#39;t fail.</p>\n<h2 id=\"summary\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#summary\">    <i class=\"fa fa-link\"></i>  </a>Summary</h2><p>So that&#39;s about it. The new template should load with all of the\nregular post content in the body. The only problem I&#39;ve noticed is\nthat some themes won&#39;t show the page&#39;s content on more specialized\ntemplates (like a Contact Page template), but this is pretty much\nexpected and it has always worked for the more commen Full Width, Left\nSidebar, etc, templates. This code is a little out of context, but the\ngeneral idea is there and easy to adapt to any plugin.</p>\n<p>:: Cody Reichert</p>\n",
 		"id": "wordpress-custom-post-type-template-options"
 	};
 
 /***/ },
-/* 251 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26753,11 +26826,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _blogs = __webpack_require__(241);
+	var _blogs = __webpack_require__(242);
 
 	var Blogs = _interopRequireWildcard(_blogs);
 
-	var _BlogPost = __webpack_require__(252);
+	var _BlogPost = __webpack_require__(255);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -26818,7 +26891,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = BlogPreview;
 
 /***/ },
-/* 252 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -26835,17 +26908,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _blogs = __webpack_require__(241);
+	var _blogs = __webpack_require__(242);
 
 	var Blogs = _interopRequireWildcard(_blogs);
 
-	var _Icon = __webpack_require__(253);
+	var _Icon = __webpack_require__(238);
 
 	var _Icon2 = _interopRequireDefault(_Icon);
 
-	var _utilities = __webpack_require__(254);
+	var _utilities = __webpack_require__(256);
 
-	var _reactDisqusThread = __webpack_require__(255);
+	var _reactDisqusThread = __webpack_require__(257);
 
 	var _reactDisqusThread2 = _interopRequireDefault(_reactDisqusThread);
 
@@ -26955,43 +27028,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 253 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	exports.default = Icon;
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-	function Icon(_ref) {
-	    var glyph = _ref.glyph;
-
-	    var rest = _objectWithoutProperties(_ref, ['glyph']);
-
-	    return _react2.default.createElement('i', _extends({ className: 'fa fa-' + glyph,
-	        style: { marginRight: 5 }
-	    }, rest));
-	}
-
-	Icon.propTypes = {
-	    glyph: _react.PropTypes.string.isRequired
-	};
-
-/***/ },
-/* 254 */
+/* 256 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -27010,15 +27047,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 255 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	module.exports = __webpack_require__(256);
+	module.exports = __webpack_require__(258);
 
 /***/ },
-/* 256 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27212,32 +27249,74 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ },
-/* 257 */
+/* 259 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 258 */,
-/* 259 */,
 /* 260 */,
-/* 261 */
+/* 261 */,
+/* 262 */,
+/* 263 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 262 */,
-/* 263 */,
 /* 264 */,
 /* 265 */,
 /* 266 */,
 /* 267 */,
 /* 268 */,
-/* 269 */
+/* 269 */,
+/* 270 */,
+/* 271 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 272 */,
+/* 273 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var map = {
+		"./chrome-canary-screenshot.png": 274,
+		"./wp-page-attributes.png": 275,
+		"./wp-page-template-meta-box.png": 276
+	};
+	function webpackContext(req) {
+		return __webpack_require__(webpackContextResolve(req));
+	};
+	function webpackContextResolve(req) {
+		return map[req] || (function() { throw new Error("Cannot find module '" + req + "'.") }());
+	};
+	webpackContext.keys = function webpackContextKeys() {
+		return Object.keys(map);
+	};
+	webpackContext.resolve = webpackContextResolve;
+	module.exports = webpackContext;
+	webpackContext.id = 273;
+
+
+/***/ },
+/* 274 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "/images/chrome-canary-screenshot.png";
+
+/***/ },
+/* 275 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "/images/wp-page-attributes.png";
+
+/***/ },
+/* 276 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "/images/wp-page-template-meta-box.png";
 
 /***/ }
 /******/ ])
