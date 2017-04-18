@@ -5,15 +5,16 @@ const fs = require('fs')
 const ejs = require('ejs')
 const template = ejs.compile(fs.readFileSync(`${__dirname}/template.ejs`, 'utf-8'))
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const blogPaths = fs.readdirSync('./posts')
-const blogNames = blogPaths.map(path => `posts/${path.replace('.md', '')}`)
 
-const paths = [
-    '/',
-    'about',
-    'posts',
-    ...blogNames,
-];
+
+const blogPaths = fs.readdirSync('./posts')
+const blogNames = blogPaths.map(path => {
+    if(path.includes('.md'))
+        return `posts/${path.replace('.md', '')}`
+}).filter(name => !!name)
+
+const paths = ['/', 'about', 'posts'].concat(blogNames);
+
 
 module.exports = {
     entry: {

@@ -11,14 +11,8 @@ const blogNames = blogPaths.map(path => {
         return `posts/${path.replace('.md', '')}`
 }).filter(name => !!name)
 
-console.log(blogNames);
 
-const paths = [
-    '/',
-    'about',
-    'posts',
-    ...blogNames,
-];
+const paths = ['/', 'about', 'posts'].concat(blogNames);
 
 module.exports = {
     entry: {
