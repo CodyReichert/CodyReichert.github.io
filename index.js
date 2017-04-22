@@ -26513,7 +26513,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            _react2.default.createElement('br', null),
 	                            _react2.default.createElement(
 	                                'a',
-	                                { href: 'https://reichertbrothers.com' },
+	                                { href: 'http://reichertbrothers.com' },
 	                                'Read more...'
 	                            )
 	                        ),
