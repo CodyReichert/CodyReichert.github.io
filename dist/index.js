@@ -78,15 +78,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _routes = __webpack_require__(234);
 
-	__webpack_require__(259);
+	__webpack_require__(260);
 
-	__webpack_require__(263);
+	__webpack_require__(264);
 
-	__webpack_require__(271);
+	__webpack_require__(272);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var imgContext = __webpack_require__(273);
+	var imgContext = __webpack_require__(274);
 	imgContext.keys().map(imgContext);
 
 	/*
@@ -26074,7 +26074,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Blogroll2 = _interopRequireDefault(_Blogroll);
 
-	var _BlogPost = __webpack_require__(255);
+	var _BlogPost = __webpack_require__(256);
 
 	var _BlogPost2 = _interopRequireDefault(_BlogPost);
 
@@ -26728,7 +26728,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _blogs = __webpack_require__(242);
 
-	var _BlogPreview = __webpack_require__(254);
+	var _BlogPreview = __webpack_require__(255);
 
 	var _BlogPreview2 = _interopRequireDefault(_BlogPreview);
 
@@ -26798,16 +26798,17 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ (function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./blogging-with-emacs-and-org-mode.md": 244,
-		"./cl-ses.md": 245,
-		"./device-screenshots-in-chrome-canary.md": 246,
-		"./january-2016-reading-list.md": 247,
-		"./javascript-boolean-anything.md": 248,
-		"./jsx-the-basics.md": 249,
-		"./managing-dotfiles-with-gnu-stow.md": 250,
-		"./pretty-print-json.md": 251,
-		"./webpack-entry-points.md": 252,
-		"./wordpress-custom-post-type-template-options.md": 253
+		"./automatic-link-checker-and-html-validation.md": 244,
+		"./blogging-with-emacs-and-org-mode.md": 245,
+		"./cl-ses.md": 246,
+		"./device-screenshots-in-chrome-canary.md": 247,
+		"./january-2016-reading-list.md": 248,
+		"./javascript-boolean-anything.md": 249,
+		"./jsx-the-basics.md": 250,
+		"./managing-dotfiles-with-gnu-stow.md": 251,
+		"./pretty-print-json.md": 252,
+		"./webpack-entry-points.md": 253,
+		"./wordpress-custom-post-type-template-options.md": 254
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -26828,6 +26829,22 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ (function(module, exports) {
 
 	module.exports = {
+		"path": "automatic-link-checker-and-html-validation.md",
+		"meta": {
+			"author": "Cody Reichert",
+			"category": "programming, tips",
+			"date": "2017-04-21T00:00:00.000Z",
+			"title": "Automatically check links on GitHub pages site"
+		},
+		"content": "<p>I&#39;m not good at checking my own code, and I&#39;ve accidentally pushed\nbroken links and bad HTML on numerous occasions. To solve this, I set\nup <a href=\"https://assertible.com\">Assertible</a> to automatically check the\nlinks and HTML on this blog every time I make a change.</p>\n<h2 id=\"link-check-and-html-validation\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#link-check-and-html-validation\">    <i class=\"oi oi-link-intact\"></i>  </a>Link check and HTML validation</h2><p>Assertible has test assertions\nfor\n<a href=\"https://assertible.com/docs/guide/assertions#assert-link-check\">checking links</a> and\n<a href=\"https://assertible.com/docs/guide/assertions#assert-html-validation\">HTML validation</a> on\na website. These assertions are perfect for this blog; it&#39;s a simple static site, heavy on content. I want to make sure that the links stay in tact and the markup is accessible.</p>\n<p>The Assertible link checker assertion also checks <code>&lt;img&gt;</code>, <code>&lt;script&gt;</code>,\n<code>&lt;link&gt;</code>, etc tags in addition to <code>&lt;a&gt;</code> tags - so I get the free\nbenefit of making sure all of the site&#39;s assets are available.</p>\n<h2 id=\"automating-and-monitoring-the-website\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#automating-and-monitoring-the-website\">    <i class=\"oi oi-link-intact\"></i>  </a>Automating and monitoring the website</h2><p>First, I set up\nan\n<a href=\"https://assertible.com/docs/guide/automation#schedules\">hourly test schedule</a> to\nrun the assertions and notify me if anything fails. Failure alerts are\nsent to a <a href=\"https://slack.com\">Slack</a> channel, and email.</p>\n<p>But when you think about, it makes sense to <strong>check links immediately\nafter every change to the site</strong>. Links may go bad over time, but by\nfar the most common occurrence is when I&#39;m pushing something\nnew. Assertible&#39;s\n<a href=\"https://assertible.com/docs/guide/automation#github-deployments\">GitHub Deployments integration</a> actually\nworks out of the box with GitHub pages, so all I had to do was install\nthe integration\nand\n<a href=\"https://assertible.com/docs/guide/web-services#environments\">create an environment</a> called\n<code>github-pages</code>.</p>\n<p>Now, every time I push to the <code>master</code> branch of this repository,\nGitHub deploys the site to GitHub Pages (automatically), sends a\ndeployment event to Assertible, and Assertible then runs these smoke\ntests on the website. In addition, the tests are run hourly, and every\nfailure will alert me over Slack or email. Cool, right?</p>\n<p>:: <a href=\"https://twitter.com/CodyReichert\">@CodyReichert</a></p>\n",
+		"id": "automatic-link-checker-and-html-validation"
+	};
+
+/***/ }),
+/* 245 */
+/***/ (function(module, exports) {
+
+	module.exports = {
 		"path": "blogging-with-emacs-and-org-mode.md",
 		"meta": {
 			"author": "Cody Reichert",
@@ -26840,7 +26857,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ }),
-/* 245 */
+/* 246 */
 /***/ (function(module, exports) {
 
 	module.exports = {
@@ -26856,7 +26873,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ }),
-/* 246 */
+/* 247 */
 /***/ (function(module, exports) {
 
 	module.exports = {
@@ -26872,7 +26889,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ }),
-/* 247 */
+/* 248 */
 /***/ (function(module, exports) {
 
 	module.exports = {
@@ -26888,7 +26905,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ }),
-/* 248 */
+/* 249 */
 /***/ (function(module, exports) {
 
 	module.exports = {
@@ -26904,7 +26921,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ }),
-/* 249 */
+/* 250 */
 /***/ (function(module, exports) {
 
 	module.exports = {
@@ -26920,7 +26937,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ }),
-/* 250 */
+/* 251 */
 /***/ (function(module, exports) {
 
 	module.exports = {
@@ -26936,7 +26953,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ }),
-/* 251 */
+/* 252 */
 /***/ (function(module, exports) {
 
 	module.exports = {
@@ -26952,7 +26969,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ }),
-/* 252 */
+/* 253 */
 /***/ (function(module, exports) {
 
 	module.exports = {
@@ -26968,7 +26985,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ }),
-/* 253 */
+/* 254 */
 /***/ (function(module, exports) {
 
 	module.exports = {
@@ -26984,7 +27001,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ }),
-/* 254 */
+/* 255 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27003,7 +27020,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var Blogs = _interopRequireWildcard(_blogs);
 
-	var _BlogPost = __webpack_require__(255);
+	var _BlogPost = __webpack_require__(256);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -27063,7 +27080,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = BlogPreview;
 
 /***/ }),
-/* 255 */
+/* 256 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27088,9 +27105,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Icon2 = _interopRequireDefault(_Icon);
 
-	var _utilities = __webpack_require__(256);
+	var _utilities = __webpack_require__(257);
 
-	var _reactDisqusThread = __webpack_require__(257);
+	var _reactDisqusThread = __webpack_require__(258);
 
 	var _reactDisqusThread2 = _interopRequireDefault(_reactDisqusThread);
 
@@ -27199,7 +27216,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 256 */
+/* 257 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -27218,15 +27235,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ }),
-/* 257 */
+/* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	module.exports = __webpack_require__(258);
+	module.exports = __webpack_require__(259);
 
 /***/ }),
-/* 258 */
+/* 259 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27417,42 +27434,42 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 
 /***/ }),
-/* 259 */
+/* 260 */
 /***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 260 */,
 /* 261 */,
 /* 262 */,
-/* 263 */
+/* 263 */,
+/* 264 */
 /***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 264 */,
 /* 265 */,
 /* 266 */,
 /* 267 */,
 /* 268 */,
 /* 269 */,
 /* 270 */,
-/* 271 */
+/* 271 */,
+/* 272 */
 /***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 272 */,
-/* 273 */
+/* 273 */,
+/* 274 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./chrome-canary-screenshot.png": 274,
-		"./wp-page-attributes.png": 275,
-		"./wp-page-template-meta-box.png": 276
+		"./chrome-canary-screenshot.png": 275,
+		"./wp-page-attributes.png": 276,
+		"./wp-page-template-meta-box.png": 277
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -27465,23 +27482,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 273;
+	webpackContext.id = 274;
 
-
-/***/ }),
-/* 274 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "/images/chrome-canary-screenshot.png";
 
 /***/ }),
 /* 275 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "/images/wp-page-attributes.png";
+	module.exports = __webpack_require__.p + "/images/chrome-canary-screenshot.png";
 
 /***/ }),
 /* 276 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "/images/wp-page-attributes.png";
+
+/***/ }),
+/* 277 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "/images/wp-page-template-meta-box.png";
