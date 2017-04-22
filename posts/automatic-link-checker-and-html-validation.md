@@ -22,7 +22,7 @@ The Assertible link checker assertion also checks `<img>`, `<script>`,
 `<link>`, etc tags in addition to `<a>` tags - so I get the free
 benefit of making sure all of the site's assets are available.
 
-## Automating and monitoring the website
+## Automated checks and monitoring
 
 First, I set up
 an
