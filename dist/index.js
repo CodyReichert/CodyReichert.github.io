@@ -26421,6 +26421,57 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        _react2.default.createElement(
 	                            'h5',
 	                            null,
+	                            'Assertible',
+	                            " ",
+	                            _react2.default.createElement(
+	                                'small',
+	                                { className: 'text-muted' },
+	                                'Automated QA testing for web services'
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'p',
+	                            null,
+	                            _react2.default.createElement(
+	                                'a',
+	                                { href: 'https://assertible.com' },
+	                                'Assertible'
+	                            ),
+	                            " ",
+	                            ' is a service for creating automated QA tests for APIs and websites. ',
+	                            _react2.default.createElement(CReichert, null),
+	                            ' and I started Assertible to have a ',
+	                            _react2.default.createElement(
+	                                'i',
+	                                null,
+	                                'reliable'
+	                            ),
+	                            ' way to test and monitor our APIs and it has become a key part of our testing workflow. Assertible focuses on',
+	                            " ",
+	                            _react2.default.createElement(
+	                                'a',
+	                                { href: 'https://assertible.com/docs/guide/deployments' },
+	                                'post deploy smoke tests'
+	                            ),
+	                            " ",
+	                            'and',
+	                            " ",
+	                            _react2.default.createElement(
+	                                'a',
+	                                { href: 'https://assertible.com/docs/guide/automation' },
+	                                'web service monitoring'
+	                            ),
+	                            '.',
+	                            _react2.default.createElement('br', null),
+	                            _react2.default.createElement(
+	                                'a',
+	                                { href: 'https://assertible.com' },
+	                                'Read more...'
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'h5',
+	                            null,
 	                            'SimplyRETS',
 	                            " ",
 	                            _react2.default.createElement(
