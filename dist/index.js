@@ -52,7 +52,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -117,18 +117,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }));
 	};
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	module.exports = __webpack_require__(2);
 
 
-/***/ },
+/***/ }),
 /* 2 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -219,13 +219,99 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = React;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 3 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	// shim for using process in browser
-
 	var process = module.exports = {};
+
+	// cached from whatever global is present so that test runners that stub it
+	// don't break things.  But we need to wrap it in a try catch in case it is
+	// wrapped in strict mode code which doesn't define any globals.  It's inside a
+	// function because try/catches deoptimize in certain engines.
+
+	var cachedSetTimeout;
+	var cachedClearTimeout;
+
+	function defaultSetTimout() {
+	    throw new Error('setTimeout has not been defined');
+	}
+	function defaultClearTimeout () {
+	    throw new Error('clearTimeout has not been defined');
+	}
+	(function () {
+	    try {
+	        if (typeof setTimeout === 'function') {
+	            cachedSetTimeout = setTimeout;
+	        } else {
+	            cachedSetTimeout = defaultSetTimout;
+	        }
+	    } catch (e) {
+	        cachedSetTimeout = defaultSetTimout;
+	    }
+	    try {
+	        if (typeof clearTimeout === 'function') {
+	            cachedClearTimeout = clearTimeout;
+	        } else {
+	            cachedClearTimeout = defaultClearTimeout;
+	        }
+	    } catch (e) {
+	        cachedClearTimeout = defaultClearTimeout;
+	    }
+	} ())
+	function runTimeout(fun) {
+	    if (cachedSetTimeout === setTimeout) {
+	        //normal enviroments in sane situations
+	        return setTimeout(fun, 0);
+	    }
+	    // if setTimeout wasn't available but was latter defined
+	    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+	        cachedSetTimeout = setTimeout;
+	        return setTimeout(fun, 0);
+	    }
+	    try {
+	        // when when somebody has screwed with setTimeout but no I.E. maddness
+	        return cachedSetTimeout(fun, 0);
+	    } catch(e){
+	        try {
+	            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+	            return cachedSetTimeout.call(null, fun, 0);
+	        } catch(e){
+	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+	            return cachedSetTimeout.call(this, fun, 0);
+	        }
+	    }
+
+
+	}
+	function runClearTimeout(marker) {
+	    if (cachedClearTimeout === clearTimeout) {
+	        //normal enviroments in sane situations
+	        return clearTimeout(marker);
+	    }
+	    // if clearTimeout wasn't available but was latter defined
+	    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+	        cachedClearTimeout = clearTimeout;
+	        return clearTimeout(marker);
+	    }
+	    try {
+	        // when when somebody has screwed with setTimeout but no I.E. maddness
+	        return cachedClearTimeout(marker);
+	    } catch (e){
+	        try {
+	            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+	            return cachedClearTimeout.call(null, marker);
+	        } catch (e){
+	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+	            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+	            return cachedClearTimeout.call(this, marker);
+	        }
+	    }
+
+
+
+	}
 	var queue = [];
 	var draining = false;
 	var currentQueue;
@@ -250,7 +336,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (draining) {
 	        return;
 	    }
-	    var timeout = setTimeout(cleanUpNextTick);
+	    var timeout = runTimeout(cleanUpNextTick);
 	    draining = true;
 
 	    var len = queue.length;
@@ -267,7 +353,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    currentQueue = null;
 	    draining = false;
-	    clearTimeout(timeout);
+	    runClearTimeout(timeout);
 	}
 
 	process.nextTick = function (fun) {
@@ -279,7 +365,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    queue.push(new Item(fun, args));
 	    if (queue.length === 1 && !draining) {
-	        setTimeout(drainQueue, 0);
+	        runTimeout(drainQueue);
 	    }
 	};
 
@@ -319,12 +405,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	process.umask = function() { return 0; };
 
 
-/***/ },
+/***/ }),
 /* 4 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
+
+	/*
+	object-assign
+	(c) Sindre Sorhus
+	@license MIT
+	*/
 
 	'use strict';
 	/* eslint-disable no-unused-vars */
+	var getOwnPropertySymbols = Object.getOwnPropertySymbols;
 	var hasOwnProperty = Object.prototype.hasOwnProperty;
 	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
 
@@ -345,7 +438,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			// Detect buggy property enumeration order in older V8 versions.
 
 			// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-			var test1 = new String('abc');  // eslint-disable-line
+			var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
 			test1[5] = 'de';
 			if (Object.getOwnPropertyNames(test1)[0] === '5') {
 				return false;
@@ -374,7 +467,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			}
 
 			return true;
-		} catch (e) {
+		} catch (err) {
 			// We don't expect any of the above to throw, but better to be safe.
 			return false;
 		}
@@ -394,8 +487,8 @@ return /******/ (function(modules) { // webpackBootstrap
 				}
 			}
 
-			if (Object.getOwnPropertySymbols) {
-				symbols = Object.getOwnPropertySymbols(from);
+			if (getOwnPropertySymbols) {
+				symbols = getOwnPropertySymbols(from);
 				for (var i = 0; i < symbols.length; i++) {
 					if (propIsEnumerable.call(from, symbols[i])) {
 						to[symbols[i]] = from[symbols[i]];
@@ -408,9 +501,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
+/***/ }),
 /* 5 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -596,9 +689,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactChildren;
 
-/***/ },
+/***/ }),
 /* 6 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -721,9 +814,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = PooledClass;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 7 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -748,12 +841,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * will remain to ensure logic does not differ in production.
 	 */
 
-	function invariant(condition, format, a, b, c, d, e, f) {
-	  if (process.env.NODE_ENV !== 'production') {
+	var validateFormat = function validateFormat(format) {};
+
+	if (process.env.NODE_ENV !== 'production') {
+	  validateFormat = function validateFormat(format) {
 	    if (format === undefined) {
 	      throw new Error('invariant requires an error message argument');
 	    }
-	  }
+	  };
+	}
+
+	function invariant(condition, format, a, b, c, d, e, f) {
+	  validateFormat(format);
 
 	  if (!condition) {
 	    var error;
@@ -776,9 +875,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = invariant;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 8 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -1069,9 +1168,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactElement;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 9 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -1105,9 +1204,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactCurrentOwner;
 
-/***/ },
+/***/ }),
 /* 10 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2014-2015, Facebook, Inc.
@@ -1133,20 +1232,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	var warning = emptyFunction;
 
 	if (process.env.NODE_ENV !== 'production') {
-	  warning = function (condition, format) {
-	    for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-	      args[_key - 2] = arguments[_key];
-	    }
+	  (function () {
+	    var printWarning = function printWarning(format) {
+	      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	        args[_key - 1] = arguments[_key];
+	      }
 
-	    if (format === undefined) {
-	      throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
-	    }
-
-	    if (format.indexOf('Failed Composite propType: ') === 0) {
-	      return; // Ignore CompositeComponent proptype check.
-	    }
-
-	    if (!condition) {
 	      var argIndex = 0;
 	      var message = 'Warning: ' + format.replace(/%s/g, function () {
 	        return args[argIndex++];
@@ -1160,16 +1251,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // to find the callsite that caused this warning to fire.
 	        throw new Error(message);
 	      } catch (x) {}
-	    }
-	  };
+	    };
+
+	    warning = function warning(condition, format) {
+	      if (format === undefined) {
+	        throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
+	      }
+
+	      if (format.indexOf('Failed Composite propType: ') === 0) {
+	        return; // Ignore CompositeComponent proptype check.
+	      }
+
+	      if (!condition) {
+	        for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+	          args[_key2 - 2] = arguments[_key2];
+	        }
+
+	        printWarning.apply(undefined, [format].concat(args));
+	      }
+	    };
+	  })();
 	}
 
 	module.exports = warning;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 11 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	"use strict";
 
@@ -1181,6 +1290,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * LICENSE file in the root directory of this source tree. An additional grant
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 *
+	 * 
 	 */
 
 	function makeEmptyFunction(arg) {
@@ -1194,7 +1304,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * primarily useful idiomatically for overridable function endpoints which
 	 * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
 	 */
-	function emptyFunction() {}
+	var emptyFunction = function emptyFunction() {};
 
 	emptyFunction.thatReturns = makeEmptyFunction;
 	emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
@@ -1209,9 +1319,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = emptyFunction;
 
-/***/ },
+/***/ }),
 /* 12 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -1239,9 +1349,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = canDefineProperty;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 13 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -1403,9 +1513,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = traverseAllChildren;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 14 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -1448,9 +1558,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = getIteratorFn;
 
-/***/ },
+/***/ }),
 /* 15 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -1511,9 +1621,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = KeyEscapeUtils;
 
-/***/ },
+/***/ }),
 /* 16 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -1638,9 +1748,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactComponent;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 17 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2015-present, Facebook, Inc.
@@ -1739,9 +1849,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactNoopUpdateQueue;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 18 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2016-present, Facebook, Inc.
@@ -1760,9 +1870,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = { debugTool: ReactDebugTool };
 
-/***/ },
+/***/ }),
 /* 19 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2016-present, Facebook, Inc.
@@ -1838,9 +1948,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactDebugTool;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 20 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2016-present, Facebook, Inc.
@@ -1880,9 +1990,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactInvalidSetStateWarningDevTool;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 21 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -1905,9 +2015,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = emptyObject;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 22 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -2634,9 +2744,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactClass;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 23 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -2661,9 +2771,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactPropTypeLocations;
 
-/***/ },
+/***/ }),
 /* 24 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -2698,7 +2808,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {object} obj
 	 * @return {object}
 	 */
-	var keyMirror = function (obj) {
+	var keyMirror = function keyMirror(obj) {
 	  var ret = {};
 	  var key;
 	  !(obj instanceof Object && !Array.isArray(obj)) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'keyMirror(...): Argument must be an object.') : invariant(false) : void 0;
@@ -2714,9 +2824,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = keyMirror;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 25 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -2744,9 +2854,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactPropTypeLocationNames;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 26 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	"use strict";
 
@@ -2770,7 +2880,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 'xa12' in that case. Resolve keys you want to use once at startup time, then
 	 * reuse those resolutions.
 	 */
-	var keyOf = function (oneKeyObj) {
+	var keyOf = function keyOf(oneKeyObj) {
 	  var key;
 	  for (key in oneKeyObj) {
 	    if (!oneKeyObj.hasOwnProperty(key)) {
@@ -2783,9 +2893,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = keyOf;
 
-/***/ },
+/***/ }),
 /* 27 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -2965,9 +3075,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactDOMFactories;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 28 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -3252,9 +3362,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactElementValidator;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 29 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -3307,9 +3417,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = mapObject;
 
-/***/ },
+/***/ }),
 /* 30 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -3692,9 +3802,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactPropTypes;
 
-/***/ },
+/***/ }),
 /* 31 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -3711,9 +3821,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = '15.0.2';
 
-/***/ },
+/***/ }),
 /* 32 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -3750,18 +3860,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = onlyChild;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 33 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	module.exports = __webpack_require__(34);
 
 
-/***/ },
+/***/ }),
 /* 34 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -3869,9 +3979,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = React;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 35 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -4061,9 +4171,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactDOMComponentTree;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 36 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -4280,9 +4390,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = DOMProperty;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 37 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2015-present, Facebook, Inc.
@@ -4303,9 +4413,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactDOMComponentFlags;
 
-/***/ },
+/***/ }),
 /* 38 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -4402,9 +4512,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 39 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present Facebook, Inc.
@@ -4795,9 +4905,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = BeforeInputEventPlugin;
 
-/***/ },
+/***/ }),
 /* 40 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -4897,9 +5007,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = EventConstants;
 
-/***/ },
+/***/ }),
 /* 41 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -5040,9 +5150,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = EventPropagators;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 42 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -5281,9 +5391,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = EventPluginHub;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 43 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -5528,9 +5638,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = EventPluginRegistry;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 44 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -5761,9 +5871,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = EventPluginUtils;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 45 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -5843,9 +5953,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactErrorUtils;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 46 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -5908,9 +6018,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = accumulateInto;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 47 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -5943,9 +6053,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = forEachAccumulated;
 
-/***/ },
+/***/ }),
 /* 48 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -5983,9 +6093,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ExecutionEnvironment;
 
-/***/ },
+/***/ }),
 /* 49 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -6083,9 +6193,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = FallbackCompositionState;
 
-/***/ },
+/***/ }),
 /* 50 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -6121,9 +6231,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = getTextContentAccessor;
 
-/***/ },
+/***/ }),
 /* 51 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -6162,9 +6272,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = SyntheticCompositionEvent;
 
-/***/ },
+/***/ }),
 /* 52 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -6429,9 +6539,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 53 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -6471,9 +6581,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = SyntheticInputEvent;
 
-/***/ },
+/***/ }),
 /* 54 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -6801,9 +6911,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ChangeEventPlugin;
 
-/***/ },
+/***/ }),
 /* 55 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7048,9 +7158,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactUpdates;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 56 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7159,9 +7269,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = CallbackQueue;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 57 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7185,9 +7295,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactFeatureFlags;
 
-/***/ },
+/***/ }),
 /* 58 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7287,9 +7397,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactPerf;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 59 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7423,9 +7533,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactReconciler;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 60 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7506,9 +7616,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactRef;
 
-/***/ },
+/***/ }),
 /* 61 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7604,9 +7714,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactOwner;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 62 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7841,9 +7951,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = Transaction;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 63 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7881,9 +7991,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = getEventTarget;
 
-/***/ },
+/***/ }),
 /* 64 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7946,9 +8056,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = isEventSupported;
 
-/***/ },
+/***/ }),
 /* 65 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -7992,9 +8102,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = isTextInputElement;
 
-/***/ },
+/***/ }),
 /* 66 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -8024,9 +8134,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = DefaultEventPluginOrder;
 
-/***/ },
+/***/ }),
 /* 67 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -8134,9 +8244,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = EnterLeaveEventPlugin;
 
-/***/ },
+/***/ }),
 /* 68 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -8211,9 +8321,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = SyntheticMouseEvent;
 
-/***/ },
+/***/ }),
 /* 69 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -8275,9 +8385,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = SyntheticUIEvent;
 
-/***/ },
+/***/ }),
 /* 70 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -8307,9 +8417,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ViewportMetrics;
 
-/***/ },
+/***/ }),
 /* 71 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -8355,9 +8465,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = getEventModifierState;
 
-/***/ },
+/***/ }),
 /* 72 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -8569,9 +8679,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = HTMLDOMPropertyConfig;
 
-/***/ },
+/***/ }),
 /* 73 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -8618,9 +8728,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactComponentBrowserEnvironment;
 
-/***/ },
+/***/ }),
 /* 74 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -8782,9 +8892,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = DOMChildrenOperations;
 
-/***/ },
+/***/ }),
 /* 75 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2015-present, Facebook, Inc.
@@ -8892,9 +9002,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = DOMLazyTree;
 
-/***/ },
+/***/ }),
 /* 76 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -8929,9 +9039,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = createMicrosoftUnsafeLocalFunction;
 
-/***/ },
+/***/ }),
 /* 77 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -8974,9 +9084,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = setTextContent;
 
-/***/ },
+/***/ }),
 /* 78 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -9017,9 +9127,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = escapeTextContentForBrowser;
 
-/***/ },
+/***/ }),
 /* 79 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -9104,9 +9214,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = setInnerHTML;
 
-/***/ },
+/***/ }),
 /* 80 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -9254,9 +9364,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = Danger;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 81 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -9343,9 +9453,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = createNodesFromMarkup;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 82 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -9420,7 +9530,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {boolean}
 	 */
 	function hasArrayNature(obj) {
-	  return(
+	  return (
 	    // not null/false
 	    !!obj && (
 	    // arrays are objects, NodeLists are functions in Safari
@@ -9475,9 +9585,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = createArrayFromMixed;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 83 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -9575,9 +9685,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = getMarkupWrap;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 84 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -9612,9 +9722,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactMultiChildUpdateTypes;
 
-/***/ },
+/***/ }),
 /* 85 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -9656,9 +9766,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactDOMIDOperations;
 
-/***/ },
+/***/ }),
 /* 86 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -10571,9 +10681,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactDOMComponent;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 87 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -10600,9 +10710,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = AutoFocusUtils;
 
-/***/ },
+/***/ }),
 /* 88 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -10631,9 +10741,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = focusNode;
 
-/***/ },
+/***/ }),
 /* 89 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -10842,9 +10952,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = CSSPropertyOperations;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 90 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -10995,9 +11105,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = CSSProperty;
 
-/***/ },
+/***/ }),
 /* 91 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -11039,9 +11149,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = camelizeStyleName;
 
-/***/ },
+/***/ }),
 /* 92 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	"use strict";
 
@@ -11075,9 +11185,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = camelize;
 
-/***/ },
+/***/ }),
 /* 93 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -11158,9 +11268,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = dangerousStyleValue;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 94 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -11201,9 +11311,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = hyphenateStyleName;
 
-/***/ },
+/***/ }),
 /* 95 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -11238,9 +11348,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = hyphenate;
 
-/***/ },
+/***/ }),
 /* 96 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -11250,6 +11360,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * LICENSE file in the root directory of this source tree. An additional grant
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 *
+	 * 
 	 * @typechecks static-only
 	 */
 
@@ -11257,9 +11368,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * Memoizes the return value of a function that accepts one string argument.
-	 *
-	 * @param {function} callback
-	 * @return {function}
 	 */
 
 	function memoizeStringOnly(callback) {
@@ -11274,9 +11382,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = memoizeStringOnly;
 
-/***/ },
+/***/ }),
 /* 97 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -11299,9 +11407,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = DOMNamespaces;
 
-/***/ },
+/***/ }),
 /* 98 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -11518,9 +11626,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = DOMPropertyOperations;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 99 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -11539,9 +11647,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = { debugTool: ReactDOMDebugTool };
 
-/***/ },
+/***/ }),
 /* 100 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -11606,9 +11714,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactDOMDebugTool;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 101 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -11676,9 +11784,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactDOMUnknownPropertyDevtool;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 102 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -11707,9 +11815,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = quoteAttributeValueForBrowser;
 
-/***/ },
+/***/ }),
 /* 103 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -12029,9 +12137,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactBrowserEventEmitter;
 
-/***/ },
+/***/ }),
 /* 104 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -12067,9 +12175,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactEventEmitterMixin;
 
-/***/ },
+/***/ }),
 /* 105 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -12173,9 +12281,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = getVendorPrefixedEventName;
 
-/***/ },
+/***/ }),
 /* 106 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -12202,9 +12310,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactDOMButton;
 
-/***/ },
+/***/ }),
 /* 107 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -12257,9 +12365,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = DisabledInputUtils;
 
-/***/ },
+/***/ }),
 /* 108 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -12467,9 +12575,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactDOMInput;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 109 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -12606,9 +12714,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = LinkedValueUtils;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 110 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -12721,9 +12829,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactDOMOption;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 111 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -12940,9 +13048,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactDOMSelect;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 112 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -13088,9 +13196,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactDOMTextarea;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 113 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -13496,9 +13604,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactMultiChild;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 114 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -13553,9 +13661,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactComponentEnvironment;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 115 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -13684,9 +13792,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactChildReconciler;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 116 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -13801,9 +13909,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = instantiateReactComponent;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 117 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -14601,9 +14709,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactCompositeComponent;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 118 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -14654,9 +14762,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactInstanceMap;
 
-/***/ },
+/***/ }),
 /* 119 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -14697,9 +14805,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactNodeTypes;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 120 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2015-present, Facebook, Inc.
@@ -14918,9 +15026,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactUpdateQueue;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 121 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -14965,9 +15073,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = shouldUpdateReactComponent;
 
-/***/ },
+/***/ }),
 /* 122 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -15000,9 +15108,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactEmptyComponent;
 
-/***/ },
+/***/ }),
 /* 123 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -15101,9 +15209,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactNativeComponent;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 124 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -15156,9 +15264,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = flattenChildren;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 125 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -15187,7 +15295,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (x === y) {
 	    // Steps 1-5, 7-10
 	    // Steps 6.b-6.e: +0 != -0
-	    return x !== 0 || 1 / x === 1 / y;
+	    // Added the nonzero y check to make Flow happy, but it is redundant
+	    return x !== 0 || y !== 0 || 1 / x === 1 / y;
 	  } else {
 	    // Step 6.a: NaN == NaN
 	    return x !== x && y !== y;
@@ -15227,9 +15336,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = shallowEqual;
 
-/***/ },
+/***/ }),
 /* 126 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2015-present, Facebook, Inc.
@@ -15602,9 +15711,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = validateDOMNesting;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 127 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -15667,9 +15776,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactDOMEmptyComponent;
 
-/***/ },
+/***/ }),
 /* 128 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2015-present, Facebook, Inc.
@@ -15807,9 +15916,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 129 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -15982,9 +16091,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactDOMTextComponent;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 130 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -16055,9 +16164,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactDefaultBatchingStrategy;
 
-/***/ },
+/***/ }),
 /* 131 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -16217,9 +16326,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactEventListener;
 
-/***/ },
+/***/ }),
 /* 132 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -16256,18 +16365,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * @param {function} callback Callback function.
 	   * @return {object} Object with a `remove` method.
 	   */
-	  listen: function (target, eventType, callback) {
+	  listen: function listen(target, eventType, callback) {
 	    if (target.addEventListener) {
 	      target.addEventListener(eventType, callback, false);
 	      return {
-	        remove: function () {
+	        remove: function remove() {
 	          target.removeEventListener(eventType, callback, false);
 	        }
 	      };
 	    } else if (target.attachEvent) {
 	      target.attachEvent('on' + eventType, callback);
 	      return {
-	        remove: function () {
+	        remove: function remove() {
 	          target.detachEvent('on' + eventType, callback);
 	        }
 	      };
@@ -16282,11 +16391,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * @param {function} callback Callback function.
 	   * @return {object} Object with a `remove` method.
 	   */
-	  capture: function (target, eventType, callback) {
+	  capture: function capture(target, eventType, callback) {
 	    if (target.addEventListener) {
 	      target.addEventListener(eventType, callback, true);
 	      return {
-	        remove: function () {
+	        remove: function remove() {
 	          target.removeEventListener(eventType, callback, true);
 	        }
 	      };
@@ -16300,15 +16409,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  },
 
-	  registerDefault: function () {}
+	  registerDefault: function registerDefault() {}
 	};
 
 	module.exports = EventListener;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 133 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -16335,10 +16444,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 
 	function getUnboundedScrollPosition(scrollable) {
-	  if (scrollable === window) {
+	  if (scrollable.Window && scrollable instanceof scrollable.Window) {
 	    return {
-	      x: window.pageXOffset || document.documentElement.scrollLeft,
-	      y: window.pageYOffset || document.documentElement.scrollTop
+	      x: scrollable.pageXOffset || scrollable.document.documentElement.scrollLeft,
+	      y: scrollable.pageYOffset || scrollable.document.documentElement.scrollTop
 	    };
 	  }
 	  return {
@@ -16349,9 +16458,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = getUnboundedScrollPosition;
 
-/***/ },
+/***/ }),
 /* 134 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -16392,9 +16501,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactInjection;
 
-/***/ },
+/***/ }),
 /* 135 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -16559,9 +16668,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactReconcileTransaction;
 
-/***/ },
+/***/ }),
 /* 136 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -16688,9 +16797,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactInputSelection;
 
-/***/ },
+/***/ }),
 /* 137 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -16905,9 +17014,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactDOMSelection;
 
-/***/ },
+/***/ }),
 /* 138 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -16984,9 +17093,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = getNodeForCharacterOffset;
 
-/***/ },
+/***/ }),
 /* 139 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -16998,7 +17107,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * LICENSE file in the root directory of this source tree. An additional grant
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 *
-	 * @typechecks
+	 * 
 	 */
 
 	var isTextNode = __webpack_require__(140);
@@ -17007,10 +17116,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/**
 	 * Checks if a given DOM node contains or is another DOM node.
-	 *
-	 * @param {?DOMNode} outerNode Outer DOM node.
-	 * @param {?DOMNode} innerNode Inner DOM node.
-	 * @return {boolean} True if `outerNode` contains or is `innerNode`.
 	 */
 	function containsNode(outerNode, innerNode) {
 	  if (!outerNode || !innerNode) {
@@ -17021,7 +17126,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return false;
 	  } else if (isTextNode(innerNode)) {
 	    return containsNode(outerNode, innerNode.parentNode);
-	  } else if (outerNode.contains) {
+	  } else if ('contains' in outerNode) {
 	    return outerNode.contains(innerNode);
 	  } else if (outerNode.compareDocumentPosition) {
 	    return !!(outerNode.compareDocumentPosition(innerNode) & 16);
@@ -17032,9 +17137,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = containsNode;
 
-/***/ },
+/***/ }),
 /* 140 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -17061,9 +17166,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = isTextNode;
 
-/***/ },
+/***/ }),
 /* 141 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -17083,14 +17188,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {boolean} Whether or not the object is a DOM node.
 	 */
 	function isNode(object) {
-	  return !!(object && (typeof Node === 'function' ? object instanceof Node : typeof object === 'object' && typeof object.nodeType === 'number' && typeof object.nodeName === 'string'));
+	  var doc = object ? object.ownerDocument || object : document;
+	  var defaultView = doc.defaultView || window;
+	  return !!(object && (typeof defaultView.Node === 'function' ? object instanceof defaultView.Node : typeof object === 'object' && typeof object.nodeType === 'number' && typeof object.nodeName === 'string'));
 	}
 
 	module.exports = isNode;
 
-/***/ },
+/***/ }),
 /* 142 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -17113,23 +17220,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * The activeElement will be null only if the document or document body is not
 	 * yet defined.
+	 *
+	 * @param {?DOMDocument} doc Defaults to current document.
+	 * @return {?DOMElement}
 	 */
-	function getActiveElement() /*?DOMElement*/{
-	  if (typeof document === 'undefined') {
+	function getActiveElement(doc) /*?DOMElement*/{
+	  doc = doc || (typeof document !== 'undefined' ? document : undefined);
+	  if (typeof doc === 'undefined') {
 	    return null;
 	  }
 	  try {
-	    return document.activeElement || document.body;
+	    return doc.activeElement || doc.body;
 	  } catch (e) {
-	    return document.body;
+	    return doc.body;
 	  }
 	}
 
 	module.exports = getActiveElement;
 
-/***/ },
+/***/ }),
 /* 143 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -17432,9 +17543,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = SVGDOMPropertyConfig;
 
-/***/ },
+/***/ }),
 /* 144 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -17633,9 +17744,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = SelectEventPlugin;
 
-/***/ },
+/***/ }),
 /* 145 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -18266,9 +18377,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = SimpleEventPlugin;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 146 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -18310,9 +18421,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = SyntheticAnimationEvent;
 
-/***/ },
+/***/ }),
 /* 147 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -18353,9 +18464,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = SyntheticClipboardEvent;
 
-/***/ },
+/***/ }),
 /* 148 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -18394,9 +18505,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = SyntheticFocusEvent;
 
-/***/ },
+/***/ }),
 /* 149 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -18483,9 +18594,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = SyntheticKeyboardEvent;
 
-/***/ },
+/***/ }),
 /* 150 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -18538,9 +18649,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = getEventCharCode;
 
-/***/ },
+/***/ }),
 /* 151 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -18645,9 +18756,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = getEventKey;
 
-/***/ },
+/***/ }),
 /* 152 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -18686,9 +18797,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = SyntheticDragEvent;
 
-/***/ },
+/***/ }),
 /* 153 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -18736,9 +18847,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = SyntheticTouchEvent;
 
-/***/ },
+/***/ }),
 /* 154 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -18780,9 +18891,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = SyntheticTransitionEvent;
 
-/***/ },
+/***/ }),
 /* 155 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -18839,9 +18950,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = SyntheticWheelEvent;
 
-/***/ },
+/***/ }),
 /* 156 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -19161,9 +19272,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactDefaultPerf;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 157 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -19376,9 +19487,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactDefaultPerfAnalysis;
 
-/***/ },
+/***/ }),
 /* 158 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -19860,9 +19971,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactMount;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 159 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -19899,9 +20010,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = ReactDOMContainerInfo;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 160 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -19922,9 +20033,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactDOMFeatureFlags;
 
-/***/ },
+/***/ }),
 /* 161 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -19977,9 +20088,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactMarkupChecksum;
 
-/***/ },
+/***/ }),
 /* 162 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -20025,9 +20136,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = adler32;
 
-/***/ },
+/***/ }),
 /* 163 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -20052,20 +20163,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * because of Facebook's testing infrastructure.
 	 */
 	if (performance.now) {
-	  performanceNow = function () {
+	  performanceNow = function performanceNow() {
 	    return performance.now();
 	  };
 	} else {
-	  performanceNow = function () {
+	  performanceNow = function performanceNow() {
 	    return Date.now();
 	  };
 	}
 
 	module.exports = performanceNow;
 
-/***/ },
+/***/ }),
 /* 164 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright (c) 2013-present, Facebook, Inc.
@@ -20090,9 +20201,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = performance || {};
 
-/***/ },
+/***/ }),
 /* 165 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -20152,9 +20263,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = findDOMNode;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 166 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -20187,9 +20298,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = getNativeComponentFromComposite;
 
-/***/ },
+/***/ }),
 /* 167 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -20208,18 +20319,18 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactMount.renderSubtreeIntoContainer;
 
-/***/ },
+/***/ }),
 /* 168 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	module.exports = __webpack_require__(169);
 
 
-/***/ },
+/***/ }),
 /* 169 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -20248,9 +20359,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactDOMServer;
 
-/***/ },
+/***/ }),
 /* 170 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-present, Facebook, Inc.
@@ -20319,9 +20430,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 171 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -20346,9 +20457,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactServerBatchingStrategy;
 
-/***/ },
+/***/ }),
 /* 172 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/**
 	 * Copyright 2014-present, Facebook, Inc.
@@ -20420,9 +20531,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = ReactServerRenderingTransaction;
 
-/***/ },
+/***/ }),
 /* 173 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -20581,9 +20692,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.hashHistory = _hashHistory3.default;
 	exports.createMemoryHistory = _createMemoryHistory3.default;
 
-/***/ },
+/***/ }),
 /* 174 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -20699,9 +20810,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 175 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -20740,9 +20851,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  warned = {};
 	}
 
-/***/ },
+/***/ }),
 /* 176 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2014-2015, Facebook, Inc.
@@ -20807,9 +20918,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 177 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -20914,9 +21025,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = defaultExport;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 178 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -20995,9 +21106,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = deprecateObjectProperties;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 179 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -21032,9 +21143,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	var route = exports.route = oneOfType([object, element]);
 	var routes = exports.routes = oneOfType([route, arrayOf(route)]);
 
-/***/ },
+/***/ }),
 /* 180 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -21249,9 +21360,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 181 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Copyright 2013-2015, Facebook, Inc.
@@ -21307,9 +21418,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 182 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -21521,9 +21632,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 183 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -21773,9 +21884,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 184 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Indicates that navigation was caused by a call to history.push.
@@ -21809,9 +21920,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  POP: POP
 	};
 
-/***/ },
+/***/ }),
 /* 185 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -21862,9 +21973,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 186 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -21872,9 +21983,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
 	exports.canUseDOM = canUseDOM;
 
-/***/ },
+/***/ }),
 /* 187 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -21952,9 +22063,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return ua.indexOf('Firefox') === -1;
 	}
 
-/***/ },
+/***/ }),
 /* 188 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/*eslint-disable no-empty */
 	'use strict';
@@ -22031,9 +22142,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 189 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -22077,9 +22188,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 190 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -22371,9 +22482,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 191 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	var pSlice = Array.prototype.slice;
 	var objectKeys = __webpack_require__(192);
@@ -22471,9 +22582,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 
-/***/ },
+/***/ }),
 /* 192 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	exports = module.exports = typeof Object.keys === 'function'
 	  ? Object.keys : shim;
@@ -22486,9 +22597,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 
-/***/ },
+/***/ }),
 /* 193 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	var supportsArgumentsClass = (function(){
 	  return Object.prototype.toString.call(arguments)
@@ -22512,9 +22623,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
+/***/ }),
 /* 194 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	"use strict";
 
@@ -22575,9 +22686,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  next();
 	}
 
-/***/ },
+/***/ }),
 /* 195 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -22632,9 +22743,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 196 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -22662,9 +22773,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 197 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -22687,9 +22798,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 198 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -22869,9 +22980,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 199 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	var strictUriEncode = __webpack_require__(200);
@@ -22941,9 +23052,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
+/***/ }),
 /* 200 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	'use strict';
 	module.exports = function (str) {
@@ -22953,9 +23064,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
+/***/ }),
 /* 201 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -23266,9 +23377,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 202 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -23348,9 +23459,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = computeChangedRoutes;
 	module.exports = exports['default'];
 
-/***/ },
+/***/ }),
 /* 203 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -23476,9 +23587,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 204 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	"use strict";
 
@@ -23569,9 +23680,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  });
 	}
 
-/***/ },
+/***/ }),
 /* 205 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -23726,9 +23837,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	module.exports = exports['default'];
 
-/***/ },
+/***/ }),
 /* 206 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -23811,9 +23922,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 207 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -24046,9 +24157,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 208 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -24208,9 +24319,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 209 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -24241,9 +24352,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = getRouteParams;
 	module.exports = exports['default'];
 
-/***/ },
+/***/ }),
 /* 210 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -24279,9 +24390,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 211 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -24458,9 +24569,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 212 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -24491,9 +24602,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = IndexLink;
 	module.exports = exports['default'];
 
-/***/ },
+/***/ }),
 /* 213 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -24536,9 +24647,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	module.exports = exports['default'];
 
-/***/ },
+/***/ }),
 /* 214 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/**
 	 * Copyright 2015, Yahoo! Inc.
@@ -24566,11 +24677,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    arity: true
 	};
 
-	module.exports = function hoistNonReactStatics(targetComponent, sourceComponent) {
+	var isGetOwnPropertySymbolsAvailable = typeof Object.getOwnPropertySymbols === 'function';
+
+	module.exports = function hoistNonReactStatics(targetComponent, sourceComponent, customStatics) {
 	    if (typeof sourceComponent !== 'string') { // don't hoist over string (html) components
 	        var keys = Object.getOwnPropertyNames(sourceComponent);
-	        for (var i=0; i<keys.length; ++i) {
-	            if (!REACT_STATICS[keys[i]] && !KNOWN_STATICS[keys[i]]) {
+
+	        /* istanbul ignore else */
+	        if (isGetOwnPropertySymbolsAvailable) {
+	            keys = keys.concat(Object.getOwnPropertySymbols(sourceComponent));
+	        }
+
+	        for (var i = 0; i < keys.length; ++i) {
+	            if (!REACT_STATICS[keys[i]] && !KNOWN_STATICS[keys[i]] && (!customStatics || !customStatics[keys[i]])) {
 	                try {
 	                    targetComponent[keys[i]] = sourceComponent[keys[i]];
 	                } catch (error) {
@@ -24584,9 +24703,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 
-/***/ },
+/***/ }),
 /* 215 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -24653,9 +24772,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 216 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -24761,9 +24880,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 217 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -24827,9 +24946,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 218 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -24890,9 +25009,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 219 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -24925,9 +25044,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 220 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -24999,9 +25118,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 221 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -25050,9 +25169,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 222 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -25107,9 +25226,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 223 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -25143,9 +25262,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 224 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -25230,9 +25349,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 225 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -25267,9 +25386,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	module.exports = exports['default'];
 
-/***/ },
+/***/ }),
 /* 226 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -25431,9 +25550,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 227 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -25591,9 +25710,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 228 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -25619,9 +25738,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	module.exports = exports['default'];
 
-/***/ },
+/***/ }),
 /* 229 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -25674,9 +25793,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = exports['default'];
 
-/***/ },
+/***/ }),
 /* 230 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -25695,9 +25814,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = (0, _createRouterHistory2.default)(_createBrowserHistory2.default);
 	module.exports = exports['default'];
 
-/***/ },
+/***/ }),
 /* 231 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
@@ -25745,7 +25864,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var useRefresh = !isSupported || forceRefresh;
 
 	  function getCurrentLocation(historyState) {
-	    historyState = historyState || window.history.state || {};
+	    try {
+	      historyState = historyState || window.history.state || {};
+	    } catch (e) {
+	      historyState = {};
+	    }
 
 	    var path = _DOMUtils.getWindowPath();
 	    var _historyState = historyState;
@@ -25877,9 +26000,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports['default'];
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
-/***/ },
+/***/ }),
 /* 232 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -25901,9 +26024,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = exports['default'];
 
-/***/ },
+/***/ }),
 /* 233 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -25922,9 +26045,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = (0, _createRouterHistory2.default)(_createHashHistory2.default);
 	module.exports = exports['default'];
 
-/***/ },
+/***/ }),
 /* 234 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -25969,9 +26092,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _react2.default.createElement(_reactRouter.Route, { path: 'posts/:id', component: _BlogPost2.default })
 	);
 
-/***/ },
+/***/ }),
 /* 235 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -26007,7 +26130,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function Root() {
 	        _classCallCheck(this, Root);
 
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Root).apply(this, arguments));
+	        return _possibleConstructorReturn(this, (Root.__proto__ || Object.getPrototypeOf(Root)).apply(this, arguments));
 	    }
 
 	    _createClass(Root, [{
@@ -26037,9 +26160,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	exports.default = Root;
 
-/***/ },
+/***/ }),
 /* 236 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 
@@ -26102,9 +26225,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    );
 	}
 
-/***/ },
+/***/ }),
 /* 237 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -26142,7 +26265,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        _react2.default.createElement(
 	                            'span',
 	                            { className: 'nav-link' },
-	                            'Cody Reichert - Copyright © 2016'
+	                            'Cody Reichert - Copyright \xA9 2016'
 	                        )
 	                    )
 	                ),
@@ -26177,9 +26300,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    );
 	}
 
-/***/ },
+/***/ }),
 /* 238 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -26200,9 +26323,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
 	function Icon(_ref) {
-	    var glyph = _ref.glyph;
-
-	    var rest = _objectWithoutProperties(_ref, ['glyph']);
+	    var glyph = _ref.glyph,
+	        rest = _objectWithoutProperties(_ref, ['glyph']);
 
 	    return _react2.default.createElement('i', _extends({ className: 'fa fa-' + glyph,
 	        style: { marginRight: 5 }
@@ -26213,9 +26335,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    glyph: _react.PropTypes.string.isRequired
 	};
 
-/***/ },
+/***/ }),
 /* 239 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -26247,7 +26369,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function About() {
 	        _classCallCheck(this, About);
 
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(About).apply(this, arguments));
+	        return _possibleConstructorReturn(this, (About.__proto__ || Object.getPrototypeOf(About)).apply(this, arguments));
 	    }
 
 	    _createClass(About, [{
@@ -26503,8 +26625,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	function GhProjectLink(_ref) {
-	    var name = _ref.name;
-	    var children = _ref.children;
+	    var name = _ref.name,
+	        children = _ref.children;
 
 
 	    var href = name.includes("/") ? name : 'CodyReichert/' + name;
@@ -26531,15 +26653,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    );
 	}
 
-/***/ },
+/***/ }),
 /* 240 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "/images/avatar.jpg";
 
-/***/ },
+/***/ }),
 /* 241 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -26573,7 +26695,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function Blogroll() {
 	        _classCallCheck(this, Blogroll);
 
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Blogroll).apply(this, arguments));
+	        return _possibleConstructorReturn(this, (Blogroll.__proto__ || Object.getPrototypeOf(Blogroll)).apply(this, arguments));
 	    }
 
 	    _createClass(Blogroll, [{
@@ -26594,9 +26716,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	exports.default = Blogroll;
 
-/***/ },
+/***/ }),
 /* 242 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -26608,7 +26730,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var blogContext = __webpack_require__(243);
 
 	var blogs = exports.blogs = blogContext.keys().map(blogContext).sort(function (a, b) {
-	    return(
+	    return (
 	        // Import blogs and sort them by date (reverse)
 	        new Date(b.meta.date) - new Date(a.meta.date)
 	    );
@@ -26620,9 +26742,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 	}
 
-/***/ },
+/***/ }),
 /* 243 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	var map = {
 		"./blogging-with-emacs-and-org-mode.md": 244,
@@ -26650,9 +26772,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	webpackContext.id = 243;
 
 
-/***/ },
+/***/ }),
 /* 244 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = {
 		"path": "blogging-with-emacs-and-org-mode.md",
@@ -26662,13 +26784,13 @@ return /******/ (function(modules) { // webpackBootstrap
 			"date": "2015-07-05T00:00:00.000Z",
 			"title": "Blogging with Emacs and Org Mode"
 		},
-		"content": "<p>I&#39;ve finally got my new blog up! I&#39;ve been wanting to migrate from\nMiddleman, a static-site generator written in Ruby. The problem was\nthat it was too many steps to post a new article - so I just never\ndid.</p>\n<p>I&#39;ve been eyeing\n<a href=\"http://orgmode.org/worg/org-blog-wiki.html\">a few solutions for blogging completely from within Emacs</a>. There&#39;s\nsome good (and some outdated) software on the wiki to accomplish that.</p>\n<p>I finally came across <a href=\"https://github.com/kelvinh/org-page\">org-page</a>,\nwhich seemed to be exactly what I wanted. The documentation was a\nlittle terse, but it&#39;s a simple setup so I decided to give it a shot.</p>\n<p>Here&#39;s what I was able to get set up, with a few snippets to accompany\nthe\n<a href=\"https://github.com/kelvinh/org-page/wiki/Quick-Guide-to-Org-page\">official documentation</a>.</p>\n<ul>\n<li>Write blogs completely in <code>org-mode</code> (obviously)</li>\n<li>Publish to GitHub pages (or anywhere you can push static files).</li>\n<li>One command publish</li>\n<li>Ability to customize a theme, or write my own</li>\n<li>Tags, RSS Feed, and all the other blog goodies.</li>\n<li>Never have to leave Emacs</li>\n</ul>\n<h1 id=\"installation\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#installation\">    <i class=\"fa fa-link\"></i>  </a>Installation</h1><p>Org-page is <a href=\"http://melpa.org/#/org-page\">available on MELPA</a>, so the\ninstall is simple:</p>\n<pre><code class=\"hljs lang-sh\">  M-x package-install RET org-page RET</code></pre><p>That will give you org-page and a few commands (which is all you need)\nto create a repo, add a new post, and publish.</p>\n<p><em>For manual installation, see the\n<a href=\"https://github.com/kelvinh/org-page/wiki/Quick-Guide-to-Org-page\">documentation</a></em></p>\n<h1 id=\"set-up-a-repo\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#set-up-a-repo\">    <i class=\"fa fa-link\"></i>  </a>Set up a repo</h1><p>Org-page also handles this for you, with the available command\n<code>op/new-repository</code>. So find a place on your system you want</p>\n<pre><code class=\"hljs lang-emacs-lisp\">M-x op/new-repository RET /path/to/new/blog RET</code></pre><p>This sets up a new git repository, with a few pages already laid\nout for you (index.org, about.org, readme, etc).</p>\n<h1 id=\"org-page-in-your-init.el\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#org-page-in-your-init.el\">    <i class=\"fa fa-link\"></i>  </a>Org-page in your init.el</h1><p>There are few things you&#39;ll need to set up in your Emacs config\nfile to get things working correctly. Here&#39;s an annotated example:</p>\n<pre><code class=\"hljs lang-lisp\">  <span class=\"hljs-list\">(<span class=\"hljs-keyword\">require</span> <span class=\"hljs-quoted\">'org-page</span>)</span>\n  <span class=\"hljs-list\">(<span class=\"hljs-keyword\">setq</span> op/repository-directory <span class=\"hljs-string\">\"~/workspace/play/newblog\"</span>)</span>\n  <span class=\"hljs-list\">(<span class=\"hljs-keyword\">setq</span> op/site-domain <span class=\"hljs-string\">\"http://codyreichert.github.io\"</span>)</span>\n  <span class=\"hljs-list\">(<span class=\"hljs-keyword\">setq</span> op/personal-github-link <span class=\"hljs-string\">\"https://github.com/CodyReichert\"</span>)</span>\n  <span class=\"hljs-list\">(<span class=\"hljs-keyword\">setq</span> op/site-main-title <span class=\"hljs-string\">\"The One True Blog\"</span>)</span>\n  <span class=\"hljs-list\">(<span class=\"hljs-keyword\">setq</span> op/site-sub-title <span class=\"hljs-string\">\"Emacs, Programming, and Arch Linux\"</span>)</span>\n  <span class=\"hljs-list\">(<span class=\"hljs-keyword\">setq</span> op/personal-disqus-shortname <span class=\"hljs-string\">\"theonetrueblog\"</span>)</span></code></pre><p>   Kelvin used very sane variable names, so most of that should be\n   self-explanatory.  Not all of those are required, but if you leave\n   out things like the GitHub Link, it just won&#39;t show at all -\n   perfect.</p>\n<p>   <em>Reload your Emacs config and let&#39;s move on</em></p>\n<h1 id=\"creating-a-new-post\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#creating-a-new-post\">    <i class=\"fa fa-link\"></i>  </a>Creating a new post</h1><p>You&#39;ll probably first want to fill out some of the generated\npages, like <code>about.org</code> and <code>index.org</code>.</p>\n<blockquote class=\"blockquote\"><p>Pro-tip: If you remove the =index.org= it will default to a list of\nposts, like mine. It&#39;s preferable since there is already an about page.</p>\n</blockquote><p>Once again, org-page has another built in command to get a new post\nstarted. The best thing about it is that is handles the description,\nfile name, post uri, tags, and more. Meaning you can get to just\nwriting articles, not boilerplate.</p>\n<pre><code class=\"hljs lang-sh\">M-x op/new-post RET</code></pre><p>It will run you through a few steps to generate all of those fields\nfor you post, and put your cursor where you can start writing.\n<a href=\"../img/op-new-post.gif\">op/new-post gif example</a></p>\n<h1 id=\"publishing-your-new-blog\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#publishing-your-new-blog\">    <i class=\"fa fa-link\"></i>  </a>Publishing your new blog</h1><p>Yet again...built in to org-page. And since we&#39;re in Emacs, we can\nmake it do whatever we want. First, make sure you set the remote in\nyour blogs git repo:</p>\n<pre><code class=\"hljs lang-sh\">    git remote add origin git@github.com:CodyReichert/CodyReichert.github.io\n    git remote -v</code></pre><p>Org-page has a command <code>op/do-publication</code>. It asks a couple of\nquestions, and compiles the org mode pages for you. When you set up\nyour repository, org-page created two branches: source and\nmaster. This is a good setup for GitHub-pages and probably most\nother hosts. All of your org files live on the source branch, and\norg-page will add and commit the compiled files to the mater branch.</p>\n<p><em>The questions:</em></p>\n<p>1) Publish all org-files (y or n)\n2) Publish to directory? (original repo if not) (y or n)\n   This on is particularly useful for sending the compiled files to\n   another directory, which you can watch with a simple HTTP server\n   and quickly view changes when your writing.\n3) Auto-commit to repo? (y or n)\n4) Auto-push to repo? (y or n)</p>\n<p>The last two are great, because all I need to do run\n<code>op/do-publication</code> and the new post is live within a few\nseconds. <em>That&#39;s</em> the Emacs way.</p>\n<p><a href=\"../img/op-do-publication.gif\">Here&#39;s a GIF</a> of how I published this\nblog, right after I wrote this part.</p>\n<h1 id=\"other-setup\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#other-setup\">    <i class=\"fa fa-link\"></i>  </a>Other setup</h1><p>I have a few other snippets for using a custom theme with org-page,\nand a couple other nice settings I&#39;ll share eventually.</p>\n<p>My recommendation is to <code>C-h f RET ___ RET</code> on some of the org-page\nfunctions, they&#39;re documented well.</p>\n<p>You can also view my org-page setup\n<a href=\"https://github.com/CodyReichert/dotfiles\">on Github</a>.</p>\n<p>:: Cody Reichert</p>\n",
+		"content": "<p>I&#39;ve finally got my new blog up! I&#39;ve been wanting to migrate from\nMiddleman, a static-site generator written in Ruby. The problem was\nthat it was too many steps to post a new article - so I just never\ndid.</p>\n<p>I&#39;ve been eyeing\n<a href=\"http://orgmode.org/worg/org-blog-wiki.html\">a few solutions for blogging completely from within Emacs</a>. There&#39;s\nsome good (and some outdated) software on the wiki to accomplish that.</p>\n<p>I finally came across <a href=\"https://github.com/kelvinh/org-page\">org-page</a>,\nwhich seemed to be exactly what I wanted. The documentation was a\nlittle terse, but it&#39;s a simple setup so I decided to give it a shot.</p>\n<p>Here&#39;s what I was able to get set up, with a few snippets to accompany\nthe\n<a href=\"https://github.com/kelvinh/org-page/wiki/Quick-Guide-to-Org-page\">official documentation</a>.</p>\n<ul>\n<li>Write blogs completely in <code>org-mode</code> (obviously)</li>\n<li>Publish to GitHub pages (or anywhere you can push static files).</li>\n<li>One command publish</li>\n<li>Ability to customize a theme, or write my own</li>\n<li>Tags, RSS Feed, and all the other blog goodies.</li>\n<li>Never have to leave Emacs</li>\n</ul>\n<h1 id=\"installation\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#installation\">    <i class=\"oi oi-link-intact\"></i>  </a>Installation</h1><p>Org-page is <a href=\"http://melpa.org/#/org-page\">available on MELPA</a>, so the\ninstall is simple:</p>\n<pre><code class=\"hljs lang-sh\">  M-x package-install RET org-page RET</code></pre><p>That will give you org-page and a few commands (which is all you need)\nto create a repo, add a new post, and publish.</p>\n<p><em>For manual installation, see the\n<a href=\"https://github.com/kelvinh/org-page/wiki/Quick-Guide-to-Org-page\">documentation</a></em></p>\n<h1 id=\"set-up-a-repo\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#set-up-a-repo\">    <i class=\"oi oi-link-intact\"></i>  </a>Set up a repo</h1><p>Org-page also handles this for you, with the available command\n<code>op/new-repository</code>. So find a place on your system you want</p>\n<pre><code class=\"hljs lang-emacs-lisp\">M-x op/new-repository RET /path/to/new/blog RET</code></pre><p>This sets up a new git repository, with a few pages already laid\nout for you (index.org, about.org, readme, etc).</p>\n<h1 id=\"org-page-in-your-init.el\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#org-page-in-your-init.el\">    <i class=\"oi oi-link-intact\"></i>  </a>Org-page in your init.el</h1><p>There are few things you&#39;ll need to set up in your Emacs config\nfile to get things working correctly. Here&#39;s an annotated example:</p>\n<pre><code class=\"hljs lang-lisp\">  <span class=\"hljs-list\">(<span class=\"hljs-keyword\">require</span> <span class=\"hljs-quoted\">'org-page</span>)</span>\n  <span class=\"hljs-list\">(<span class=\"hljs-keyword\">setq</span> op/repository-directory <span class=\"hljs-string\">\"~/workspace/play/newblog\"</span>)</span>\n  <span class=\"hljs-list\">(<span class=\"hljs-keyword\">setq</span> op/site-domain <span class=\"hljs-string\">\"http://codyreichert.github.io\"</span>)</span>\n  <span class=\"hljs-list\">(<span class=\"hljs-keyword\">setq</span> op/personal-github-link <span class=\"hljs-string\">\"https://github.com/CodyReichert\"</span>)</span>\n  <span class=\"hljs-list\">(<span class=\"hljs-keyword\">setq</span> op/site-main-title <span class=\"hljs-string\">\"The One True Blog\"</span>)</span>\n  <span class=\"hljs-list\">(<span class=\"hljs-keyword\">setq</span> op/site-sub-title <span class=\"hljs-string\">\"Emacs, Programming, and Arch Linux\"</span>)</span>\n  <span class=\"hljs-list\">(<span class=\"hljs-keyword\">setq</span> op/personal-disqus-shortname <span class=\"hljs-string\">\"theonetrueblog\"</span>)</span></code></pre><p>   Kelvin used very sane variable names, so most of that should be\n   self-explanatory.  Not all of those are required, but if you leave\n   out things like the GitHub Link, it just won&#39;t show at all -\n   perfect.</p>\n<p>   <em>Reload your Emacs config and let&#39;s move on</em></p>\n<h1 id=\"creating-a-new-post\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#creating-a-new-post\">    <i class=\"oi oi-link-intact\"></i>  </a>Creating a new post</h1><p>You&#39;ll probably first want to fill out some of the generated\npages, like <code>about.org</code> and <code>index.org</code>.</p>\n<blockquote class=\"blockquote\"><p>Pro-tip: If you remove the =index.org= it will default to a list of\nposts, like mine. It&#39;s preferable since there is already an about page.</p>\n</blockquote><p>Once again, org-page has another built in command to get a new post\nstarted. The best thing about it is that is handles the description,\nfile name, post uri, tags, and more. Meaning you can get to just\nwriting articles, not boilerplate.</p>\n<pre><code class=\"hljs lang-sh\">M-x op/new-post RET</code></pre><p>It will run you through a few steps to generate all of those fields\nfor you post, and put your cursor where you can start writing.\n<a href=\"../img/op-new-post.gif\">op/new-post gif example</a></p>\n<h1 id=\"publishing-your-new-blog\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#publishing-your-new-blog\">    <i class=\"oi oi-link-intact\"></i>  </a>Publishing your new blog</h1><p>Yet again...built in to org-page. And since we&#39;re in Emacs, we can\nmake it do whatever we want. First, make sure you set the remote in\nyour blogs git repo:</p>\n<pre><code class=\"hljs lang-sh\">    git remote add origin git@github.com:CodyReichert/CodyReichert.github.io\n    git remote -v</code></pre><p>Org-page has a command <code>op/do-publication</code>. It asks a couple of\nquestions, and compiles the org mode pages for you. When you set up\nyour repository, org-page created two branches: source and\nmaster. This is a good setup for GitHub-pages and probably most\nother hosts. All of your org files live on the source branch, and\norg-page will add and commit the compiled files to the mater branch.</p>\n<p><em>The questions:</em></p>\n<p>1) Publish all org-files (y or n)\n2) Publish to directory? (original repo if not) (y or n)\n   This on is particularly useful for sending the compiled files to\n   another directory, which you can watch with a simple HTTP server\n   and quickly view changes when your writing.\n3) Auto-commit to repo? (y or n)\n4) Auto-push to repo? (y or n)</p>\n<p>The last two are great, because all I need to do run\n<code>op/do-publication</code> and the new post is live within a few\nseconds. <em>That&#39;s</em> the Emacs way.</p>\n<p><a href=\"../img/op-do-publication.gif\">Here&#39;s a GIF</a> of how I published this\nblog, right after I wrote this part.</p>\n<h1 id=\"other-setup\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#other-setup\">    <i class=\"oi oi-link-intact\"></i>  </a>Other setup</h1><p>I have a few other snippets for using a custom theme with org-page,\nand a couple other nice settings I&#39;ll share eventually.</p>\n<p>My recommendation is to <code>C-h f RET ___ RET</code> on some of the org-page\nfunctions, they&#39;re documented well.</p>\n<p>You can also view my org-page setup\n<a href=\"https://github.com/CodyReichert/dotfiles\">on Github</a>.</p>\n<p>:: Cody Reichert</p>\n",
 		"id": "blogging-with-emacs-and-org-mode"
 	};
 
-/***/ },
+/***/ }),
 /* 245 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = {
 		"path": "cl-ses.md",
@@ -26678,13 +26800,13 @@ return /******/ (function(modules) { // webpackBootstrap
 			"date": "2015-08-02T00:00:00.000Z",
 			"title": "cl-ses - Sending Emails from Common Lisp with AWS SES"
 		},
-		"content": "<p>I&#39;ve been enjoying using Common Lisp lately. After going through the\nfirst half of\n<a href=\"http://www.gigamonkeys.com/book/\">Practical Common Lisp</a> (highly\nrecommended), I wanted to write some scripts to automate some of my\nown tasks. We use AWS for most of our infrastraucture at\n<a href=\"https://simplyrets.com\">SimplyRETS</a> and\n<a href=\"http://reichertbrothers.com\">Reichert Brothers</a>, and run jobs to\ncheck how our API&#39;s are holding up. Naturally, I wanted to automate\nsome of that and send out an email when reports are generated.</p>\n<p>In case you don&#39;t want to read the rest:\n<a href=\"https://github.com/CodyReichert/cl-ses\">Here&#39;s the code</a></p>\n<h2 id=\"options\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#options\">    <i class=\"fa fa-link\"></i>  </a>Options</h2><p>There are a few AWS libraries out there for Common Lisp<sup>1</sup>, but I\ncouldn&#39;t find one that supported SES - except for\n<a href=\"http://www.obrezan.com/lisp/aws-ses/\">aws-ses</a>. The problem I had\nwith aws-ses is that it only works with LispWorks - which is perfectly\nfine, but I&#39;ve been using SBCL and wanted something with a bit more\nflexibility.</p>\n<p>One a side note, if you <em>are</em> using LispWorks - <code>aws-ses</code> is really\ncool since the author wrote his own hmac, sha1, and base64 algorithms\nwith 0 dependencies.</p>\n<h2 id=\"cl-ses\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#cl-ses\">    <i class=\"fa fa-link\"></i>  </a>CL-SES</h2><p>The app I wanted to send email from was running in SBCL - so I decided\na port of aws-ses would be the right thing to do.</p>\n<p>I put up <a href=\"https://github.com/CodyReichert/cl-ses\">cl-ses</a> on GithHub\nthe other day after porting all of the LispWorks specific\nfunction. Specifically, the use of <code>comm</code> for the tcp connection was\nthe major blocker. I decided against porting <code>comm</code> to <code>sb-bsd-ports</code>\nand opted for bringing in <a href=\"http://weitz.de/drakma/\">Drakma</a>, which is\nan awesome HTTP Library that has already hashed out the differences\nbetween Lisp implementations.</p>\n<p>Losing the &quot;no dependency&quot; badge and adding the &quot;1 dependency, but\nmultiple implementations&quot; badge was the best route - especially since\nthere seems to be a lack of any high level email libraries.</p>\n<h3 id=\"usage\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#usage\">    <i class=\"fa fa-link\"></i>  </a>Usage</h3><p>I changed up a bit of code in order to get the signing algorthims to\nwork with Drakma&#39;s headers, but the library stayed very simple - only\nexposing one <code>send-email</code> function. Here&#39;s all it takes to send an\nemail:</p>\n<pre><code class=\"hljs lang-lisp\">  <span class=\"hljs-list\">(<span class=\"hljs-keyword\">cl-ses</span><span class=\"hljs-keyword\">:send-email</span> <span class=\"hljs-keyword\">:from</span> <span class=\"hljs-string\">\"me@example.com\"</span>\n                     <span class=\"hljs-keyword\">:to</span> <span class=\"hljs-string\">\"you@example.com\"</span>\n                     <span class=\"hljs-keyword\">:subject</span> <span class=\"hljs-string\">\"Hello from CL-SES\"</span>\n                     <span class=\"hljs-keyword\">:message</span> <span class=\"hljs-string\">\"The body of the email message\"</span>\n                     <span class=\"hljs-keyword\">:aws-access-key</span> <span class=\"hljs-string\">\"XXXXXX\"</span></span></code></pre><p><code>send-email</code> returns <code>T</code> if the status was 200 (OK), and <code>NIL</code>\notherwise. In the future I&#39;ll hopefully have implemented better\nerror reporting.</p>\n<p>You can easily send to multiple recipients:</p>\n<pre><code class=\"hljs lang-lisp\">  <span class=\"hljs-list\">(<span class=\"hljs-keyword\">cl-ses</span><span class=\"hljs-keyword\">:send-email</span> <span class=\"hljs-keyword\">:from</span> <span class=\"hljs-string\">\"me@example.com\"</span>\n                     <span class=\"hljs-keyword\">:to</span> <span class=\"hljs-string\">\"first@example.com,second@example.com,third@example.com\"</span>\n                     <span class=\"hljs-keyword\">:subject</span> <span class=\"hljs-string\">\"Hello from CL-SES\"</span>\n                     <span class=\"hljs-keyword\">:message</span> <span class=\"hljs-string\">\"The body of the email message\"</span>\n                     <span class=\"hljs-keyword\">:aws-access-key</span> <span class=\"hljs-string\">\"XXXXXX\"</span>\n                     <span class=\"hljs-keyword\">:aws-secret-key</span> <span class=\"hljs-string\">\"XXXXXXXXXXX\"</span>)</span></code></pre><p>I&#39;m working on extending this to support more of AWS&#39;s features, allow\nfor a lot of the obvious settings (like the AWS region), provide\nbetter error hanlding, and built in support for HTML emails - but\nother than that it&#39;s working great so far.</p>\n<h2 id=\"footnotes\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#footnotes\">    <i class=\"fa fa-link\"></i>  </a>Footnotes</h2><p>1 - <a href=\"https://github.com/xach/zpb-aws\">zpb-aws</a> and\n<a href=\"https://github.com/hargettp/hh-aws\">hh-aws</a> are the two I found.</p>\n<p>:: Cody Reichert</p>\n",
+		"content": "<p>I&#39;ve been enjoying using Common Lisp lately. After going through the\nfirst half of\n<a href=\"http://www.gigamonkeys.com/book/\">Practical Common Lisp</a> (highly\nrecommended), I wanted to write some scripts to automate some of my\nown tasks. We use AWS for most of our infrastraucture at\n<a href=\"https://simplyrets.com\">SimplyRETS</a> and\n<a href=\"http://reichertbrothers.com\">Reichert Brothers</a>, and run jobs to\ncheck how our API&#39;s are holding up. Naturally, I wanted to automate\nsome of that and send out an email when reports are generated.</p>\n<p>In case you don&#39;t want to read the rest:\n<a href=\"https://github.com/CodyReichert/cl-ses\">Here&#39;s the code</a></p>\n<h2 id=\"options\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#options\">    <i class=\"oi oi-link-intact\"></i>  </a>Options</h2><p>There are a few AWS libraries out there for Common Lisp<sup>1</sup>, but I\ncouldn&#39;t find one that supported SES - except for\n<a href=\"http://www.obrezan.com/lisp/aws-ses/\">aws-ses</a>. The problem I had\nwith aws-ses is that it only works with LispWorks - which is perfectly\nfine, but I&#39;ve been using SBCL and wanted something with a bit more\nflexibility.</p>\n<p>One a side note, if you <em>are</em> using LispWorks - <code>aws-ses</code> is really\ncool since the author wrote his own hmac, sha1, and base64 algorithms\nwith 0 dependencies.</p>\n<h2 id=\"cl-ses\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#cl-ses\">    <i class=\"oi oi-link-intact\"></i>  </a>CL-SES</h2><p>The app I wanted to send email from was running in SBCL - so I decided\na port of aws-ses would be the right thing to do.</p>\n<p>I put up <a href=\"https://github.com/CodyReichert/cl-ses\">cl-ses</a> on GithHub\nthe other day after porting all of the LispWorks specific\nfunction. Specifically, the use of <code>comm</code> for the tcp connection was\nthe major blocker. I decided against porting <code>comm</code> to <code>sb-bsd-ports</code>\nand opted for bringing in <a href=\"http://weitz.de/drakma/\">Drakma</a>, which is\nan awesome HTTP Library that has already hashed out the differences\nbetween Lisp implementations.</p>\n<p>Losing the &quot;no dependency&quot; badge and adding the &quot;1 dependency, but\nmultiple implementations&quot; badge was the best route - especially since\nthere seems to be a lack of any high level email libraries.</p>\n<h3 id=\"usage\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#usage\">    <i class=\"oi oi-link-intact\"></i>  </a>Usage</h3><p>I changed up a bit of code in order to get the signing algorthims to\nwork with Drakma&#39;s headers, but the library stayed very simple - only\nexposing one <code>send-email</code> function. Here&#39;s all it takes to send an\nemail:</p>\n<pre><code class=\"hljs lang-lisp\">  <span class=\"hljs-list\">(<span class=\"hljs-keyword\">cl-ses</span><span class=\"hljs-keyword\">:send-email</span> <span class=\"hljs-keyword\">:from</span> <span class=\"hljs-string\">\"me@example.com\"</span>\n                     <span class=\"hljs-keyword\">:to</span> <span class=\"hljs-string\">\"you@example.com\"</span>\n                     <span class=\"hljs-keyword\">:subject</span> <span class=\"hljs-string\">\"Hello from CL-SES\"</span>\n                     <span class=\"hljs-keyword\">:message</span> <span class=\"hljs-string\">\"The body of the email message\"</span>\n                     <span class=\"hljs-keyword\">:aws-access-key</span> <span class=\"hljs-string\">\"XXXXXX\"</span></span></code></pre><p><code>send-email</code> returns <code>T</code> if the status was 200 (OK), and <code>NIL</code>\notherwise. In the future I&#39;ll hopefully have implemented better\nerror reporting.</p>\n<p>You can easily send to multiple recipients:</p>\n<pre><code class=\"hljs lang-lisp\">  <span class=\"hljs-list\">(<span class=\"hljs-keyword\">cl-ses</span><span class=\"hljs-keyword\">:send-email</span> <span class=\"hljs-keyword\">:from</span> <span class=\"hljs-string\">\"me@example.com\"</span>\n                     <span class=\"hljs-keyword\">:to</span> <span class=\"hljs-string\">\"first@example.com,second@example.com,third@example.com\"</span>\n                     <span class=\"hljs-keyword\">:subject</span> <span class=\"hljs-string\">\"Hello from CL-SES\"</span>\n                     <span class=\"hljs-keyword\">:message</span> <span class=\"hljs-string\">\"The body of the email message\"</span>\n                     <span class=\"hljs-keyword\">:aws-access-key</span> <span class=\"hljs-string\">\"XXXXXX\"</span>\n                     <span class=\"hljs-keyword\">:aws-secret-key</span> <span class=\"hljs-string\">\"XXXXXXXXXXX\"</span>)</span></code></pre><p>I&#39;m working on extending this to support more of AWS&#39;s features, allow\nfor a lot of the obvious settings (like the AWS region), provide\nbetter error hanlding, and built in support for HTML emails - but\nother than that it&#39;s working great so far.</p>\n<h2 id=\"footnotes\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#footnotes\">    <i class=\"oi oi-link-intact\"></i>  </a>Footnotes</h2><p>1 - <a href=\"https://github.com/xach/zpb-aws\">zpb-aws</a> and\n<a href=\"https://github.com/hargettp/hh-aws\">hh-aws</a> are the two I found.</p>\n<p>:: Cody Reichert</p>\n",
 		"id": "cl-ses"
 	};
 
-/***/ },
+/***/ }),
 /* 246 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = {
 		"path": "device-screenshots-in-chrome-canary.md",
@@ -26698,9 +26820,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		"id": "device-screenshots-in-chrome-canary"
 	};
 
-/***/ },
+/***/ }),
 /* 247 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = {
 		"path": "january-2016-reading-list.md",
@@ -26710,13 +26832,13 @@ return /******/ (function(modules) { // webpackBootstrap
 			"date": "2016-01-22T00:00:00.000Z",
 			"title": "January 2016 Reading List"
 		},
-		"content": "<p>One of my goals this year is to spend more time reading. Books on\nbusiness, startups, psychology, history, etc, are all fair game.</p>\n<p>Last month, January, I picked up a few new books. Some I really like\nand others were OK. In no particular order:</p>\n<h1 id=\"completed\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#completed\">    <i class=\"fa fa-link\"></i>  </a>Completed</h1><h2 id=\"a-href=\"http://www.amazon.com/rework-jason-fried/dp/0307463745\"\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#a-href=\"http://www.amazon.com/rework-jason-fried/dp/0307463745\"\">    <i class=\"fa fa-link\"></i>  </a><a href=\"http://www.amazon.com/Rework-Jason-Fried/dp/0307463745\">Rework - Jason Fried</a></h2><p>Reading <em>Rework</em> was a breath of fresh air. Brilliantly put together,\nblunt no-fluff advice, and wittingly accurate illustrations and\nmetaphors made this my #1 book this month.</p>\n<p>If you&#39;re new to startups, veteran to startups, interested in the\nculture, or anywhere in between, then go to your local Amazon and pick\nthis up immediately. You won&#39;t regret it.</p>\n<h2 id=\"a-href=\"http://www.amazon.com/zero-one-notes-startups-future/dp/0804139296/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737377&amp;sr=1-1&amp;keywords=zero+to+one\"\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#a-href=\"http://www.amazon.com/zero-one-notes-startups-future/dp/0804139296/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737377&amp;sr=1-1&amp;keywords=zero+to+one\"\">    <i class=\"fa fa-link\"></i>  </a><a href=\"http://www.amazon.com/Zero-One-Notes-Startups-Future/dp/0804139296/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1455737377&amp;sr=1-1&amp;keywords=zero+to+one\">Zero to One - Peter Thiel</a></h2><p>Zero to One is filled with interesting insight from one of our\nstartup culture&#39;s very own, Peter Thiel. There&#39;s no denying that\nThiel is a smart businessman - so that alone is reason enough to\nread anything he writes.</p>\n<p>This book really made me think about some tough topics like\ncompeting with your competition and how major technilogical\nadvances occur. Every chapter of this book got me pumped up to\nbuild something world-changing.</p>\n<h2 id=\"a-href=\"http://www.amazon.com/virgin-way-its-worth-doing/dp/1591847982/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737278&amp;sr=1-1&amp;keywords=the+virgin+way\"\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#a-href=\"http://www.amazon.com/virgin-way-its-worth-doing/dp/1591847982/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737278&amp;sr=1-1&amp;keywords=the+virgin+way\"\">    <i class=\"fa fa-link\"></i>  </a><a href=\"http://www.amazon.com/Virgin-Way-Its-Worth-Doing/dp/1591847982/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1455737278&amp;sr=1-1&amp;keywords=the+virgin+way\">The Virgin Way - Richard Branson</a></h2><p>I didn&#39;t have many expectations going into this book - but I came\nout with nothing but praise for Sir Branson and The Virgin Way. The\nbook is funny, thought-provoking, and riddled with real life\nanecdotes about Virgin and other mega-corps (Netflix, Microsoft,\netc).</p>\n<p>I would recommend this to anyone who is interested in Richard\nBranson, or what it&#39;s like running hundreds of businesses. His\nwriting is easy to read and intriguing, it&#39;s hard to put down!</p>\n<p>After this one, I&#39;ll be looking to pick up a couple more of Richard\nBransons books.</p>\n<h2 id=\"a-href=\"http://www.amazon.com/how-win-friends-influence-people/dp/0671027034/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737210&amp;sr=1-1&amp;keywords=how+to+win+friends\"\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#a-href=\"http://www.amazon.com/how-win-friends-influence-people/dp/0671027034/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737210&amp;sr=1-1&amp;keywords=how+to+win+friends\"\">    <i class=\"fa fa-link\"></i>  </a><a href=\"http://www.amazon.com/How-Win-Friends-Influence-People/dp/0671027034/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1455737210&amp;sr=1-1&amp;keywords=how+to+win+friends\">How to Win Friends and Influence Peopl - Dale Carnegie</a></h2><p>A classic. Anyone who has read any of Dale Carnegie&#39;s books (then\nyou&#39;ve probably read this one) would tell you that is writing style\nis one of a kind and hilariously interstesting. How to Win Friends\nis a must read (and re-read) for anyone in a leadership role.</p>\n<p>I&#39;ll keep this one on the shelf and read it again.</p>\n<h1 id=\"in-progress\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#in-progress\">    <i class=\"fa fa-link\"></i>  </a>In Progress</h1><h2 id=\"a-href=\"http://www.amazon.com/lincoln-dale-carnegie/dp/160796550x/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737421&amp;sr=1-1&amp;keywords=lincoln+the+unknown\"\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#a-href=\"http://www.amazon.com/lincoln-dale-carnegie/dp/160796550x/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737421&amp;sr=1-1&amp;keywords=lincoln+the+unknown\"\">    <i class=\"fa fa-link\"></i>  </a><a href=\"http://www.amazon.com/Lincoln-Dale-Carnegie/dp/160796550X/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1455737421&amp;sr=1-1&amp;keywords=lincoln+the+unknown\">Lincoln the Unknown - Dale Carnegie</a></h2><p>I picked Up Lincoln the Unknown after finishing Carnegie&#39;s other\nbook, How to Win Friends. Lincoln the Unknown is an interesting\ntale of Abraham Lincoln&#39;s life and upbringing.</p>\n<p>I haven&#39;t quite finished it, so let&#39;s hope for an update next month.</p>\n<h2 id=\"a-href=\"http://www.amazon.com/hard-thing-about-things-building/dp/0062273205/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737458&amp;sr=1-1&amp;keywords=the+hard+thing+about+hard+things\"\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#a-href=\"http://www.amazon.com/hard-thing-about-things-building/dp/0062273205/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737458&amp;sr=1-1&amp;keywords=the+hard+thing+about+hard+things\"\">    <i class=\"fa fa-link\"></i>  </a><a href=\"http://www.amazon.com/Hard-Thing-About-Things-Building/dp/0062273205/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1455737458&amp;sr=1-1&amp;keywords=the+hard+thing+about+hard+things\">The Hard Thing About Hard Things - Ben Horowitz</a></h2><p>At this point in time, the most I&#39;ve read of this book is the\ninside cover. Horowitz&#39;s book is highly recommened across the\nindustry as a guide for managing a startup.</p>\n<p>:: Cody Reichert</p>\n",
+		"content": "<p>One of my goals this year is to spend more time reading. Books on\nbusiness, startups, psychology, history, etc, are all fair game.</p>\n<p>Last month, January, I picked up a few new books. Some I really like\nand others were OK. In no particular order:</p>\n<h1 id=\"completed\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#completed\">    <i class=\"oi oi-link-intact\"></i>  </a>Completed</h1><h2 id=\"a-href=\"http://www.amazon.com/rework-jason-fried/dp/0307463745\"\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#a-href=\"http://www.amazon.com/rework-jason-fried/dp/0307463745\"\">    <i class=\"oi oi-link-intact\"></i>  </a><a href=\"http://www.amazon.com/Rework-Jason-Fried/dp/0307463745\">Rework - Jason Fried</a></h2><p>Reading <em>Rework</em> was a breath of fresh air. Brilliantly put together,\nblunt no-fluff advice, and wittingly accurate illustrations and\nmetaphors made this my #1 book this month.</p>\n<p>If you&#39;re new to startups, veteran to startups, interested in the\nculture, or anywhere in between, then go to your local Amazon and pick\nthis up immediately. You won&#39;t regret it.</p>\n<h2 id=\"a-href=\"http://www.amazon.com/zero-one-notes-startups-future/dp/0804139296/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737377&amp;sr=1-1&amp;keywords=zero+to+one\"\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#a-href=\"http://www.amazon.com/zero-one-notes-startups-future/dp/0804139296/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737377&amp;sr=1-1&amp;keywords=zero+to+one\"\">    <i class=\"oi oi-link-intact\"></i>  </a><a href=\"http://www.amazon.com/Zero-One-Notes-Startups-Future/dp/0804139296/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1455737377&amp;sr=1-1&amp;keywords=zero+to+one\">Zero to One - Peter Thiel</a></h2><p>Zero to One is filled with interesting insight from one of our\nstartup culture&#39;s very own, Peter Thiel. There&#39;s no denying that\nThiel is a smart businessman - so that alone is reason enough to\nread anything he writes.</p>\n<p>This book really made me think about some tough topics like\ncompeting with your competition and how major technilogical\nadvances occur. Every chapter of this book got me pumped up to\nbuild something world-changing.</p>\n<h2 id=\"a-href=\"http://www.amazon.com/virgin-way-its-worth-doing/dp/1591847982/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737278&amp;sr=1-1&amp;keywords=the+virgin+way\"\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#a-href=\"http://www.amazon.com/virgin-way-its-worth-doing/dp/1591847982/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737278&amp;sr=1-1&amp;keywords=the+virgin+way\"\">    <i class=\"oi oi-link-intact\"></i>  </a><a href=\"http://www.amazon.com/Virgin-Way-Its-Worth-Doing/dp/1591847982/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1455737278&amp;sr=1-1&amp;keywords=the+virgin+way\">The Virgin Way - Richard Branson</a></h2><p>I didn&#39;t have many expectations going into this book - but I came\nout with nothing but praise for Sir Branson and The Virgin Way. The\nbook is funny, thought-provoking, and riddled with real life\nanecdotes about Virgin and other mega-corps (Netflix, Microsoft,\netc).</p>\n<p>I would recommend this to anyone who is interested in Richard\nBranson, or what it&#39;s like running hundreds of businesses. His\nwriting is easy to read and intriguing, it&#39;s hard to put down!</p>\n<p>After this one, I&#39;ll be looking to pick up a couple more of Richard\nBransons books.</p>\n<h2 id=\"a-href=\"http://www.amazon.com/how-win-friends-influence-people/dp/0671027034/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737210&amp;sr=1-1&amp;keywords=how+to+win+friends\"\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#a-href=\"http://www.amazon.com/how-win-friends-influence-people/dp/0671027034/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737210&amp;sr=1-1&amp;keywords=how+to+win+friends\"\">    <i class=\"oi oi-link-intact\"></i>  </a><a href=\"http://www.amazon.com/How-Win-Friends-Influence-People/dp/0671027034/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1455737210&amp;sr=1-1&amp;keywords=how+to+win+friends\">How to Win Friends and Influence Peopl - Dale Carnegie</a></h2><p>A classic. Anyone who has read any of Dale Carnegie&#39;s books (then\nyou&#39;ve probably read this one) would tell you that is writing style\nis one of a kind and hilariously interstesting. How to Win Friends\nis a must read (and re-read) for anyone in a leadership role.</p>\n<p>I&#39;ll keep this one on the shelf and read it again.</p>\n<h1 id=\"in-progress\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#in-progress\">    <i class=\"oi oi-link-intact\"></i>  </a>In Progress</h1><h2 id=\"a-href=\"http://www.amazon.com/lincoln-dale-carnegie/dp/160796550x/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737421&amp;sr=1-1&amp;keywords=lincoln+the+unknown\"\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#a-href=\"http://www.amazon.com/lincoln-dale-carnegie/dp/160796550x/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737421&amp;sr=1-1&amp;keywords=lincoln+the+unknown\"\">    <i class=\"oi oi-link-intact\"></i>  </a><a href=\"http://www.amazon.com/Lincoln-Dale-Carnegie/dp/160796550X/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1455737421&amp;sr=1-1&amp;keywords=lincoln+the+unknown\">Lincoln the Unknown - Dale Carnegie</a></h2><p>I picked Up Lincoln the Unknown after finishing Carnegie&#39;s other\nbook, How to Win Friends. Lincoln the Unknown is an interesting\ntale of Abraham Lincoln&#39;s life and upbringing.</p>\n<p>I haven&#39;t quite finished it, so let&#39;s hope for an update next month.</p>\n<h2 id=\"a-href=\"http://www.amazon.com/hard-thing-about-things-building/dp/0062273205/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737458&amp;sr=1-1&amp;keywords=the+hard+thing+about+hard+things\"\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#a-href=\"http://www.amazon.com/hard-thing-about-things-building/dp/0062273205/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737458&amp;sr=1-1&amp;keywords=the+hard+thing+about+hard+things\"\">    <i class=\"oi oi-link-intact\"></i>  </a><a href=\"http://www.amazon.com/Hard-Thing-About-Things-Building/dp/0062273205/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1455737458&amp;sr=1-1&amp;keywords=the+hard+thing+about+hard+things\">The Hard Thing About Hard Things - Ben Horowitz</a></h2><p>At this point in time, the most I&#39;ve read of this book is the\ninside cover. Horowitz&#39;s book is highly recommened across the\nindustry as a guide for managing a startup.</p>\n<p>:: Cody Reichert</p>\n",
 		"id": "january-2016-reading-list"
 	};
 
-/***/ },
+/***/ }),
 /* 248 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = {
 		"path": "javascript-boolean-anything.md",
@@ -26730,9 +26852,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		"id": "javascript-boolean-anything"
 	};
 
-/***/ },
+/***/ }),
 /* 249 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = {
 		"path": "jsx-the-basics.md",
@@ -26742,13 +26864,13 @@ return /******/ (function(modules) { // webpackBootstrap
 			"date": "2016-03-12T00:00:00.000Z",
 			"title": "JSX - The Basics"
 		},
-		"content": "<p>When most people get started with\n<a href=\"https://facebook.github.io/react/\">React.js</a>, JSX is the first thing\nthat comes as a surprise. JSX is a templating language inside\nJavaScript. Remeber all those string template you to write with\n<em>(insert frontend framework here)</em>?, well JSX to the rescue.</p>\n<p><strong>Table of Contents:</strong></p>\n<ul>\n<li><a href=\"#what-is-jsx\">What is JSX</a></li>\n<li><a href=\"#comments-in-jsx\">Comments in JSX</a></li>\n<li><a href=\"#passing-props\">Passing Props</a></li>\n<li><a href=\"#boolean-props\">Boolean Props</a></li>\n</ul>\n<h3 id=\"what-is-jsx\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#what-is-jsx\">    <i class=\"fa fa-link\"></i>  </a>What is JSX</h3><blockquote class=\"blockquote\"><p>JSX is a JavaScript syntax extension that looks similar to XML. You\ncan use a simple JSX syntactic transform with React.</p>\n</blockquote><p>Picture this. Instead of writing HTML strings within your code, you\ncan use a preprocessor that allow you to write (basically) pure HTML\nwith some compile-time checking? Brilliant, let&#39;s look at the examples\nfrom Facebook&#39;s\n<a href=\"https://facebook.github.io/react/docs/displaying-data.html\">Displaying Data</a>\npost:</p>\n<p>Without JSX:</p>\n<pre><code class=\"hljs lang-javascript\">React.createElement(<span class=\"hljs-string\">'a'</span>, {href: <span class=\"hljs-string\">'https://facebook.github.io/react/'</span>}, <span class=\"hljs-string\">'Hello!'</span>)</code></pre><p>With JSX:</p>\n<pre><code class=\"hljs lang-javascript\">&lt;a href=<span class=\"hljs-string\">\"https://facebook.github.io/react/\"</span>&gt;Hello!<span class=\"xml\"><span class=\"hljs-tag\">&lt;/<span class=\"hljs-title\">a</span>&gt;</span></span></code></pre><p>Great! We&#39;ve improved readability by 10,000%.</p>\n<p>Now that we&#39;ve got a solid introduction<sup>;)</sup> to JSX, let&#39;s\ntake a look at some common gotchas.</p>\n<h2 id=\"comments-in-jsx\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#comments-in-jsx\">    <i class=\"fa fa-link\"></i>  </a>Comments in JSX</h2><p>It&#39;s common to want to write comments within your markup. Inside of\nJSX, there are a couple of &#39;rules&#39; to follow:</p>\n<h3 id=\"in-between-jsx-elements,-wrap-your-comments-in\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#in-between-jsx-elements,-wrap-your-comments-in\">    <i class=\"fa fa-link\"></i>  </a>In between JSX elements, wrap your comments in <code>{}</code></h3><p><em>valid</em>:</p>\n<pre><code class=\"hljs lang-javascript\">&lt;div&gt;\n    {/** A comment about the component below */}\n    &lt;span&gt;Hello, JSX&lt;/span&gt;\n&lt;/div&gt;</code></pre><p><em>invalid</em>:</p>\n<pre><code class=\"hljs lang-javascript\">&lt;div&gt;\n    /** A comment about the component below */\n    &lt;span&gt;Hello, JSX&lt;/span&gt;\n&lt;/div&gt;</code></pre><h3 id=\"inside-of-a-jsx-tag-you-can-use-normal-comments:\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#inside-of-a-jsx-tag-you-can-use-normal-comments:\">    <i class=\"fa fa-link\"></i>  </a>Inside of a JSX tag you can use normal comments:</h3><p><em>valid</em>:</p>\n<pre><code class=\"hljs lang-javascript\">&lt;div&gt;\n    <span class=\"xml\"><span class=\"hljs-tag\">&lt;<span class=\"hljs-title\">AwesomeComponent</span>\n        /** <span class=\"hljs-attribute\">Some</span> <span class=\"hljs-attribute\">commentsabout</span> <span class=\"hljs-attribute\">the</span> <span class=\"hljs-attribute\">props</span> <span class=\"hljs-attribute\">below</span> */\n        <span class=\"hljs-attribute\">prop1</span>=<span class=\"hljs-value\">\"jsxRocks\"</span>\n        <span class=\"hljs-attribute\">booly</span>=<span class=\"hljs-value\">{true}</span>\n    /&gt;</span>\n<span class=\"hljs-tag\">&lt;/<span class=\"hljs-title\">div</span>&gt;</span></span></code></pre><p><em>invalid</em>:</p>\n<pre><code class=\"hljs lang-javascript\">&lt;div&gt;\n    <span class=\"xml\"><span class=\"hljs-tag\">&lt;<span class=\"hljs-title\">AwesomeComponent</span>\n        {/** <span class=\"hljs-attribute\">Some</span> <span class=\"hljs-attribute\">commentsabout</span> <span class=\"hljs-attribute\">the</span> <span class=\"hljs-attribute\">props</span> <span class=\"hljs-attribute\">below</span> */}\n        <span class=\"hljs-attribute\">prop1</span>=<span class=\"hljs-value\">\"jsxRocks\"</span>\n        <span class=\"hljs-attribute\">booly</span>=<span class=\"hljs-value\">{true}</span>\n    /&gt;</span>\n<span class=\"hljs-tag\">&lt;/<span class=\"hljs-title\">div</span>&gt;</span></span></code></pre><h2 id=\"passing-props\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#passing-props\">    <i class=\"fa fa-link\"></i>  </a>Passing Props</h2><p>JSX also makes passing <code>props</code> (arguments) to other components with\nsimple HTML-like syntax. If you&#39;re not familiar with nesting\ncomponents and receiving components, you should check out\n<a href=\"https://facebook.github.io/react/docs/jsx-in-depth.html\">JSX In Depth</a>\nfirst.</p>\n<h3 id=\"string-props\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#string-props\">    <i class=\"fa fa-link\"></i>  </a>String Props</h3><p>Normal, string value props are easy to pass to child components:</p>\n<pre><code class=\"hljs lang-javascript\">&lt;AwesomeComponent\n    name=<span class=\"hljs-string\">\"jsxRocks\"</span>\n/&gt;</code></pre><p>Now inside of <code>AwesomeComponent</code> you have access to <code>this.props.name</code>\nthat references the value <code>jsxRocks</code>.</p>\n<h3 id=\"functions\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#functions\">    <i class=\"fa fa-link\"></i>  </a>Functions</h3><p>Passing functions as callback is also common practice when writing JSX components.\nA basic example would look like:</p>\n<pre><code class=\"hljs lang-javascript\">&lt;AwesomeComponent\n    handleNameChange={data =&gt; myAction(data)}\n/&gt;</code></pre><p>Whoah, let&#39;s not a couple of things here:</p>\n<ul>\n<li><p><code>{}</code>. Where did that come from?\nJSX can take JavaScript expressions as arguments to props. This\nmeans that you&#39;re not restricted to string props. You can pas\nfunctions to children that make handling callback easier.</p>\n<p>To extend the example, this means we can use any logic we want inside of component&#39;s attributes.\nNeed computed data at render time? Not problem</p>\n</li>\n</ul>\n<pre><code class=\"hljs lang-javascript\">&lt;AwesomeComponent\n    conditionalProp={thing === <span class=\"hljs-literal\">true</span> ? <span class=\"hljs-string\">'thisprop'</span> : <span class=\"hljs-string\">'thatprop'</span>}\n/&gt;</code></pre><ul>\n<li>No quotes?\nWhen using expressions as a value to a prop, you don&#39;t need to do\nany fancy string interpolation - React will take care of rendering\nthe result of the expression.</li>\n</ul>\n<h3 id=\"basic-function-optimizations\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#basic-function-optimizations\">    <i class=\"fa fa-link\"></i>  </a>Basic function optimizations</h3><p>Keep in mind that when creating functions inside of components\n<code>render</code> method (like we&#39;re doing with the expressions in props), that\na new function is created on each re-render.</p>\n<p>This is a pretty minor thing for most apps, but as the size of\napplication grows and you start thinking about performance, minimizing\nthe amount of work on the client can be idea.</p>\n<p>If we take our two examples from above, they would be better written\nso a new function is not created and the class intsance can take care\nof re-computing the value:</p>\n<pre><code class=\"hljs lang-javascript\"><span class=\"hljs-class\"><span class=\"hljs-keyword\">class</span> <span class=\"hljs-title\">AwesomeComponent</span> <span class=\"hljs-keyword\">extends</span> <span class=\"hljs-title\">React</span>.<span class=\"hljs-title\">Component</span> </span>{\n\n    conditionalProp() {\n        <span class=\"hljs-keyword\">return</span> <span class=\"hljs-keyword\">this</span>.props.thing ? <span class=\"hljs-string\">'prop1'</span> : <span class=\"hljs-string\">'prop2'</span>\n    }\n\n    render() {\n\n        <span class=\"hljs-keyword\">const</span> { thing } = <span class=\"hljs-keyword\">this</span>.props\n\n        <span class=\"hljs-keyword\">return</span> (\n            <span class=\"xml\"><span class=\"hljs-tag\">&lt;<span class=\"hljs-title\">AwesomeComponent</span>\n                <span class=\"hljs-attribute\">conditionalProp</span>=<span class=\"hljs-value\">{this.conditionalProp()}</span>\n            /&gt;</span>\n        )</span>\n    }\n}</code></pre><h3 id=\"function-reference-vs-function-unwrapping\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#function-reference-vs-function-unwrapping\">    <i class=\"fa fa-link\"></i>  </a>Function reference vs Function unwrapping</h3><p>When the <code>render</code> method of a component is called, functions inside of\nthe JSX are executed and their return values are used in place of the\nprops. That brings up two common use-cases for using expression in\ncomponents:</p>\n<p><strong>Using a reference to a function</strong></p>\n<p>Sometimes you will need to provide a callback method to child\ncomponent - and sometimes you will need to provide the first argument\nto a function and let the child provide the rest. In those cases,\nanonymouse functions work perfectly:</p>\n<pre><code class=\"hljs lang-javascript\">&lt;AwesomeComponent\n    conditionalProp={data =&gt; myCallback(id, data)}\n/&gt;</code></pre><p>What we&#39;re doing in the above example is called <em>partial function\napplication</em>. In a nutshell, we create a <code>unary</code> function that returns\na <code>binary</code> function with the first argument already given (so really,\nwe get a <code>unary</code> function again).</p>\n<p>When the <code>render</code> method of the component is called, functions are\nexecuted. With the example above again, what we actually get <em>after</em>\nthe render is:</p>\n<pre><code class=\"hljs lang-javascript\">&lt;AwesomeComponent\n    handleCallback={data =&gt; myCallback(id, data)}\n/&gt;</code></pre><p>And inside of <code>AwesomeComponent</code>, you can simply call:</p>\n<pre><code class=\"hljs lang-javascript\"><span class=\"hljs-keyword\">this</span>.props.handleCallback(arg)</code></pre><p><strong>Using the value of a function</strong></p>\n<pre><code class=\"hljs lang-`javascript\">class AwesomeComponent extends React.Component {\n\n    conditionalProp() {\n        return this.props.thing ? 'prop1' : 'prop2'\n    }\n\n    render() {\n\n        const { thing } = this.props\n\n        return (\n            &lt;AwesomeComponent\n                conditionalProp={this.conditionalProp()}\n            /&gt;\n        )\n    }\n}</code></pre><h2 id=\"boolean-props\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#boolean-props\">    <i class=\"fa fa-link\"></i>  </a>Boolean Props</h2><p>Passing boolean properties to JSX components is simple. The only thing\nyou need to know is that they are <em>JavaScript Booleans</em>, not <em>String\nBooleans</em>. In other words:</p>\n<p>This is correct:</p>\n<pre><code class=\"hljs lang-javascript\">&lt;AwesomeComponent\n    handleCallback={<span class=\"hljs-literal\">true</span>}\n/&gt;</code></pre><p>This is not:</p>\n<pre><code class=\"hljs lang-javascript\">&lt;AwesomeComponent\n    handleCallback=<span class=\"hljs-string\">\"true\"</span>\n/&gt;</code></pre><p><small>\n<em>Just a quick note that the second one actually <em>is</em> valid, but it&#39;s\nnot considered a <code>boolean</code> it&#39;s considered a <code>string</code>.</em>\n</small></p>\n<h3 id=\"alternative-syntax\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#alternative-syntax\">    <i class=\"fa fa-link\"></i>  </a>Alternative syntax</h3><p>An alternative for passing <code>true</code> is to simply provide the prop name without a value:</p>\n<pre><code class=\"hljs lang-javascript\">&lt;Input disabled/&gt;</code></pre><p>My professional opinion is to always use the full <code>true</code> or <code>false</code>\nvalue for the sake of readability.</p>\n<h2 id=\"final-thoughts\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#final-thoughts\">    <i class=\"fa fa-link\"></i>  </a>Final Thoughts</h2><p>Are there any pieces of JSX where you got caught up first starting?\nLet&#39;s chat - shoot me a message on twitter\n<a href=\"https://twitter.com/CodyReichert\">@CodyReichert</a> and I&#39;ll add it!</p>\n<p>:: Cody Reichert</p>\n",
+		"content": "<p>When most people get started with\n<a href=\"https://facebook.github.io/react/\">React.js</a>, JSX is the first thing\nthat comes as a surprise. JSX is a templating language inside\nJavaScript. Remeber all those string template you to write with\n<em>(insert frontend framework here)</em>?, well JSX to the rescue.</p>\n<p><strong>Table of Contents:</strong></p>\n<ul>\n<li><a href=\"#what-is-jsx\">What is JSX</a></li>\n<li><a href=\"#comments-in-jsx\">Comments in JSX</a></li>\n<li><a href=\"#passing-props\">Passing Props</a></li>\n<li><a href=\"#boolean-props\">Boolean Props</a></li>\n</ul>\n<h3 id=\"what-is-jsx\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#what-is-jsx\">    <i class=\"oi oi-link-intact\"></i>  </a>What is JSX</h3><blockquote class=\"blockquote\"><p>JSX is a JavaScript syntax extension that looks similar to XML. You\ncan use a simple JSX syntactic transform with React.</p>\n</blockquote><p>Picture this. Instead of writing HTML strings within your code, you\ncan use a preprocessor that allow you to write (basically) pure HTML\nwith some compile-time checking? Brilliant, let&#39;s look at the examples\nfrom Facebook&#39;s\n<a href=\"https://facebook.github.io/react/docs/displaying-data.html\">Displaying Data</a>\npost:</p>\n<p>Without JSX:</p>\n<pre><code class=\"hljs lang-javascript\">React.createElement(<span class=\"hljs-string\">'a'</span>, {href: <span class=\"hljs-string\">'https://facebook.github.io/react/'</span>}, <span class=\"hljs-string\">'Hello!'</span>)</code></pre><p>With JSX:</p>\n<pre><code class=\"hljs lang-javascript\">&lt;a href=<span class=\"hljs-string\">\"https://facebook.github.io/react/\"</span>&gt;Hello!<span class=\"xml\"><span class=\"hljs-tag\">&lt;/<span class=\"hljs-title\">a</span>&gt;</span></span></code></pre><p>Great! We&#39;ve improved readability by 10,000%.</p>\n<p>Now that we&#39;ve got a solid introduction<sup>;)</sup> to JSX, let&#39;s\ntake a look at some common gotchas.</p>\n<h2 id=\"comments-in-jsx\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#comments-in-jsx\">    <i class=\"oi oi-link-intact\"></i>  </a>Comments in JSX</h2><p>It&#39;s common to want to write comments within your markup. Inside of\nJSX, there are a couple of &#39;rules&#39; to follow:</p>\n<h3 id=\"in-between-jsx-elements,-wrap-your-comments-in\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#in-between-jsx-elements,-wrap-your-comments-in\">    <i class=\"oi oi-link-intact\"></i>  </a>In between JSX elements, wrap your comments in <code>{}</code></h3><p><em>valid</em>:</p>\n<pre><code class=\"hljs lang-javascript\">&lt;div&gt;\n    {/** A comment about the component below */}\n    &lt;span&gt;Hello, JSX&lt;/span&gt;\n&lt;/div&gt;</code></pre><p><em>invalid</em>:</p>\n<pre><code class=\"hljs lang-javascript\">&lt;div&gt;\n    /** A comment about the component below */\n    &lt;span&gt;Hello, JSX&lt;/span&gt;\n&lt;/div&gt;</code></pre><h3 id=\"inside-of-a-jsx-tag-you-can-use-normal-comments:\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#inside-of-a-jsx-tag-you-can-use-normal-comments:\">    <i class=\"oi oi-link-intact\"></i>  </a>Inside of a JSX tag you can use normal comments:</h3><p><em>valid</em>:</p>\n<pre><code class=\"hljs lang-javascript\">&lt;div&gt;\n    <span class=\"xml\"><span class=\"hljs-tag\">&lt;<span class=\"hljs-title\">AwesomeComponent</span>\n        /** <span class=\"hljs-attribute\">Some</span> <span class=\"hljs-attribute\">commentsabout</span> <span class=\"hljs-attribute\">the</span> <span class=\"hljs-attribute\">props</span> <span class=\"hljs-attribute\">below</span> */\n        <span class=\"hljs-attribute\">prop1</span>=<span class=\"hljs-value\">\"jsxRocks\"</span>\n        <span class=\"hljs-attribute\">booly</span>=<span class=\"hljs-value\">{true}</span>\n    /&gt;</span>\n<span class=\"hljs-tag\">&lt;/<span class=\"hljs-title\">div</span>&gt;</span></span></code></pre><p><em>invalid</em>:</p>\n<pre><code class=\"hljs lang-javascript\">&lt;div&gt;\n    <span class=\"xml\"><span class=\"hljs-tag\">&lt;<span class=\"hljs-title\">AwesomeComponent</span>\n        {/** <span class=\"hljs-attribute\">Some</span> <span class=\"hljs-attribute\">commentsabout</span> <span class=\"hljs-attribute\">the</span> <span class=\"hljs-attribute\">props</span> <span class=\"hljs-attribute\">below</span> */}\n        <span class=\"hljs-attribute\">prop1</span>=<span class=\"hljs-value\">\"jsxRocks\"</span>\n        <span class=\"hljs-attribute\">booly</span>=<span class=\"hljs-value\">{true}</span>\n    /&gt;</span>\n<span class=\"hljs-tag\">&lt;/<span class=\"hljs-title\">div</span>&gt;</span></span></code></pre><h2 id=\"passing-props\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#passing-props\">    <i class=\"oi oi-link-intact\"></i>  </a>Passing Props</h2><p>JSX also makes passing <code>props</code> (arguments) to other components with\nsimple HTML-like syntax. If you&#39;re not familiar with nesting\ncomponents and receiving components, you should check out\n<a href=\"https://facebook.github.io/react/docs/jsx-in-depth.html\">JSX In Depth</a>\nfirst.</p>\n<h3 id=\"string-props\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#string-props\">    <i class=\"oi oi-link-intact\"></i>  </a>String Props</h3><p>Normal, string value props are easy to pass to child components:</p>\n<pre><code class=\"hljs lang-javascript\">&lt;AwesomeComponent\n    name=<span class=\"hljs-string\">\"jsxRocks\"</span>\n/&gt;</code></pre><p>Now inside of <code>AwesomeComponent</code> you have access to <code>this.props.name</code>\nthat references the value <code>jsxRocks</code>.</p>\n<h3 id=\"functions\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#functions\">    <i class=\"oi oi-link-intact\"></i>  </a>Functions</h3><p>Passing functions as callback is also common practice when writing JSX components.\nA basic example would look like:</p>\n<pre><code class=\"hljs lang-javascript\">&lt;AwesomeComponent\n    handleNameChange={data =&gt; myAction(data)}\n/&gt;</code></pre><p>Whoah, let&#39;s not a couple of things here:</p>\n<ul>\n<li><p><code>{}</code>. Where did that come from?\nJSX can take JavaScript expressions as arguments to props. This\nmeans that you&#39;re not restricted to string props. You can pas\nfunctions to children that make handling callback easier.</p>\n<p>To extend the example, this means we can use any logic we want inside of component&#39;s attributes.\nNeed computed data at render time? Not problem</p>\n</li>\n</ul>\n<pre><code class=\"hljs lang-javascript\">&lt;AwesomeComponent\n    conditionalProp={thing === <span class=\"hljs-literal\">true</span> ? <span class=\"hljs-string\">'thisprop'</span> : <span class=\"hljs-string\">'thatprop'</span>}\n/&gt;</code></pre><ul>\n<li>No quotes?\nWhen using expressions as a value to a prop, you don&#39;t need to do\nany fancy string interpolation - React will take care of rendering\nthe result of the expression.</li>\n</ul>\n<h3 id=\"basic-function-optimizations\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#basic-function-optimizations\">    <i class=\"oi oi-link-intact\"></i>  </a>Basic function optimizations</h3><p>Keep in mind that when creating functions inside of components\n<code>render</code> method (like we&#39;re doing with the expressions in props), that\na new function is created on each re-render.</p>\n<p>This is a pretty minor thing for most apps, but as the size of\napplication grows and you start thinking about performance, minimizing\nthe amount of work on the client can be idea.</p>\n<p>If we take our two examples from above, they would be better written\nso a new function is not created and the class intsance can take care\nof re-computing the value:</p>\n<pre><code class=\"hljs lang-javascript\"><span class=\"hljs-class\"><span class=\"hljs-keyword\">class</span> <span class=\"hljs-title\">AwesomeComponent</span> <span class=\"hljs-keyword\">extends</span> <span class=\"hljs-title\">React</span>.<span class=\"hljs-title\">Component</span> </span>{\n\n    conditionalProp() {\n        <span class=\"hljs-keyword\">return</span> <span class=\"hljs-keyword\">this</span>.props.thing ? <span class=\"hljs-string\">'prop1'</span> : <span class=\"hljs-string\">'prop2'</span>\n    }\n\n    render() {\n\n        <span class=\"hljs-keyword\">const</span> { thing } = <span class=\"hljs-keyword\">this</span>.props\n\n        <span class=\"hljs-keyword\">return</span> (\n            <span class=\"xml\"><span class=\"hljs-tag\">&lt;<span class=\"hljs-title\">AwesomeComponent</span>\n                <span class=\"hljs-attribute\">conditionalProp</span>=<span class=\"hljs-value\">{this.conditionalProp()}</span>\n            /&gt;</span>\n        )</span>\n    }\n}</code></pre><h3 id=\"function-reference-vs-function-unwrapping\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#function-reference-vs-function-unwrapping\">    <i class=\"oi oi-link-intact\"></i>  </a>Function reference vs Function unwrapping</h3><p>When the <code>render</code> method of a component is called, functions inside of\nthe JSX are executed and their return values are used in place of the\nprops. That brings up two common use-cases for using expression in\ncomponents:</p>\n<p><strong>Using a reference to a function</strong></p>\n<p>Sometimes you will need to provide a callback method to child\ncomponent - and sometimes you will need to provide the first argument\nto a function and let the child provide the rest. In those cases,\nanonymouse functions work perfectly:</p>\n<pre><code class=\"hljs lang-javascript\">&lt;AwesomeComponent\n    conditionalProp={data =&gt; myCallback(id, data)}\n/&gt;</code></pre><p>What we&#39;re doing in the above example is called <em>partial function\napplication</em>. In a nutshell, we create a <code>unary</code> function that returns\na <code>binary</code> function with the first argument already given (so really,\nwe get a <code>unary</code> function again).</p>\n<p>When the <code>render</code> method of the component is called, functions are\nexecuted. With the example above again, what we actually get <em>after</em>\nthe render is:</p>\n<pre><code class=\"hljs lang-javascript\">&lt;AwesomeComponent\n    handleCallback={data =&gt; myCallback(id, data)}\n/&gt;</code></pre><p>And inside of <code>AwesomeComponent</code>, you can simply call:</p>\n<pre><code class=\"hljs lang-javascript\"><span class=\"hljs-keyword\">this</span>.props.handleCallback(arg)</code></pre><p><strong>Using the value of a function</strong></p>\n<pre><code class=\"hljs lang-`javascript\">class AwesomeComponent extends React.Component {\n\n    conditionalProp() {\n        return this.props.thing ? 'prop1' : 'prop2'\n    }\n\n    render() {\n\n        const { thing } = this.props\n\n        return (\n            &lt;AwesomeComponent\n                conditionalProp={this.conditionalProp()}\n            /&gt;\n        )\n    }\n}</code></pre><h2 id=\"boolean-props\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#boolean-props\">    <i class=\"oi oi-link-intact\"></i>  </a>Boolean Props</h2><p>Passing boolean properties to JSX components is simple. The only thing\nyou need to know is that they are <em>JavaScript Booleans</em>, not <em>String\nBooleans</em>. In other words:</p>\n<p>This is correct:</p>\n<pre><code class=\"hljs lang-javascript\">&lt;AwesomeComponent\n    handleCallback={<span class=\"hljs-literal\">true</span>}\n/&gt;</code></pre><p>This is not:</p>\n<pre><code class=\"hljs lang-javascript\">&lt;AwesomeComponent\n    handleCallback=<span class=\"hljs-string\">\"true\"</span>\n/&gt;</code></pre><p><small>\n<em>Just a quick note that the second one actually <em>is</em> valid, but it&#39;s\nnot considered a <code>boolean</code> it&#39;s considered a <code>string</code>.</em>\n</small></p>\n<h3 id=\"alternative-syntax\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#alternative-syntax\">    <i class=\"oi oi-link-intact\"></i>  </a>Alternative syntax</h3><p>An alternative for passing <code>true</code> is to simply provide the prop name without a value:</p>\n<pre><code class=\"hljs lang-javascript\">&lt;Input disabled/&gt;</code></pre><p>My professional opinion is to always use the full <code>true</code> or <code>false</code>\nvalue for the sake of readability.</p>\n<h2 id=\"final-thoughts\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#final-thoughts\">    <i class=\"oi oi-link-intact\"></i>  </a>Final Thoughts</h2><p>Are there any pieces of JSX where you got caught up first starting?\nLet&#39;s chat - shoot me a message on twitter\n<a href=\"https://twitter.com/CodyReichert\">@CodyReichert</a> and I&#39;ll add it!</p>\n<p>:: Cody Reichert</p>\n",
 		"id": "jsx-the-basics"
 	};
 
-/***/ },
+/***/ }),
 /* 250 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = {
 		"path": "managing-dotfiles-with-gnu-stow.md",
@@ -26758,13 +26880,13 @@ return /******/ (function(modules) { // webpackBootstrap
 			"date": "2015-07-07T00:00:00.000Z",
 			"title": "Managing Your Dotfiles with GNU Stow"
 		},
-		"content": "<p>I see questions and posts almost every day (Eg,\n<a href=\"http://www.reddit.com/r/archlinux/comments/3cad2o/best_way_to_share_config_files/\">One</a>,\n<a href=\"https://www.reddit.com/r/commandline/comments/3c0bvk/when_you_have_multiple_systems_and_your_own_bin/\">Two</a>,\n<a href=\"https://www.reddit.com/r/bash/comments/370kh9/extensive_dotfiles_w_focus_on_tmux_vim_ack_git/\">Three</a>)\non the best way to manage configuration files between machines or\nworkplaces. There&#39;s a lot of (ok) solutions out there. However,\nthey&#39;re all setup-specific bash scripts that aren&#39;t very reproducible.</p>\n<p>I wanted to write this to hopefully prevent people from maintaining\ntheir Makefiles, and to keep their dots pristine.</p>\n<h2 id=\"welcome-gnu-stow\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#welcome-gnu-stow\">    <i class=\"fa fa-link\"></i>  </a>Welcome GNU Stow</h2><p><a href=\"https://www.gnu.org/software/stow/\">GNU Stow</a> is a symlink-farm\nmanager. Wait, I thought we were talking about dotfiles? Well, we\nare. To quote the original site:</p>\n<blockquote class=\"blockquote\"><p>GNU Stow is a symlink farm manager which takes distinct packages of\nsoftware and/or data located in separate directories on the\nfilesystem, and makes them appear to be installed in the same place</p>\n</blockquote><p>When it comes to configuration files, this means that we can do\nthings like: create a directory anywhere on our system that\nimitates the structure of our <code>$HOME</code> directory, and then have Stow\nsymlink them from the imitated directory, to the real <code>$HOME</code>.</p>\n<h2 id=\"directory-structure\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#directory-structure\">    <i class=\"fa fa-link\"></i>  </a>Directory Structure</h2><p>There&#39;s a lot of good examples out there, but one of the most\ncommon questions I see is still, &quot;Wait, so how does it\nwork?&quot;. Hopefully this will clarify.</p>\n<p>Create a directory anywhere on your system called <code>dotfiles/</code>, and\n<code>cd</code> into it. Now pretend for a minute that you&#39;re <em>actually</em> in\nyour <code>$HOME</code> directory. Where would you find your <code>.bashrc</code>?\nProbably some place like this:</p>\n<pre><code class=\"hljs lang-screen\">     └── ~/\n         └── .bashrc</code></pre><p>With Stow, you imitate that structure:</p>\n<pre><code class=\"hljs lang-screen\">     └── dotfiles/\n         └── bash/\n              └── .bashrc</code></pre><p>Not all configuration files live in the top-level of your\nhome-directory, so what about a program that keeps in config file\nin the <code>$XDG_CONFIG_HOME</code>?</p>\n<p>The key to Stow is remembering that, you have a subdirectory (eg,\n<code>dotfiles/bash</code>) for each program that wish to store configuration\nfiles. So in essence, we end up imitating our home directory each\ntime we add something new. Here&#39;s a bigger example with more\nnesting:</p>\n<pre><code class=\"hljs lang-screen\">   ── dotfiles/\n      │\n      ├── awesomewm/\n      ├──── .config/\n      ├──────── awesome/\n      ├─────────── rc.lua\n      │\n      ├── bash/\n      ├──── .bashrc\n      │\n      ├── emacs/\n      ├──── .emacs.d/\n      ├──────── init.el\n      │\n      ├── zsh/ # we can name these dirs whatever we want</code></pre><p>There&#39;s a few different things going on up there, but they all\nfollow the same pattern.</p>\n<p>First, note that we can name the first-level directories whatever\nwe want, but it makes sense to call them the name of the program\nthey contain. Second, see how directly under each first-level\ndirectory, we start placing files exactly where they should show up\nin our <code>$HOME</code> directory.</p>\n<p>Repeat those steps for any other configuration files you\nwant to Stow away.</p>\n<h2 id=\"using-stow\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#using-stow\">    <i class=\"fa fa-link\"></i>  </a>Using Stow</h2><p>Now that the dotfiles folder is set up, we can actually use\nStow. Let&#39;s with only using the <code>.bashrc</code> from above.</p>\n<p>Remove, backup, rename, your original .bashrc (the one that&#39;s <em>not\nin your dotfiles</em>), because we need that name for Stow.</p>\n<p><code>cd</code> into your new dotfiles directory, and run:</p>\n<pre><code class=\"hljs lang-sh\">  stow bash</code></pre><p>That will create a symlink from your dotfiles repo, to the correct\nplace at home:</p>\n<pre><code class=\"hljs lang-sh\">  ls -al ~/.bashrc\n  <span class=\"hljs-comment\"># outputs:</span>\n  <span class=\"hljs-comment\"># .bashrc -&gt; dotfiles/bash/.bashrc</span></code></pre><p>The stow command simply takes the name of the directory you wish to\nsymlink. You can do the same for the other configurations in your\ndotfiles repo, and you successfully have them all managed.</p>\n<h2 id=\"advanced-usage\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#advanced-usage\">    <i class=\"fa fa-link\"></i>  </a>Advanced Usage</h2><p>Using Stow in combination with git (or any other VC) is really the\nbest part. It allows you to have your entire configuration on any\nsystem in just a matter of seconds.</p>\n<p>And when you leave, if you don&#39;t want to leave your config files\nthere, stow comes with a nice flag to unstow:</p>\n<pre><code class=\"hljs lang-sh\">  stow -D bash</code></pre><p>For a more complex and complete example, you can chekout\n<a href=\"https://github.com/CodyReichert/dotfiles\">my dotfiles</a> on Github.</p>\n<p>My hope here is that I&#39;ll now be able to point people to this article\nto help them understand Stow little better without needing to actually\nset it up. If you&#39;ve found any other cool uses for this tool, or some\nother programs manange your dotfiles - leave it in the comments!</p>\n<p>:: Cody Reichert</p>\n",
+		"content": "<p>I see questions and posts almost every day (Eg,\n<a href=\"http://www.reddit.com/r/archlinux/comments/3cad2o/best_way_to_share_config_files/\">One</a>,\n<a href=\"https://www.reddit.com/r/commandline/comments/3c0bvk/when_you_have_multiple_systems_and_your_own_bin/\">Two</a>,\n<a href=\"https://www.reddit.com/r/bash/comments/370kh9/extensive_dotfiles_w_focus_on_tmux_vim_ack_git/\">Three</a>)\non the best way to manage configuration files between machines or\nworkplaces. There&#39;s a lot of (ok) solutions out there. However,\nthey&#39;re all setup-specific bash scripts that aren&#39;t very reproducible.</p>\n<p>I wanted to write this to hopefully prevent people from maintaining\ntheir Makefiles, and to keep their dots pristine.</p>\n<h2 id=\"welcome-gnu-stow\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#welcome-gnu-stow\">    <i class=\"oi oi-link-intact\"></i>  </a>Welcome GNU Stow</h2><p><a href=\"https://www.gnu.org/software/stow/\">GNU Stow</a> is a symlink-farm\nmanager. Wait, I thought we were talking about dotfiles? Well, we\nare. To quote the original site:</p>\n<blockquote class=\"blockquote\"><p>GNU Stow is a symlink farm manager which takes distinct packages of\nsoftware and/or data located in separate directories on the\nfilesystem, and makes them appear to be installed in the same place</p>\n</blockquote><p>When it comes to configuration files, this means that we can do\nthings like: create a directory anywhere on our system that\nimitates the structure of our <code>$HOME</code> directory, and then have Stow\nsymlink them from the imitated directory, to the real <code>$HOME</code>.</p>\n<h2 id=\"directory-structure\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#directory-structure\">    <i class=\"oi oi-link-intact\"></i>  </a>Directory Structure</h2><p>There&#39;s a lot of good examples out there, but one of the most\ncommon questions I see is still, &quot;Wait, so how does it\nwork?&quot;. Hopefully this will clarify.</p>\n<p>Create a directory anywhere on your system called <code>dotfiles/</code>, and\n<code>cd</code> into it. Now pretend for a minute that you&#39;re <em>actually</em> in\nyour <code>$HOME</code> directory. Where would you find your <code>.bashrc</code>?\nProbably some place like this:</p>\n<pre><code class=\"hljs lang-screen\">     └── ~/\n         └── .bashrc</code></pre><p>With Stow, you imitate that structure:</p>\n<pre><code class=\"hljs lang-screen\">     └── dotfiles/\n         └── bash/\n              └── .bashrc</code></pre><p>Not all configuration files live in the top-level of your\nhome-directory, so what about a program that keeps in config file\nin the <code>$XDG_CONFIG_HOME</code>?</p>\n<p>The key to Stow is remembering that, you have a subdirectory (eg,\n<code>dotfiles/bash</code>) for each program that wish to store configuration\nfiles. So in essence, we end up imitating our home directory each\ntime we add something new. Here&#39;s a bigger example with more\nnesting:</p>\n<pre><code class=\"hljs lang-screen\">   ── dotfiles/\n      │\n      ├── awesomewm/\n      ├──── .config/\n      ├──────── awesome/\n      ├─────────── rc.lua\n      │\n      ├── bash/\n      ├──── .bashrc\n      │\n      ├── emacs/\n      ├──── .emacs.d/\n      ├──────── init.el\n      │\n      ├── zsh/ # we can name these dirs whatever we want</code></pre><p>There&#39;s a few different things going on up there, but they all\nfollow the same pattern.</p>\n<p>First, note that we can name the first-level directories whatever\nwe want, but it makes sense to call them the name of the program\nthey contain. Second, see how directly under each first-level\ndirectory, we start placing files exactly where they should show up\nin our <code>$HOME</code> directory.</p>\n<p>Repeat those steps for any other configuration files you\nwant to Stow away.</p>\n<h2 id=\"using-stow\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#using-stow\">    <i class=\"oi oi-link-intact\"></i>  </a>Using Stow</h2><p>Now that the dotfiles folder is set up, we can actually use\nStow. Let&#39;s with only using the <code>.bashrc</code> from above.</p>\n<p>Remove, backup, rename, your original .bashrc (the one that&#39;s <em>not\nin your dotfiles</em>), because we need that name for Stow.</p>\n<p><code>cd</code> into your new dotfiles directory, and run:</p>\n<pre><code class=\"hljs lang-sh\">  stow bash</code></pre><p>That will create a symlink from your dotfiles repo, to the correct\nplace at home:</p>\n<pre><code class=\"hljs lang-sh\">  ls -al ~/.bashrc\n  <span class=\"hljs-comment\"># outputs:</span>\n  <span class=\"hljs-comment\"># .bashrc -&gt; dotfiles/bash/.bashrc</span></code></pre><p>The stow command simply takes the name of the directory you wish to\nsymlink. You can do the same for the other configurations in your\ndotfiles repo, and you successfully have them all managed.</p>\n<h2 id=\"advanced-usage\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#advanced-usage\">    <i class=\"oi oi-link-intact\"></i>  </a>Advanced Usage</h2><p>Using Stow in combination with git (or any other VC) is really the\nbest part. It allows you to have your entire configuration on any\nsystem in just a matter of seconds.</p>\n<p>And when you leave, if you don&#39;t want to leave your config files\nthere, stow comes with a nice flag to unstow:</p>\n<pre><code class=\"hljs lang-sh\">  stow -D bash</code></pre><p>For a more complex and complete example, you can chekout\n<a href=\"https://github.com/CodyReichert/dotfiles\">my dotfiles</a> on Github.</p>\n<p>My hope here is that I&#39;ll now be able to point people to this article\nto help them understand Stow little better without needing to actually\nset it up. If you&#39;ve found any other cool uses for this tool, or some\nother programs manange your dotfiles - leave it in the comments!</p>\n<p>:: Cody Reichert</p>\n",
 		"id": "managing-dotfiles-with-gnu-stow"
 	};
 
-/***/ },
+/***/ }),
 /* 251 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = {
 		"path": "pretty-print-json.md",
@@ -26778,9 +26900,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		"id": "pretty-print-json"
 	};
 
-/***/ },
+/***/ }),
 /* 252 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = {
 		"path": "webpack-entry-points.md",
@@ -26790,13 +26912,13 @@ return /******/ (function(modules) { // webpackBootstrap
 			"date": "2015-07-04T00:00:00.000Z",
 			"title": "Webpack: Create Multiple Bundles Using Entry Points"
 		},
-		"content": "<p><a href=\"http://webpack.github.io/\">Webpack</a> is module bundler that generates\nstatic assets for almost all of your front-end dependencies, and their\ndependencies. It&#39;s primary use-case is for creating optimized bundles\nfor you Javascript, but it&#39;s quickly been extended to handle\neverything from fonts, images, and even a compilation step for\nCoffeeScript, LESS, and pretty much anything else you can think of.</p>\n<p>A common use case for Webpack is single page applications, but another\nlarge one is for <em>multi</em> page applications. Loading a large JavaScript\nbundle on every page is not ideal, so let&#39;s set up Webpack to create\nmultiple bundles for us.</p>\n<h2 id=\"a-basic-setup\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#a-basic-setup\">    <i class=\"fa fa-link\"></i>  </a>A basic setup</h2><p>So let&#39;s say the front-end JavaScript/Stylesheets structure of our\nsite looks like this:</p>\n<pre><code class=\"hljs lang-text\">    └── static\n        ├── dist\n        └── src\n            ├── js\n            │   ├── Account.js\n            │   └── Front.js\n            ├── node_modules\n            ├── package.json\n            ├── stylesheets\n            │   └── main.scss\n            └── webpack.config.js</code></pre><p>Most importantly, We have a main Javascript file for Front and\nAccount.</p>\n<p>The goal is to have Webpack generate a <code>front-bundle.js</code> and\n<code>account-bundle.js</code> bundle. The advantage here is that new visitors\nwho aren&#39;t logged in don&#39;t need to load a huge JavaScript bundle\njust for visiting the homepage.</p>\n<h2 id=\"single-entry-point\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#single-entry-point\">    <i class=\"fa fa-link\"></i>  </a>Single Entry Point</h2><p>With a goal in mind, we can dig into Webpack and see what it offers.\nBy default, Webpack makes you define an <code>entry-point</code>, basically the\nroot JavaScript file for you app:</p>\n<pre><code class=\"hljs lang-js\">    <span class=\"hljs-built_in\">module</span>.exports = {\n        entry: {\n            app: <span class=\"hljs-string\">\"./static/src/app.js\"</span>\n        },\n        output: {\n            path: <span class=\"hljs-string\">\"./static/dist\"</span>,\n            filename: <span class=\"hljs-string\">\"app-bundle.js\"</span>\n        }\n    };</code></pre><p>Our site structure doesn&#39;t match up with that. With this, we would\nhave to load all the account panel JavaScript on the homepage too -\nwhich is far from ideal.</p>\n<h2 id=\"multiple-entry-points\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#multiple-entry-points\">    <i class=\"fa fa-link\"></i>  </a>Multiple Entry Points</h2><p>Webpack supports\n<a href=\"http://webpack.github.io/docs/multiple-entry-points.html\">multiple entry points</a>\nfor this reason. Here&#39;s a new configuration more suited to our site\nstructure:</p>\n<pre><code class=\"hljs lang-js\">     <span class=\"hljs-built_in\">module</span>.exports = {\n         entry: {\n             front: <span class=\"hljs-string\">\"./static/src/js/Front.js\"</span>,\n             account: <span class=\"hljs-string\">\"./static/src/js/Account.js\"</span>\n         },\n         output: {\n             path: <span class=\"hljs-string\">\"./static/dist\"</span>,\n             filename: <span class=\"hljs-string\">\"[name]-bundle.js\"</span>\n         }\n     };</code></pre><p>Much better. What&#39;s happening here is that Webpack is now looking\nfor both <code>Front.js</code> and <code>Account.js</code>, and will create a separate\nbundle, including the Webpack runtime and dependencies, for each of\nthose. In the output object, we export the bundle to <code>static/dist</code>\nand use the <code>[name]</code> variable to name each bundle.</p>\n<p>We end up with <code>/static/dist/front-bundle.js</code> and\n<code>/static/dist/account-bundle.js</code>. Great, so now we can the script\ntag to each page and we&#39;re done!</p>\n<p><strong>Almost...</strong></p>\n<p>Even though the bundles contain different code, there are a few\nlibraries/modules that we use in both Front and Account. So, what\nabout the use-case where a new user <em>does</em> end up logging in?</p>\n<p>We wouldn&#39;t want to make them re-download the same JavaScript!</p>\n<h2 id=\"common-chunks\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#common-chunks\">    <i class=\"fa fa-link\"></i>  </a>Common Chunks</h2><p>While the solution above is good, it can be better.</p>\n<p>Ideally, we have Front-bundle.js and Account-bundle.js - but we\nalso have a Common-bundle.js that contains the modules we use\n<em>everywhere</em>. The browser will cache Common-bundle.js, so when a\nuser transitions from the Front to the Account, they&#39;ve already got\nmost of what they need.</p>\n<p>Say hello to the\n<a href=\"http://webpack.github.io/docs/list-of-plugins.html#1-commons-chunk-for-entries\">CommonChunksPlugin</a>*.</p>\n<h2 id=\"configuring-commonchunksplugin\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#configuring-commonchunksplugin\">    <i class=\"fa fa-link\"></i>  </a>Configuring CommonChunksPlugin</h2><p>The common chunks plugin will look for and find all common modules\nand dependencies between your entry points, and automatically\nbundle them. All we need to is a little configuration:</p>\n<pre><code class=\"hljs lang-js\">      <span class=\"hljs-keyword\">let</span> commonsPlugin = <span class=\"hljs-keyword\">new</span> webpack.optimize.CommonsChunkPlugin(\n          <span class=\"hljs-string\">'commons'</span>,  <span class=\"hljs-comment\">// Just name it</span>\n          <span class=\"hljs-string\">'common.js'</span> <span class=\"hljs-comment\">// Name of the output file</span>\n                      <span class=\"hljs-comment\">// There are more options, but we don't need them yet.</span>\n      );\n\n      <span class=\"hljs-built_in\">module</span>.exports = {\n          entry: {\n              front: <span class=\"hljs-string\">\"./static/src/js/Front.js\"</span>,\n              account: <span class=\"hljs-string\">\"./static/src/js/Account.js\"</span>\n          },\n          output: {\n              path: <span class=\"hljs-string\">\"./static/dist\"</span>,\n              filename: <span class=\"hljs-string\">\"[name]-bundle.js\"</span>\n          },\n          plugins: [ commonsPlugin ]\n          <span class=\"hljs-comment\">// more config options</span>\n      };</code></pre><p>We initialize a new instance of the <code>CommonChunksPlugin</code> and pass\na couple parameters (annotated). After that, the Webpack will do\nthe rest.</p>\n<p>The <code>commons</code> bundle will also be output to <code>static/dist/</code>, with\nthe name that we gave it (<code>common.js</code>).</p>\n<h2 id=\"wrapping-up\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#wrapping-up\">    <i class=\"fa fa-link\"></i>  </a>Wrapping Up</h2><p><em>Now</em> we&#39;re done! Remeber to add the <code>&lt;script&gt;</code> for both the entry\nbundle and the common bundle to the correct pages, and Webpack will\ndo the rest.</p>\n<p>It&#39;s a powerful tool, and I think does a great job of cleaning up\nthe mess that is front-end dependency management. There&#39;s an endless\namount of plugins and extentions already out there, so we&#39;ll see\nwhere Webpack ends up in 6 months to a year.</p>\n<p>:: Cody Reichert</p>\n",
+		"content": "<p><a href=\"http://webpack.github.io/\">Webpack</a> is module bundler that generates\nstatic assets for almost all of your front-end dependencies, and their\ndependencies. It&#39;s primary use-case is for creating optimized bundles\nfor you Javascript, but it&#39;s quickly been extended to handle\neverything from fonts, images, and even a compilation step for\nCoffeeScript, LESS, and pretty much anything else you can think of.</p>\n<p>A common use case for Webpack is single page applications, but another\nlarge one is for <em>multi</em> page applications. Loading a large JavaScript\nbundle on every page is not ideal, so let&#39;s set up Webpack to create\nmultiple bundles for us.</p>\n<h2 id=\"a-basic-setup\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#a-basic-setup\">    <i class=\"oi oi-link-intact\"></i>  </a>A basic setup</h2><p>So let&#39;s say the front-end JavaScript/Stylesheets structure of our\nsite looks like this:</p>\n<pre><code class=\"hljs lang-text\">    └── static\n        ├── dist\n        └── src\n            ├── js\n            │   ├── Account.js\n            │   └── Front.js\n            ├── node_modules\n            ├── package.json\n            ├── stylesheets\n            │   └── main.scss\n            └── webpack.config.js</code></pre><p>Most importantly, We have a main Javascript file for Front and\nAccount.</p>\n<p>The goal is to have Webpack generate a <code>front-bundle.js</code> and\n<code>account-bundle.js</code> bundle. The advantage here is that new visitors\nwho aren&#39;t logged in don&#39;t need to load a huge JavaScript bundle\njust for visiting the homepage.</p>\n<h2 id=\"single-entry-point\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#single-entry-point\">    <i class=\"oi oi-link-intact\"></i>  </a>Single Entry Point</h2><p>With a goal in mind, we can dig into Webpack and see what it offers.\nBy default, Webpack makes you define an <code>entry-point</code>, basically the\nroot JavaScript file for you app:</p>\n<pre><code class=\"hljs lang-js\">    <span class=\"hljs-built_in\">module</span>.exports = {\n        entry: {\n            app: <span class=\"hljs-string\">\"./static/src/app.js\"</span>\n        },\n        output: {\n            path: <span class=\"hljs-string\">\"./static/dist\"</span>,\n            filename: <span class=\"hljs-string\">\"app-bundle.js\"</span>\n        }\n    };</code></pre><p>Our site structure doesn&#39;t match up with that. With this, we would\nhave to load all the account panel JavaScript on the homepage too -\nwhich is far from ideal.</p>\n<h2 id=\"multiple-entry-points\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#multiple-entry-points\">    <i class=\"oi oi-link-intact\"></i>  </a>Multiple Entry Points</h2><p>Webpack supports\n<a href=\"http://webpack.github.io/docs/multiple-entry-points.html\">multiple entry points</a>\nfor this reason. Here&#39;s a new configuration more suited to our site\nstructure:</p>\n<pre><code class=\"hljs lang-js\">     <span class=\"hljs-built_in\">module</span>.exports = {\n         entry: {\n             front: <span class=\"hljs-string\">\"./static/src/js/Front.js\"</span>,\n             account: <span class=\"hljs-string\">\"./static/src/js/Account.js\"</span>\n         },\n         output: {\n             path: <span class=\"hljs-string\">\"./static/dist\"</span>,\n             filename: <span class=\"hljs-string\">\"[name]-bundle.js\"</span>\n         }\n     };</code></pre><p>Much better. What&#39;s happening here is that Webpack is now looking\nfor both <code>Front.js</code> and <code>Account.js</code>, and will create a separate\nbundle, including the Webpack runtime and dependencies, for each of\nthose. In the output object, we export the bundle to <code>static/dist</code>\nand use the <code>[name]</code> variable to name each bundle.</p>\n<p>We end up with <code>/static/dist/front-bundle.js</code> and\n<code>/static/dist/account-bundle.js</code>. Great, so now we can the script\ntag to each page and we&#39;re done!</p>\n<p><strong>Almost...</strong></p>\n<p>Even though the bundles contain different code, there are a few\nlibraries/modules that we use in both Front and Account. So, what\nabout the use-case where a new user <em>does</em> end up logging in?</p>\n<p>We wouldn&#39;t want to make them re-download the same JavaScript!</p>\n<h2 id=\"common-chunks\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#common-chunks\">    <i class=\"oi oi-link-intact\"></i>  </a>Common Chunks</h2><p>While the solution above is good, it can be better.</p>\n<p>Ideally, we have Front-bundle.js and Account-bundle.js - but we\nalso have a Common-bundle.js that contains the modules we use\n<em>everywhere</em>. The browser will cache Common-bundle.js, so when a\nuser transitions from the Front to the Account, they&#39;ve already got\nmost of what they need.</p>\n<p>Say hello to the\n<a href=\"http://webpack.github.io/docs/list-of-plugins.html#1-commons-chunk-for-entries\">CommonChunksPlugin</a>*.</p>\n<h2 id=\"configuring-commonchunksplugin\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#configuring-commonchunksplugin\">    <i class=\"oi oi-link-intact\"></i>  </a>Configuring CommonChunksPlugin</h2><p>The common chunks plugin will look for and find all common modules\nand dependencies between your entry points, and automatically\nbundle them. All we need to is a little configuration:</p>\n<pre><code class=\"hljs lang-js\">      <span class=\"hljs-keyword\">let</span> commonsPlugin = <span class=\"hljs-keyword\">new</span> webpack.optimize.CommonsChunkPlugin(\n          <span class=\"hljs-string\">'commons'</span>,  <span class=\"hljs-comment\">// Just name it</span>\n          <span class=\"hljs-string\">'common.js'</span> <span class=\"hljs-comment\">// Name of the output file</span>\n                      <span class=\"hljs-comment\">// There are more options, but we don't need them yet.</span>\n      );\n\n      <span class=\"hljs-built_in\">module</span>.exports = {\n          entry: {\n              front: <span class=\"hljs-string\">\"./static/src/js/Front.js\"</span>,\n              account: <span class=\"hljs-string\">\"./static/src/js/Account.js\"</span>\n          },\n          output: {\n              path: <span class=\"hljs-string\">\"./static/dist\"</span>,\n              filename: <span class=\"hljs-string\">\"[name]-bundle.js\"</span>\n          },\n          plugins: [ commonsPlugin ]\n          <span class=\"hljs-comment\">// more config options</span>\n      };</code></pre><p>We initialize a new instance of the <code>CommonChunksPlugin</code> and pass\na couple parameters (annotated). After that, the Webpack will do\nthe rest.</p>\n<p>The <code>commons</code> bundle will also be output to <code>static/dist/</code>, with\nthe name that we gave it (<code>common.js</code>).</p>\n<h2 id=\"wrapping-up\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#wrapping-up\">    <i class=\"oi oi-link-intact\"></i>  </a>Wrapping Up</h2><p><em>Now</em> we&#39;re done! Remeber to add the <code>&lt;script&gt;</code> for both the entry\nbundle and the common bundle to the correct pages, and Webpack will\ndo the rest.</p>\n<p>It&#39;s a powerful tool, and I think does a great job of cleaning up\nthe mess that is front-end dependency management. There&#39;s an endless\namount of plugins and extentions already out there, so we&#39;ll see\nwhere Webpack ends up in 6 months to a year.</p>\n<p>:: Cody Reichert</p>\n",
 		"id": "webpack-entry-points"
 	};
 
-/***/ },
+/***/ }),
 /* 253 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	module.exports = {
 		"path": "wordpress-custom-post-type-template-options.md",
@@ -26806,13 +26928,13 @@ return /******/ (function(modules) { // webpackBootstrap
 			"date": "2014-12-28T00:00:00.000Z",
 			"title": "Adding Template Options to a Wordpress Custom Post Type"
 		},
-		"content": "<h2 id=\"about-the-task\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#about-the-task\">    <i class=\"fa fa-link\"></i>  </a>About the Task</h2><p>I&#39;ve recently been working on a Wordpress plugin for a new service\nwe&#39;ll be releasing at Reichert Brothers in the next couple of\nmonths. Although I haven&#39;t ever done too much in Wordpress, it\nallows for some really cool things and lends itself well to rapid\ndevelopment. I ran into a couple of problems when developing out\nthe plugin that I think might be valuable enough to get documented\nand help anyone else out that may come across the same issues.</p>\n<h3 id=\"background\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#background\">    <i class=\"fa fa-link\"></i>  </a>Background</h3><p>For the sake of making this easier to understand, I&#39;ll give a\nlittle background on what I needed my plugin to accomplish. In a\nnutshell, I ventured to write a &#39;simple&#39; plugin that would\nretrieve JSON from an external API, format it, and display it on a\nCustom Post Type Page I created. I wanted to write as few of my\nown custom templates as possible and inherit the templates that\nthe active theme makes available. The following things needed to\nbe achieved:</p>\n<ul>\n<li><em>Create a Custom Post Type</em>: to display the data from an API on\n our custom pages. (not covered here)</li>\n<li><em>Add meta boxes</em>: to filter the requests to our third part API\n (not covered here)</li>\n<li><em>Allow the user to pick a template</em>: for their Custom Post Type\n Pages. These templates should not be hardcoded and should be\n the same templates that the active theme offers (full-width,\n left-sidebar, etc).</li>\n</ul>\n<p>We&#39;ll be covering the third bullet - allowing the admin to pick a\ndifferent template for each of our Custom Post Type pages.</p>\n<h3 id=\"the-problem\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#the-problem\">    <i class=\"fa fa-link\"></i>  </a>The Problem</h3><p>When creating a new custom post type, Wordpress does allow for authors\nto add the <code>page-attributes</code> capabilities to their posts. But they don&#39;t\ninclude the Template dropdown (see fig 1.1). As a matter of fact, they\nexplicity hardcode it to only be allowed on <code>page</code> post types. Well, I\nwanted my users to be able to pick a template offered by their active\ntheme on a page-by-page basis.</p>\n<div style=\"text-align:center\">\n<img src=\"./images/wp-page-attributes.png\" alt=\"*fig 1.1*\"/>\n</div>\n\n<p>The most common solution I found was to register a setting for the\nadmin where they could pick one template to take effect on all of\nthose custom post type pages. But let&#39;s say my custom post type is for\nrestaraunt menus. Well, now the restaraunt needs two pages: one for\ntheir lunch menu and one for the dinner menu. The lunch menu is much\nsmaller and thus doesn&#39;t need a &#39;full-width&#39; layout. But the dinner\nmenu is large and the admin doesn&#39;t want anything else on that\npage. Now do you see why we might need the ability to choose a\ntemplate on a page-by-page basis. At least this was my though process.</p>\n<h2 id=\"diving-in\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#diving-in\">    <i class=\"fa fa-link\"></i>  </a>Diving In</h2><p>Well in the end, I ended up figuring out what I think is a decent\nsolution. I don&#39;t think I &#39;invented&#39; this solution, because I bet\nthere a many other people out there doing the same thing, but let&#39;s\ntake a look.</p>\n<h3 id=\"tl;dr-solution\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#tl;dr-solution\">    <i class=\"fa fa-link\"></i>  </a>TL;DR Solution</h3><p>We&#39;ll leverage the use of Meta Boxes to provide our own dropdown\nmenu. Then we&#39;ll save that setting in our <code>post_meta</code>, retrieve that\nsetting when our CPT pages are loaded, and show the correct\ntemplate. Pretty simple!</p>\n<h3 id=\"registering-the-meta-box\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#registering-the-meta-box\">    <i class=\"fa fa-link\"></i>  </a>Registering the Meta Box</h3><p>First, we&#39;ll start off by creating our meta box for our Custom Post\nType. If you&#39;ve never used meta boxes before, I recommend taking a\nlook at the\n<a href=\"WP Codex\nFunction Reference for =add_meta_box=\">http://codex.wordpress.org/Function_Reference/add_meta_box</a>. It gives some great examples\nand provides plenty of info on how to set one up. Keep in mind all of\nthis is from a plugin. I won&#39;t go into setting all of that up in this\nblog, but that&#39;s where we&#39;ll be working from.</p>\n<p>Let&#39;s set up our meta box! I&#39;ll touch on the important methods and\nsettings, but I&#39;ll leave out explaining the irrelevant ones. Our code:</p>\n<pre><code class=\"hljs lang-php\">  <span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">cptTemplateMetaBox</span><span class=\"hljs-params\">()</span> </span>{\n    add_meta_box(\n      <span class=\"hljs-string\">'cpt-template-meta-box'</span>\n      , __( <span class=\"hljs-string\">'Page Template'</span>, <span class=\"hljs-string\">'my-cpt-textdomain'</span> )\n      , <span class=\"hljs-string\">'postTemplateMetaBoxMarkup'</span>\n      , <span class=\"hljs-string\">'my-cpt-name'</span>\n      , <span class=\"hljs-string\">'side'</span>\n      , <span class=\"hljs-string\">'core'</span>\n    );\n  }\n  add_action( <span class=\"hljs-string\">'add_meta_boxes'</span>, <span class=\"hljs-string\">'cptTemplateMetaBox'</span> );</code></pre><p>Ok so we&#39;ve successfully created our Meta Box (even if it&#39;s not doing\nanything yet.) Let&#39;s go through these the <code>add_meta_box</code> function and\nsee what we&#39;re setting up.</p>\n<ul>\n<li><em>cpt-template-meta-box</em>: is simply the html ID that wordpress will give our meta box when it&#39;s put on the page.</li>\n<li><em>__( &#39;Page Template, &#39;cpt-textdomain&#39; )</em>: is the title that wordpress will give our meta box when it&#39;s rendered.</li>\n<li><em>postTemplateMetaBoxMarkup</em>: is the name of the function we&#39;re\nabout to define that will render the markup to go inside of our\nmeta box.</li>\n<li><em>my-cpt-name</em>: is the name of our custom post type for which to load our meta box.</li>\n<li><em>side</em>: is where our meta box will go. On the side, since that&#39;s\nwhere the normal one would be.</li>\n<li><em>core</em>: This field is the &#39;priority&#39; of the meta box.</li>\n<li><em>add_action</em>: registers the meta box.</li>\n</ul>\n<h3 id=\"rendering-the-meta-box\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#rendering-the-meta-box\">    <i class=\"fa fa-link\"></i>  </a>Rendering the Meta Box</h3><p>Now that we have registered our Meta Box, it&#39;s time to give it\nsome markup. Basically, we&#39;ll just generate one simple dropdown\nbox that has a list of all the currently available\ntemplates. Since this part is a little more detailed than the\nprevious code snippet, I commented inline what everything is\ndoing. Here&#39;s the code:</p>\n<pre><code class=\"hljs lang-php\">  <span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">postTemplateMetaBoxMarkup</span><span class=\"hljs-params\">( <span class=\"hljs-variable\">$post</span> )</span> </span>{\n      <span class=\"hljs-comment\">// create a nonce for verification (not covered in this post)</span>\n      wp_nonce_field( basename(<span class=\"hljs-keyword\">__FILE__</span>), <span class=\"hljs-string\">'cpt_template_meta_nonce'</span> );\n\n      <span class=\"hljs-comment\">// we get the cpt_page_template meta field from the database when we load</span>\n      <span class=\"hljs-comment\">// the admin panel. We haven't saved on yet, but when we do it'll be here.</span>\n      <span class=\"hljs-variable\">$current_template</span> = get_post_meta( <span class=\"hljs-variable\">$post</span>-&gt;ID, <span class=\"hljs-string\">'cpt_page_template'</span>, <span class=\"hljs-keyword\">true</span>);\n      <span class=\"hljs-comment\">// the get_page_templates() function retrieves all of the currently enabled</span>\n      <span class=\"hljs-comment\">// templates.</span>\n      <span class=\"hljs-variable\">$template_options</span> = get_page_templates();\n\n      <span class=\"hljs-comment\">// start creating our markup</span>\n      <span class=\"hljs-comment\">// first we create a label, the 'for' attribute should match the 'name' of the &lt;input&gt; we</span>\n      <span class=\"hljs-comment\">// want to save.</span>\n      <span class=\"hljs-variable\">$box_label</span> = <span class=\"hljs-string\">'&lt;label for=\"cpt_page_template\"&gt;Page Template&lt;/label&gt;'</span>;\n      <span class=\"hljs-comment\">// &lt;select&gt; wrapper around our options. notice the 'name' == 'for' from above</span>\n      <span class=\"hljs-variable\">$box_select</span> = <span class=\"hljs-string\">'&lt;select name=\"cpt_page_template\"&gt;'</span>;\n\n      <span class=\"hljs-comment\">// we give a Default option which will default to whatever the theme's default</span>\n      <span class=\"hljs-comment\">// template is.</span>\n      <span class=\"hljs-variable\">$box_default_option</span> = <span class=\"hljs-string\">'&lt;option value=\"\"&gt;Default Template&lt;/option&gt;'</span>;\n      <span class=\"hljs-variable\">$box_options</span> = <span class=\"hljs-string\">''</span>;\n\n      <span class=\"hljs-comment\">// here's the meat. For EACH of the available templates, create an &lt;option&gt; for it,</span>\n      <span class=\"hljs-comment\">// and put it in our &lt;select&gt; box.</span>\n      <span class=\"hljs-keyword\">foreach</span> (  <span class=\"hljs-variable\">$template_options</span> <span class=\"hljs-keyword\">as</span> <span class=\"hljs-variable\">$name</span>=&gt;<span class=\"hljs-variable\">$file</span> ) {\n          <span class=\"hljs-keyword\">if</span> ( <span class=\"hljs-variable\">$current_template</span> == <span class=\"hljs-variable\">$file</span> ) {\n              <span class=\"hljs-variable\">$box_options</span> .= <span class=\"hljs-string\">'&lt;option value=\"'</span> . <span class=\"hljs-variable\">$file</span> . <span class=\"hljs-string\">'\" selected=\"selected\"&gt;'</span> . <span class=\"hljs-variable\">$name</span> . <span class=\"hljs-string\">'&lt;/option&gt;'</span>;\n          } <span class=\"hljs-keyword\">else</span> {\n              <span class=\"hljs-variable\">$box_options</span> .= <span class=\"hljs-string\">'&lt;option value=\"'</span> . <span class=\"hljs-variable\">$file</span> . <span class=\"hljs-string\">'\"&gt;'</span> . <span class=\"hljs-variable\">$name</span> . <span class=\"hljs-string\">'&lt;/option&gt;'</span>;\n          }\n      }\n\n      <span class=\"hljs-comment\">// echo our markup (you should return it, but we won't do that here).</span>\n      <span class=\"hljs-keyword\">echo</span> <span class=\"hljs-variable\">$box_label</span>;\n      <span class=\"hljs-keyword\">echo</span> <span class=\"hljs-variable\">$box_select</span>;\n      <span class=\"hljs-keyword\">echo</span> <span class=\"hljs-variable\">$box_default_option</span>;\n      <span class=\"hljs-keyword\">echo</span> <span class=\"hljs-variable\">$box_options</span>;\n      <span class=\"hljs-keyword\">echo</span> <span class=\"hljs-string\">'&lt;/select&gt;'</span>;\n  }</code></pre><p>Note, we don&#39;t have to register this function with any hooks or\nfilters because it&#39;s called directory from the =add_meta_box=\nfunction. Now we should have a fully rendered meta box on our Custom\nPost Type Pages. It&#39;s not saving any settings yet, but now we can\nstart persisting the selection. (See fig 1.2)</p>\n<div style=\"text-align:center\">\n<img src=\"./images/wp-page-template-meta-box.png\" alt=\"*fig 1.2*\"/>\n</div>\n\n\n<h3 id=\"persisting-the-meta-box-data\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#persisting-the-meta-box-data\">    <i class=\"fa fa-link\"></i>  </a>Persisting the Meta Box Data</h3><p>Wordpress makes saving the data from the Meta Box really\nsimple. In our case, it&#39;s going to see our select box and look for\nthe =selected= option. Since this isn&#39;t a meta box tutorial, I&#39;ll\nleave out the details of how the saving works. All we need to know\nis that the field saved, and what the name of the saved field\nis. Here&#39;s the code:</p>\n<pre><code class=\"hljs lang-php\">  <span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">postTemplateMetaBoxSave</span><span class=\"hljs-params\">( <span class=\"hljs-variable\">$post_id</span> )</span> </span>{\n      <span class=\"hljs-variable\">$current_nonce</span> = <span class=\"hljs-variable\">$_POST</span>[<span class=\"hljs-string\">'cpt_template_meta_nonce'</span>];\n      <span class=\"hljs-variable\">$is_autosaving</span> = wp_is_post_autosave( <span class=\"hljs-variable\">$post_id</span> );\n      <span class=\"hljs-variable\">$is_revision</span>   = wp_is_post_revision( <span class=\"hljs-variable\">$post_id</span> );\n      <span class=\"hljs-variable\">$valid_nonce</span>   = ( <span class=\"hljs-keyword\">isset</span>( <span class=\"hljs-variable\">$current_nonce</span> ) &amp;&amp; wp_verify_nonce( <span class=\"hljs-variable\">$current_nonce</span>, basename( <span class=\"hljs-keyword\">__FILE__</span> ) ) ) ? <span class=\"hljs-string\">'true'</span> : <span class=\"hljs-string\">'false'</span>;\n\n      <span class=\"hljs-comment\">// if the post is autosaving, a revision, or the nonce is not valid</span>\n      <span class=\"hljs-comment\">// do not save any changed settings.</span>\n      <span class=\"hljs-keyword\">if</span> ( <span class=\"hljs-variable\">$is_autosaving</span> || <span class=\"hljs-variable\">$is_revision</span> || !<span class=\"hljs-variable\">$valid_nonce</span> ) {\n          <span class=\"hljs-keyword\">return</span>;\n      }\n\n      <span class=\"hljs-comment\">// Find our 'cpt_page_template' field in the POST request, and save it</span>\n      <span class=\"hljs-comment\">// when the post is updated. Note that the POST field matches the</span>\n      <span class=\"hljs-comment\">// name of the select box in the markup.</span>\n      <span class=\"hljs-variable\">$cpt_page_template</span> = <span class=\"hljs-variable\">$_POST</span>[<span class=\"hljs-string\">'cpt_page_template'</span>];\n      update_post_meta( <span class=\"hljs-variable\">$post_id</span>, <span class=\"hljs-string\">'cpt_page_template'</span>, <span class=\"hljs-variable\">$cpt_page_template</span> );\n  }\n  add_action( <span class=\"hljs-string\">'save_post'</span>, <span class=\"hljs-string\">'postTemplateMetaBoxSave'</span> );</code></pre><p>Add the end we hook into <code>save_post</code> with <code>add_action</code>, and run this\nfunction when the post is saved. This saves a field called\n<code>cpt_page_templates</code> in our database for this specific post. We can\naccess this field when the page is loaded.</p>\n<h3 id=\"retrieving-the-template-on-the-front-end\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#retrieving-the-template-on-the-front-end\">    <i class=\"fa fa-link\"></i>  </a>Retrieving the template on the front end</h3><p>This is the fun part. Now we have a shiny new meta box on our\nadmin post pages, and a field in the database for each post\ntelling us what template to show. So let&#39;s show it!</p>\n<p>Fortunately this part is also pretty straightforward, and only\nrequires a single function. Again I commented this inline since it\nflows pretty linearly. Let&#39;s take a look code:</p>\n<pre><code class=\"hljs lang-php\">  <span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">loadMyCptPostTemplate</span><span class=\"hljs-params\">()</span> </span>{\n      <span class=\"hljs-comment\">// get the queried object which contains the information we need to</span>\n      <span class=\"hljs-comment\">// access our post meta data</span>\n      <span class=\"hljs-variable\">$query_object</span> = get_queried_object();\n      <span class=\"hljs-variable\">$page_template</span> = get_post_meta( <span class=\"hljs-variable\">$query_object</span>-&gt;ID, <span class=\"hljs-string\">'cpt_page_template'</span>, <span class=\"hljs-keyword\">true</span> );\n\n      <span class=\"hljs-comment\">// the name of our custom post type for which we'll load a template</span>\n      <span class=\"hljs-variable\">$my_post_type</span> = <span class=\"hljs-string\">'my-cpt-name'</span>;\n\n      <span class=\"hljs-comment\">// create an array of default templates</span>\n      <span class=\"hljs-variable\">$default_templates</span>    = <span class=\"hljs-keyword\">array</span>();\n      <span class=\"hljs-variable\">$default_templates</span>[]  = <span class=\"hljs-string\">'single-{$query_object-&gt;post_type}-{$query_object-&gt;post_name}.php'</span>;\n      <span class=\"hljs-variable\">$default_templates</span>[]  = <span class=\"hljs-string\">'single-{$query_object-&gt;post_type}.php'</span>;\n      <span class=\"hljs-variable\">$default_templates</span>[]  = <span class=\"hljs-string\">'single.php'</span>;\n\n      <span class=\"hljs-comment\">// only apply our template to our CPT pages.</span>\n      <span class=\"hljs-keyword\">if</span> ( <span class=\"hljs-variable\">$query_object</span>-&gt;post_type == <span class=\"hljs-variable\">$my_post_type</span> ) {\n          <span class=\"hljs-comment\">// if the page_template isn't empty, set it as the default_template</span>\n          <span class=\"hljs-keyword\">if</span> ( !<span class=\"hljs-keyword\">empty</span>( <span class=\"hljs-variable\">$page_template</span> ) ) {\n              <span class=\"hljs-keyword\">echo</span> <span class=\"hljs-string\">'need to load '</span> . <span class=\"hljs-variable\">$page_template</span>;\n              <span class=\"hljs-variable\">$default_templates</span> = <span class=\"hljs-variable\">$page_template</span>;\n          }\n      }\n\n      <span class=\"hljs-comment\">// locate the template and return it</span>\n      <span class=\"hljs-variable\">$new_template</span> = locate_template( <span class=\"hljs-variable\">$default_templates</span>, <span class=\"hljs-keyword\">false</span> );\n      <span class=\"hljs-keyword\">return</span> <span class=\"hljs-variable\">$new_template</span>;\n  }\n  add_filter( <span class=\"hljs-string\">'single_template'</span>, <span class=\"hljs-string\">'loadMyCptPostTemplate'</span> );</code></pre><p>The <code>add_filter()</code> function at the end is important. It allows to hook\ninto the query and change the template to be displayed. In our case,\nwe intercept the query, run a function to see which template we had\nsaved, and load that instead. Also notice that we set a default\ntemplate. So if the post had no saved option, or something went wrong\nwhen trying to find it, it won&#39;t fail.</p>\n<h2 id=\"summary\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#summary\">    <i class=\"fa fa-link\"></i>  </a>Summary</h2><p>So that&#39;s about it. The new template should load with all of the\nregular post content in the body. The only problem I&#39;ve noticed is\nthat some themes won&#39;t show the page&#39;s content on more specialized\ntemplates (like a Contact Page template), but this is pretty much\nexpected and it has always worked for the more commen Full Width, Left\nSidebar, etc, templates. This code is a little out of context, but the\ngeneral idea is there and easy to adapt to any plugin.</p>\n<p>:: Cody Reichert</p>\n",
+		"content": "<h2 id=\"about-the-task\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#about-the-task\">    <i class=\"oi oi-link-intact\"></i>  </a>About the Task</h2><p>I&#39;ve recently been working on a Wordpress plugin for a new service\nwe&#39;ll be releasing at Reichert Brothers in the next couple of\nmonths. Although I haven&#39;t ever done too much in Wordpress, it\nallows for some really cool things and lends itself well to rapid\ndevelopment. I ran into a couple of problems when developing out\nthe plugin that I think might be valuable enough to get documented\nand help anyone else out that may come across the same issues.</p>\n<h3 id=\"background\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#background\">    <i class=\"oi oi-link-intact\"></i>  </a>Background</h3><p>For the sake of making this easier to understand, I&#39;ll give a\nlittle background on what I needed my plugin to accomplish. In a\nnutshell, I ventured to write a &#39;simple&#39; plugin that would\nretrieve JSON from an external API, format it, and display it on a\nCustom Post Type Page I created. I wanted to write as few of my\nown custom templates as possible and inherit the templates that\nthe active theme makes available. The following things needed to\nbe achieved:</p>\n<ul>\n<li><em>Create a Custom Post Type</em>: to display the data from an API on\n our custom pages. (not covered here)</li>\n<li><em>Add meta boxes</em>: to filter the requests to our third part API\n (not covered here)</li>\n<li><em>Allow the user to pick a template</em>: for their Custom Post Type\n Pages. These templates should not be hardcoded and should be\n the same templates that the active theme offers (full-width,\n left-sidebar, etc).</li>\n</ul>\n<p>We&#39;ll be covering the third bullet - allowing the admin to pick a\ndifferent template for each of our Custom Post Type pages.</p>\n<h3 id=\"the-problem\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#the-problem\">    <i class=\"oi oi-link-intact\"></i>  </a>The Problem</h3><p>When creating a new custom post type, Wordpress does allow for authors\nto add the <code>page-attributes</code> capabilities to their posts. But they don&#39;t\ninclude the Template dropdown (see fig 1.1). As a matter of fact, they\nexplicity hardcode it to only be allowed on <code>page</code> post types. Well, I\nwanted my users to be able to pick a template offered by their active\ntheme on a page-by-page basis.</p>\n<div style=\"text-align:center\">\n<img src=\"./images/wp-page-attributes.png\" alt=\"*fig 1.1*\"/>\n</div>\n\n<p>The most common solution I found was to register a setting for the\nadmin where they could pick one template to take effect on all of\nthose custom post type pages. But let&#39;s say my custom post type is for\nrestaraunt menus. Well, now the restaraunt needs two pages: one for\ntheir lunch menu and one for the dinner menu. The lunch menu is much\nsmaller and thus doesn&#39;t need a &#39;full-width&#39; layout. But the dinner\nmenu is large and the admin doesn&#39;t want anything else on that\npage. Now do you see why we might need the ability to choose a\ntemplate on a page-by-page basis. At least this was my though process.</p>\n<h2 id=\"diving-in\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#diving-in\">    <i class=\"oi oi-link-intact\"></i>  </a>Diving In</h2><p>Well in the end, I ended up figuring out what I think is a decent\nsolution. I don&#39;t think I &#39;invented&#39; this solution, because I bet\nthere a many other people out there doing the same thing, but let&#39;s\ntake a look.</p>\n<h3 id=\"tl;dr-solution\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#tl;dr-solution\">    <i class=\"oi oi-link-intact\"></i>  </a>TL;DR Solution</h3><p>We&#39;ll leverage the use of Meta Boxes to provide our own dropdown\nmenu. Then we&#39;ll save that setting in our <code>post_meta</code>, retrieve that\nsetting when our CPT pages are loaded, and show the correct\ntemplate. Pretty simple!</p>\n<h3 id=\"registering-the-meta-box\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#registering-the-meta-box\">    <i class=\"oi oi-link-intact\"></i>  </a>Registering the Meta Box</h3><p>First, we&#39;ll start off by creating our meta box for our Custom Post\nType. If you&#39;ve never used meta boxes before, I recommend taking a\nlook at the\n<a href=\"WP Codex\nFunction Reference for =add_meta_box=\">http://codex.wordpress.org/Function_Reference/add_meta_box</a>. It gives some great examples\nand provides plenty of info on how to set one up. Keep in mind all of\nthis is from a plugin. I won&#39;t go into setting all of that up in this\nblog, but that&#39;s where we&#39;ll be working from.</p>\n<p>Let&#39;s set up our meta box! I&#39;ll touch on the important methods and\nsettings, but I&#39;ll leave out explaining the irrelevant ones. Our code:</p>\n<pre><code class=\"hljs lang-php\">  <span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">cptTemplateMetaBox</span><span class=\"hljs-params\">()</span> </span>{\n    add_meta_box(\n      <span class=\"hljs-string\">'cpt-template-meta-box'</span>\n      , __( <span class=\"hljs-string\">'Page Template'</span>, <span class=\"hljs-string\">'my-cpt-textdomain'</span> )\n      , <span class=\"hljs-string\">'postTemplateMetaBoxMarkup'</span>\n      , <span class=\"hljs-string\">'my-cpt-name'</span>\n      , <span class=\"hljs-string\">'side'</span>\n      , <span class=\"hljs-string\">'core'</span>\n    );\n  }\n  add_action( <span class=\"hljs-string\">'add_meta_boxes'</span>, <span class=\"hljs-string\">'cptTemplateMetaBox'</span> );</code></pre><p>Ok so we&#39;ve successfully created our Meta Box (even if it&#39;s not doing\nanything yet.) Let&#39;s go through these the <code>add_meta_box</code> function and\nsee what we&#39;re setting up.</p>\n<ul>\n<li><em>cpt-template-meta-box</em>: is simply the html ID that wordpress will give our meta box when it&#39;s put on the page.</li>\n<li><em>__( &#39;Page Template, &#39;cpt-textdomain&#39; )</em>: is the title that wordpress will give our meta box when it&#39;s rendered.</li>\n<li><em>postTemplateMetaBoxMarkup</em>: is the name of the function we&#39;re\nabout to define that will render the markup to go inside of our\nmeta box.</li>\n<li><em>my-cpt-name</em>: is the name of our custom post type for which to load our meta box.</li>\n<li><em>side</em>: is where our meta box will go. On the side, since that&#39;s\nwhere the normal one would be.</li>\n<li><em>core</em>: This field is the &#39;priority&#39; of the meta box.</li>\n<li><em>add_action</em>: registers the meta box.</li>\n</ul>\n<h3 id=\"rendering-the-meta-box\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#rendering-the-meta-box\">    <i class=\"oi oi-link-intact\"></i>  </a>Rendering the Meta Box</h3><p>Now that we have registered our Meta Box, it&#39;s time to give it\nsome markup. Basically, we&#39;ll just generate one simple dropdown\nbox that has a list of all the currently available\ntemplates. Since this part is a little more detailed than the\nprevious code snippet, I commented inline what everything is\ndoing. Here&#39;s the code:</p>\n<pre><code class=\"hljs lang-php\">  <span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">postTemplateMetaBoxMarkup</span><span class=\"hljs-params\">( <span class=\"hljs-variable\">$post</span> )</span> </span>{\n      <span class=\"hljs-comment\">// create a nonce for verification (not covered in this post)</span>\n      wp_nonce_field( basename(<span class=\"hljs-keyword\">__FILE__</span>), <span class=\"hljs-string\">'cpt_template_meta_nonce'</span> );\n\n      <span class=\"hljs-comment\">// we get the cpt_page_template meta field from the database when we load</span>\n      <span class=\"hljs-comment\">// the admin panel. We haven't saved on yet, but when we do it'll be here.</span>\n      <span class=\"hljs-variable\">$current_template</span> = get_post_meta( <span class=\"hljs-variable\">$post</span>-&gt;ID, <span class=\"hljs-string\">'cpt_page_template'</span>, <span class=\"hljs-keyword\">true</span>);\n      <span class=\"hljs-comment\">// the get_page_templates() function retrieves all of the currently enabled</span>\n      <span class=\"hljs-comment\">// templates.</span>\n      <span class=\"hljs-variable\">$template_options</span> = get_page_templates();\n\n      <span class=\"hljs-comment\">// start creating our markup</span>\n      <span class=\"hljs-comment\">// first we create a label, the 'for' attribute should match the 'name' of the &lt;input&gt; we</span>\n      <span class=\"hljs-comment\">// want to save.</span>\n      <span class=\"hljs-variable\">$box_label</span> = <span class=\"hljs-string\">'&lt;label for=\"cpt_page_template\"&gt;Page Template&lt;/label&gt;'</span>;\n      <span class=\"hljs-comment\">// &lt;select&gt; wrapper around our options. notice the 'name' == 'for' from above</span>\n      <span class=\"hljs-variable\">$box_select</span> = <span class=\"hljs-string\">'&lt;select name=\"cpt_page_template\"&gt;'</span>;\n\n      <span class=\"hljs-comment\">// we give a Default option which will default to whatever the theme's default</span>\n      <span class=\"hljs-comment\">// template is.</span>\n      <span class=\"hljs-variable\">$box_default_option</span> = <span class=\"hljs-string\">'&lt;option value=\"\"&gt;Default Template&lt;/option&gt;'</span>;\n      <span class=\"hljs-variable\">$box_options</span> = <span class=\"hljs-string\">''</span>;\n\n      <span class=\"hljs-comment\">// here's the meat. For EACH of the available templates, create an &lt;option&gt; for it,</span>\n      <span class=\"hljs-comment\">// and put it in our &lt;select&gt; box.</span>\n      <span class=\"hljs-keyword\">foreach</span> (  <span class=\"hljs-variable\">$template_options</span> <span class=\"hljs-keyword\">as</span> <span class=\"hljs-variable\">$name</span>=&gt;<span class=\"hljs-variable\">$file</span> ) {\n          <span class=\"hljs-keyword\">if</span> ( <span class=\"hljs-variable\">$current_template</span> == <span class=\"hljs-variable\">$file</span> ) {\n              <span class=\"hljs-variable\">$box_options</span> .= <span class=\"hljs-string\">'&lt;option value=\"'</span> . <span class=\"hljs-variable\">$file</span> . <span class=\"hljs-string\">'\" selected=\"selected\"&gt;'</span> . <span class=\"hljs-variable\">$name</span> . <span class=\"hljs-string\">'&lt;/option&gt;'</span>;\n          } <span class=\"hljs-keyword\">else</span> {\n              <span class=\"hljs-variable\">$box_options</span> .= <span class=\"hljs-string\">'&lt;option value=\"'</span> . <span class=\"hljs-variable\">$file</span> . <span class=\"hljs-string\">'\"&gt;'</span> . <span class=\"hljs-variable\">$name</span> . <span class=\"hljs-string\">'&lt;/option&gt;'</span>;\n          }\n      }\n\n      <span class=\"hljs-comment\">// echo our markup (you should return it, but we won't do that here).</span>\n      <span class=\"hljs-keyword\">echo</span> <span class=\"hljs-variable\">$box_label</span>;\n      <span class=\"hljs-keyword\">echo</span> <span class=\"hljs-variable\">$box_select</span>;\n      <span class=\"hljs-keyword\">echo</span> <span class=\"hljs-variable\">$box_default_option</span>;\n      <span class=\"hljs-keyword\">echo</span> <span class=\"hljs-variable\">$box_options</span>;\n      <span class=\"hljs-keyword\">echo</span> <span class=\"hljs-string\">'&lt;/select&gt;'</span>;\n  }</code></pre><p>Note, we don&#39;t have to register this function with any hooks or\nfilters because it&#39;s called directory from the =add_meta_box=\nfunction. Now we should have a fully rendered meta box on our Custom\nPost Type Pages. It&#39;s not saving any settings yet, but now we can\nstart persisting the selection. (See fig 1.2)</p>\n<div style=\"text-align:center\">\n<img src=\"./images/wp-page-template-meta-box.png\" alt=\"*fig 1.2*\"/>\n</div>\n\n\n<h3 id=\"persisting-the-meta-box-data\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#persisting-the-meta-box-data\">    <i class=\"oi oi-link-intact\"></i>  </a>Persisting the Meta Box Data</h3><p>Wordpress makes saving the data from the Meta Box really\nsimple. In our case, it&#39;s going to see our select box and look for\nthe =selected= option. Since this isn&#39;t a meta box tutorial, I&#39;ll\nleave out the details of how the saving works. All we need to know\nis that the field saved, and what the name of the saved field\nis. Here&#39;s the code:</p>\n<pre><code class=\"hljs lang-php\">  <span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">postTemplateMetaBoxSave</span><span class=\"hljs-params\">( <span class=\"hljs-variable\">$post_id</span> )</span> </span>{\n      <span class=\"hljs-variable\">$current_nonce</span> = <span class=\"hljs-variable\">$_POST</span>[<span class=\"hljs-string\">'cpt_template_meta_nonce'</span>];\n      <span class=\"hljs-variable\">$is_autosaving</span> = wp_is_post_autosave( <span class=\"hljs-variable\">$post_id</span> );\n      <span class=\"hljs-variable\">$is_revision</span>   = wp_is_post_revision( <span class=\"hljs-variable\">$post_id</span> );\n      <span class=\"hljs-variable\">$valid_nonce</span>   = ( <span class=\"hljs-keyword\">isset</span>( <span class=\"hljs-variable\">$current_nonce</span> ) &amp;&amp; wp_verify_nonce( <span class=\"hljs-variable\">$current_nonce</span>, basename( <span class=\"hljs-keyword\">__FILE__</span> ) ) ) ? <span class=\"hljs-string\">'true'</span> : <span class=\"hljs-string\">'false'</span>;\n\n      <span class=\"hljs-comment\">// if the post is autosaving, a revision, or the nonce is not valid</span>\n      <span class=\"hljs-comment\">// do not save any changed settings.</span>\n      <span class=\"hljs-keyword\">if</span> ( <span class=\"hljs-variable\">$is_autosaving</span> || <span class=\"hljs-variable\">$is_revision</span> || !<span class=\"hljs-variable\">$valid_nonce</span> ) {\n          <span class=\"hljs-keyword\">return</span>;\n      }\n\n      <span class=\"hljs-comment\">// Find our 'cpt_page_template' field in the POST request, and save it</span>\n      <span class=\"hljs-comment\">// when the post is updated. Note that the POST field matches the</span>\n      <span class=\"hljs-comment\">// name of the select box in the markup.</span>\n      <span class=\"hljs-variable\">$cpt_page_template</span> = <span class=\"hljs-variable\">$_POST</span>[<span class=\"hljs-string\">'cpt_page_template'</span>];\n      update_post_meta( <span class=\"hljs-variable\">$post_id</span>, <span class=\"hljs-string\">'cpt_page_template'</span>, <span class=\"hljs-variable\">$cpt_page_template</span> );\n  }\n  add_action( <span class=\"hljs-string\">'save_post'</span>, <span class=\"hljs-string\">'postTemplateMetaBoxSave'</span> );</code></pre><p>Add the end we hook into <code>save_post</code> with <code>add_action</code>, and run this\nfunction when the post is saved. This saves a field called\n<code>cpt_page_templates</code> in our database for this specific post. We can\naccess this field when the page is loaded.</p>\n<h3 id=\"retrieving-the-template-on-the-front-end\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#retrieving-the-template-on-the-front-end\">    <i class=\"oi oi-link-intact\"></i>  </a>Retrieving the template on the front end</h3><p>This is the fun part. Now we have a shiny new meta box on our\nadmin post pages, and a field in the database for each post\ntelling us what template to show. So let&#39;s show it!</p>\n<p>Fortunately this part is also pretty straightforward, and only\nrequires a single function. Again I commented this inline since it\nflows pretty linearly. Let&#39;s take a look code:</p>\n<pre><code class=\"hljs lang-php\">  <span class=\"hljs-function\"><span class=\"hljs-keyword\">function</span> <span class=\"hljs-title\">loadMyCptPostTemplate</span><span class=\"hljs-params\">()</span> </span>{\n      <span class=\"hljs-comment\">// get the queried object which contains the information we need to</span>\n      <span class=\"hljs-comment\">// access our post meta data</span>\n      <span class=\"hljs-variable\">$query_object</span> = get_queried_object();\n      <span class=\"hljs-variable\">$page_template</span> = get_post_meta( <span class=\"hljs-variable\">$query_object</span>-&gt;ID, <span class=\"hljs-string\">'cpt_page_template'</span>, <span class=\"hljs-keyword\">true</span> );\n\n      <span class=\"hljs-comment\">// the name of our custom post type for which we'll load a template</span>\n      <span class=\"hljs-variable\">$my_post_type</span> = <span class=\"hljs-string\">'my-cpt-name'</span>;\n\n      <span class=\"hljs-comment\">// create an array of default templates</span>\n      <span class=\"hljs-variable\">$default_templates</span>    = <span class=\"hljs-keyword\">array</span>();\n      <span class=\"hljs-variable\">$default_templates</span>[]  = <span class=\"hljs-string\">'single-{$query_object-&gt;post_type}-{$query_object-&gt;post_name}.php'</span>;\n      <span class=\"hljs-variable\">$default_templates</span>[]  = <span class=\"hljs-string\">'single-{$query_object-&gt;post_type}.php'</span>;\n      <span class=\"hljs-variable\">$default_templates</span>[]  = <span class=\"hljs-string\">'single.php'</span>;\n\n      <span class=\"hljs-comment\">// only apply our template to our CPT pages.</span>\n      <span class=\"hljs-keyword\">if</span> ( <span class=\"hljs-variable\">$query_object</span>-&gt;post_type == <span class=\"hljs-variable\">$my_post_type</span> ) {\n          <span class=\"hljs-comment\">// if the page_template isn't empty, set it as the default_template</span>\n          <span class=\"hljs-keyword\">if</span> ( !<span class=\"hljs-keyword\">empty</span>( <span class=\"hljs-variable\">$page_template</span> ) ) {\n              <span class=\"hljs-keyword\">echo</span> <span class=\"hljs-string\">'need to load '</span> . <span class=\"hljs-variable\">$page_template</span>;\n              <span class=\"hljs-variable\">$default_templates</span> = <span class=\"hljs-variable\">$page_template</span>;\n          }\n      }\n\n      <span class=\"hljs-comment\">// locate the template and return it</span>\n      <span class=\"hljs-variable\">$new_template</span> = locate_template( <span class=\"hljs-variable\">$default_templates</span>, <span class=\"hljs-keyword\">false</span> );\n      <span class=\"hljs-keyword\">return</span> <span class=\"hljs-variable\">$new_template</span>;\n  }\n  add_filter( <span class=\"hljs-string\">'single_template'</span>, <span class=\"hljs-string\">'loadMyCptPostTemplate'</span> );</code></pre><p>The <code>add_filter()</code> function at the end is important. It allows to hook\ninto the query and change the template to be displayed. In our case,\nwe intercept the query, run a function to see which template we had\nsaved, and load that instead. Also notice that we set a default\ntemplate. So if the post had no saved option, or something went wrong\nwhen trying to find it, it won&#39;t fail.</p>\n<h2 id=\"summary\">  <a class=\"heading-anchor\" style=\"display:none;\" href=\"#summary\">    <i class=\"oi oi-link-intact\"></i>  </a>Summary</h2><p>So that&#39;s about it. The new template should load with all of the\nregular post content in the body. The only problem I&#39;ve noticed is\nthat some themes won&#39;t show the page&#39;s content on more specialized\ntemplates (like a Contact Page template), but this is pretty much\nexpected and it has always worked for the more commen Full Width, Left\nSidebar, etc, templates. This code is a little out of context, but the\ngeneral idea is there and easy to adapt to any plugin.</p>\n<p>:: Cody Reichert</p>\n",
 		"id": "wordpress-custom-post-type-template-options"
 	};
 
-/***/ },
+/***/ }),
 /* 254 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -26846,14 +26968,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * A blog preview for the blog roll. Pretty much the same as a
 	 * BlogPost, but without comments, etc
 	 */
-
 	var BlogPreview = function (_React$Component) {
 	    _inherits(BlogPreview, _React$Component);
 
 	    function BlogPreview() {
 	        _classCallCheck(this, BlogPreview);
 
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(BlogPreview).apply(this, arguments));
+	        return _possibleConstructorReturn(this, (BlogPreview.__proto__ || Object.getPrototypeOf(BlogPreview)).apply(this, arguments));
 	    }
 
 	    _createClass(BlogPreview, [{
@@ -26890,9 +27011,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	exports.default = BlogPreview;
 
-/***/ },
+/***/ }),
 /* 255 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -26936,14 +27057,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * A single blog post page. Gets route param 'id'
 	 * in it's props, and finds the correct blog to render
 	 */
-
 	var BlogPost = function (_React$Component) {
 	    _inherits(BlogPost, _React$Component);
 
 	    function BlogPost() {
 	        _classCallCheck(this, BlogPost);
 
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(BlogPost).apply(this, arguments));
+	        return _possibleConstructorReturn(this, (BlogPost.__proto__ || Object.getPrototypeOf(BlogPost)).apply(this, arguments));
 	    }
 
 	    _createClass(BlogPost, [{
@@ -26990,9 +27110,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	function BlogPostMeta(_ref2) {
-	    var meta = _ref2.meta;
-	    var _ref2$backToBlogs = _ref2.backToBlogs;
-	    var backToBlogs = _ref2$backToBlogs === undefined ? true : _ref2$backToBlogs;
+	    var meta = _ref2.meta,
+	        _ref2$backToBlogs = _ref2.backToBlogs,
+	        backToBlogs = _ref2$backToBlogs === undefined ? true : _ref2$backToBlogs;
 
 	    return _react2.default.createElement(
 	        'small',
@@ -27027,9 +27147,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    );
 	}
 
-/***/ },
+/***/ }),
 /* 256 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	"use strict";
 
@@ -27046,17 +27166,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return month + "/" + day + "/" + year;
 	}
 
-/***/ },
+/***/ }),
 /* 257 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	module.exports = __webpack_require__(258);
 
-/***/ },
+/***/ }),
 /* 258 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
@@ -27156,10 +27276,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.loadDisqus();
 	  },
 
-	  shouldComponentUpdate: function shouldComponentUpdate(newProps) {
-	    return newProps.id !== this.props.id || newProps.url !== this.props.url;
-	  },
-
 	  componentDidUpdate: function componentDidUpdate() {
 	    this.loadDisqus();
 	  },
@@ -27186,12 +27302,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      _react2['default'].createElement(
 	        'a',
 	        { href: 'http://disqus.com', className: 'dsq-brlink' },
-	        'blog comments powered by',
+	        'Blog comments powered by ',
 	        _react2['default'].createElement(
 	          'span',
 	          { className: 'logo-disqus' },
 	          'Disqus'
-	        )
+	        ),
+	        '.'
 	      )
 	    );
 	  },
@@ -27248,22 +27365,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 
-/***/ },
+/***/ }),
 /* 259 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
-/***/ },
+/***/ }),
 /* 260 */,
 /* 261 */,
 /* 262 */,
 /* 263 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
-/***/ },
+/***/ }),
 /* 264 */,
 /* 265 */,
 /* 266 */,
@@ -27272,14 +27389,14 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 269 */,
 /* 270 */,
 /* 271 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
-/***/ },
+/***/ }),
 /* 272 */,
 /* 273 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	var map = {
 		"./chrome-canary-screenshot.png": 274,
@@ -27300,25 +27417,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	webpackContext.id = 273;
 
 
-/***/ },
+/***/ }),
 /* 274 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "/images/chrome-canary-screenshot.png";
 
-/***/ },
+/***/ }),
 /* 275 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "/images/wp-page-attributes.png";
 
-/***/ },
+/***/ }),
 /* 276 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "/images/wp-page-template-meta-box.png";
 
-/***/ }
+/***/ })
 /******/ ])
 });
 ;

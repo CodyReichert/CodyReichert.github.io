@@ -16,7 +16,7 @@ CoffeeScript, LESS, and pretty much anything else you can think of.</p>
 large one is for <em>multi</em> page applications. Loading a large JavaScript
 bundle on every page is not ideal, so let&#39;s set up Webpack to create
 multiple bundles for us.</p>
-<h2 id="a-basic-setup">  <a class="heading-anchor" style="display:none;" href="#a-basic-setup">    <i class="fa fa-link"></i>  </a>A basic setup</h2><p>So let&#39;s say the front-end JavaScript/Stylesheets structure of our
+<h2 id="a-basic-setup">  <a class="heading-anchor" style="display:none;" href="#a-basic-setup">    <i class="oi oi-link-intact"></i>  </a>A basic setup</h2><p>So let&#39;s say the front-end JavaScript/Stylesheets structure of our
 site looks like this:</p>
 <pre><code class="hljs lang-text">    └── static
         ├── dist
@@ -34,7 +34,7 @@ Account.</p>
 <code>account-bundle.js</code> bundle. The advantage here is that new visitors
 who aren&#39;t logged in don&#39;t need to load a huge JavaScript bundle
 just for visiting the homepage.</p>
-<h2 id="single-entry-point">  <a class="heading-anchor" style="display:none;" href="#single-entry-point">    <i class="fa fa-link"></i>  </a>Single Entry Point</h2><p>With a goal in mind, we can dig into Webpack and see what it offers.
+<h2 id="single-entry-point">  <a class="heading-anchor" style="display:none;" href="#single-entry-point">    <i class="oi oi-link-intact"></i>  </a>Single Entry Point</h2><p>With a goal in mind, we can dig into Webpack and see what it offers.
 By default, Webpack makes you define an <code>entry-point</code>, basically the
 root JavaScript file for you app:</p>
 <pre><code class="hljs lang-js">    <span class="hljs-built_in">module</span>.exports = {
@@ -48,7 +48,7 @@ root JavaScript file for you app:</p>
     };</code></pre><p>Our site structure doesn&#39;t match up with that. With this, we would
 have to load all the account panel JavaScript on the homepage too -
 which is far from ideal.</p>
-<h2 id="multiple-entry-points">  <a class="heading-anchor" style="display:none;" href="#multiple-entry-points">    <i class="fa fa-link"></i>  </a>Multiple Entry Points</h2><p>Webpack supports
+<h2 id="multiple-entry-points">  <a class="heading-anchor" style="display:none;" href="#multiple-entry-points">    <i class="oi oi-link-intact"></i>  </a>Multiple Entry Points</h2><p>Webpack supports
 <a href="http://webpack.github.io/docs/multiple-entry-points.html">multiple entry points</a>
 for this reason. Here&#39;s a new configuration more suited to our site
 structure:</p>
@@ -74,7 +74,7 @@ tag to each page and we&#39;re done!</p>
 libraries/modules that we use in both Front and Account. So, what
 about the use-case where a new user <em>does</em> end up logging in?</p>
 <p>We wouldn&#39;t want to make them re-download the same JavaScript!</p>
-<h2 id="common-chunks">  <a class="heading-anchor" style="display:none;" href="#common-chunks">    <i class="fa fa-link"></i>  </a>Common Chunks</h2><p>While the solution above is good, it can be better.</p>
+<h2 id="common-chunks">  <a class="heading-anchor" style="display:none;" href="#common-chunks">    <i class="oi oi-link-intact"></i>  </a>Common Chunks</h2><p>While the solution above is good, it can be better.</p>
 <p>Ideally, we have Front-bundle.js and Account-bundle.js - but we
 also have a Common-bundle.js that contains the modules we use
 <em>everywhere</em>. The browser will cache Common-bundle.js, so when a
@@ -82,7 +82,7 @@ user transitions from the Front to the Account, they&#39;ve already got
 most of what they need.</p>
 <p>Say hello to the
 <a href="http://webpack.github.io/docs/list-of-plugins.html#1-commons-chunk-for-entries">CommonChunksPlugin</a>*.</p>
-<h2 id="configuring-commonchunksplugin">  <a class="heading-anchor" style="display:none;" href="#configuring-commonchunksplugin">    <i class="fa fa-link"></i>  </a>Configuring CommonChunksPlugin</h2><p>The common chunks plugin will look for and find all common modules
+<h2 id="configuring-commonchunksplugin">  <a class="heading-anchor" style="display:none;" href="#configuring-commonchunksplugin">    <i class="oi oi-link-intact"></i>  </a>Configuring CommonChunksPlugin</h2><p>The common chunks plugin will look for and find all common modules
 and dependencies between your entry points, and automatically
 bundle them. All we need to is a little configuration:</p>
 <pre><code class="hljs lang-js">      <span class="hljs-keyword">let</span> commonsPlugin = <span class="hljs-keyword">new</span> webpack.optimize.CommonsChunkPlugin(
@@ -107,7 +107,7 @@ a couple parameters (annotated). After that, the Webpack will do
 the rest.</p>
 <p>The <code>commons</code> bundle will also be output to <code>static/dist/</code>, with
 the name that we gave it (<code>common.js</code>).</p>
-<h2 id="wrapping-up">  <a class="heading-anchor" style="display:none;" href="#wrapping-up">    <i class="fa fa-link"></i>  </a>Wrapping Up</h2><p><em>Now</em> we&#39;re done! Remeber to add the <code>&lt;script&gt;</code> for both the entry
+<h2 id="wrapping-up">  <a class="heading-anchor" style="display:none;" href="#wrapping-up">    <i class="oi oi-link-intact"></i>  </a>Wrapping Up</h2><p><em>Now</em> we&#39;re done! Remeber to add the <code>&lt;script&gt;</code> for both the entry
 bundle and the common bundle to the correct pages, and Webpack will
 do the rest.</p>
 <p>It&#39;s a powerful tool, and I think does a great job of cleaning up
@@ -115,7 +115,7 @@ the mess that is front-end dependency management. There&#39;s an endless
 amount of plugins and extentions already out there, so we&#39;ll see
 where Webpack ends up in 6 months to a year.</p>
 <p>:: Cody Reichert</p>
-</div><div title="Webpack: Create Multiple Bundles Using Entry Points"><div id="disqus_thread"></div><noscript><span>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></span></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by<span class="logo-disqus">Disqus</span></a></div></div></div><br/><footer class="navbar navbar-full navbar-dark bg-inverse"><div class="container"><div id="navbar"><ul class="nav navbar-nav pull-md-left"><li class="nav-item"><span class="nav-link">Cody Reichert - Copyright © 2016</span></li></ul><ul class="nav navbar-nav pull-md-right"><li class="nav-item"><a class="nav-link" target="_blank" href="https://github.com/CodyReichert"><i class="fa fa-github-alt" style="margin-right:5px;"></i></a></li><li class="nav-item"><a class="nav-link" target="_blank" href="https://twitter.com/CodyReichert"><i class="fa fa-twitter" style="margin-right:5px;"></i></a></li></ul></div></div></footer></div>
+</div><div title="Webpack: Create Multiple Bundles Using Entry Points"><div id="disqus_thread"></div><noscript><span>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></span></noscript><a href="http://disqus.com" class="dsq-brlink">Blog comments powered by <span class="logo-disqus">Disqus</span>.</a></div></div></div><br/><footer class="navbar navbar-full navbar-dark bg-inverse"><div class="container"><div id="navbar"><ul class="nav navbar-nav pull-md-left"><li class="nav-item"><span class="nav-link">Cody Reichert - Copyright © 2016</span></li></ul><ul class="nav navbar-nav pull-md-right"><li class="nav-item"><a class="nav-link" target="_blank" href="https://github.com/CodyReichert"><i class="fa fa-github-alt" style="margin-right:5px;"></i></a></li><li class="nav-item"><a class="nav-link" target="_blank" href="https://twitter.com/CodyReichert"><i class="fa fa-twitter" style="margin-right:5px;"></i></a></li></ul></div></div></footer></div>
     <script type="text/javascript" src="/index.js">
     </script>
   </body>

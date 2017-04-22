@@ -17,7 +17,7 @@ check how our API&#39;s are holding up. Naturally, I wanted to automate
 some of that and send out an email when reports are generated.</p>
 <p>In case you don&#39;t want to read the rest:
 <a href="https://github.com/CodyReichert/cl-ses">Here&#39;s the code</a></p>
-<h2 id="options">  <a class="heading-anchor" style="display:none;" href="#options">    <i class="fa fa-link"></i>  </a>Options</h2><p>There are a few AWS libraries out there for Common Lisp<sup>1</sup>, but I
+<h2 id="options">  <a class="heading-anchor" style="display:none;" href="#options">    <i class="oi oi-link-intact"></i>  </a>Options</h2><p>There are a few AWS libraries out there for Common Lisp<sup>1</sup>, but I
 couldn&#39;t find one that supported SES - except for
 <a href="http://www.obrezan.com/lisp/aws-ses/">aws-ses</a>. The problem I had
 with aws-ses is that it only works with LispWorks - which is perfectly
@@ -26,7 +26,7 @@ flexibility.</p>
 <p>One a side note, if you <em>are</em> using LispWorks - <code>aws-ses</code> is really
 cool since the author wrote his own hmac, sha1, and base64 algorithms
 with 0 dependencies.</p>
-<h2 id="cl-ses">  <a class="heading-anchor" style="display:none;" href="#cl-ses">    <i class="fa fa-link"></i>  </a>CL-SES</h2><p>The app I wanted to send email from was running in SBCL - so I decided
+<h2 id="cl-ses">  <a class="heading-anchor" style="display:none;" href="#cl-ses">    <i class="oi oi-link-intact"></i>  </a>CL-SES</h2><p>The app I wanted to send email from was running in SBCL - so I decided
 a port of aws-ses would be the right thing to do.</p>
 <p>I put up <a href="https://github.com/CodyReichert/cl-ses">cl-ses</a> on GithHub
 the other day after porting all of the LispWorks specific
@@ -38,7 +38,7 @@ between Lisp implementations.</p>
 <p>Losing the &quot;no dependency&quot; badge and adding the &quot;1 dependency, but
 multiple implementations&quot; badge was the best route - especially since
 there seems to be a lack of any high level email libraries.</p>
-<h3 id="usage">  <a class="heading-anchor" style="display:none;" href="#usage">    <i class="fa fa-link"></i>  </a>Usage</h3><p>I changed up a bit of code in order to get the signing algorthims to
+<h3 id="usage">  <a class="heading-anchor" style="display:none;" href="#usage">    <i class="oi oi-link-intact"></i>  </a>Usage</h3><p>I changed up a bit of code in order to get the signing algorthims to
 work with Drakma&#39;s headers, but the library stayed very simple - only
 exposing one <code>send-email</code> function. Here&#39;s all it takes to send an
 email:</p>
@@ -59,10 +59,10 @@ error reporting.</p>
 for a lot of the obvious settings (like the AWS region), provide
 better error hanlding, and built in support for HTML emails - but
 other than that it&#39;s working great so far.</p>
-<h2 id="footnotes">  <a class="heading-anchor" style="display:none;" href="#footnotes">    <i class="fa fa-link"></i>  </a>Footnotes</h2><p>1 - <a href="https://github.com/xach/zpb-aws">zpb-aws</a> and
+<h2 id="footnotes">  <a class="heading-anchor" style="display:none;" href="#footnotes">    <i class="oi oi-link-intact"></i>  </a>Footnotes</h2><p>1 - <a href="https://github.com/xach/zpb-aws">zpb-aws</a> and
 <a href="https://github.com/hargettp/hh-aws">hh-aws</a> are the two I found.</p>
 <p>:: Cody Reichert</p>
-</div><div title="cl-ses - Sending Emails from Common Lisp with AWS SES"><div id="disqus_thread"></div><noscript><span>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></span></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by<span class="logo-disqus">Disqus</span></a></div></div></div><br/><footer class="navbar navbar-full navbar-dark bg-inverse"><div class="container"><div id="navbar"><ul class="nav navbar-nav pull-md-left"><li class="nav-item"><span class="nav-link">Cody Reichert - Copyright © 2016</span></li></ul><ul class="nav navbar-nav pull-md-right"><li class="nav-item"><a class="nav-link" target="_blank" href="https://github.com/CodyReichert"><i class="fa fa-github-alt" style="margin-right:5px;"></i></a></li><li class="nav-item"><a class="nav-link" target="_blank" href="https://twitter.com/CodyReichert"><i class="fa fa-twitter" style="margin-right:5px;"></i></a></li></ul></div></div></footer></div>
+</div><div title="cl-ses - Sending Emails from Common Lisp with AWS SES"><div id="disqus_thread"></div><noscript><span>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></span></noscript><a href="http://disqus.com" class="dsq-brlink">Blog comments powered by <span class="logo-disqus">Disqus</span>.</a></div></div></div><br/><footer class="navbar navbar-full navbar-dark bg-inverse"><div class="container"><div id="navbar"><ul class="nav navbar-nav pull-md-left"><li class="nav-item"><span class="nav-link">Cody Reichert - Copyright © 2016</span></li></ul><ul class="nav navbar-nav pull-md-right"><li class="nav-item"><a class="nav-link" target="_blank" href="https://github.com/CodyReichert"><i class="fa fa-github-alt" style="margin-right:5px;"></i></a></li><li class="nav-item"><a class="nav-link" target="_blank" href="https://twitter.com/CodyReichert"><i class="fa fa-twitter" style="margin-right:5px;"></i></a></li></ul></div></div></footer></div>
     <script type="text/javascript" src="/index.js">
     </script>
   </body>

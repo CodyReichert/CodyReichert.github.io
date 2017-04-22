@@ -27,17 +27,17 @@ the
 <li>Tags, RSS Feed, and all the other blog goodies.</li>
 <li>Never have to leave Emacs</li>
 </ul>
-<h1 id="installation">  <a class="heading-anchor" style="display:none;" href="#installation">    <i class="fa fa-link"></i>  </a>Installation</h1><p>Org-page is <a href="http://melpa.org/#/org-page">available on MELPA</a>, so the
+<h1 id="installation">  <a class="heading-anchor" style="display:none;" href="#installation">    <i class="oi oi-link-intact"></i>  </a>Installation</h1><p>Org-page is <a href="http://melpa.org/#/org-page">available on MELPA</a>, so the
 install is simple:</p>
 <pre><code class="hljs lang-sh">  M-x package-install RET org-page RET</code></pre><p>That will give you org-page and a few commands (which is all you need)
 to create a repo, add a new post, and publish.</p>
 <p><em>For manual installation, see the
 <a href="https://github.com/kelvinh/org-page/wiki/Quick-Guide-to-Org-page">documentation</a></em></p>
-<h1 id="set-up-a-repo">  <a class="heading-anchor" style="display:none;" href="#set-up-a-repo">    <i class="fa fa-link"></i>  </a>Set up a repo</h1><p>Org-page also handles this for you, with the available command
+<h1 id="set-up-a-repo">  <a class="heading-anchor" style="display:none;" href="#set-up-a-repo">    <i class="oi oi-link-intact"></i>  </a>Set up a repo</h1><p>Org-page also handles this for you, with the available command
 <code>op/new-repository</code>. So find a place on your system you want</p>
 <pre><code class="hljs lang-emacs-lisp">M-x op/new-repository RET /path/to/new/blog RET</code></pre><p>This sets up a new git repository, with a few pages already laid
 out for you (index.org, about.org, readme, etc).</p>
-<h1 id="org-page-in-your-init.el">  <a class="heading-anchor" style="display:none;" href="#org-page-in-your-init.el">    <i class="fa fa-link"></i>  </a>Org-page in your init.el</h1><p>There are few things you&#39;ll need to set up in your Emacs config
+<h1 id="org-page-in-your-init.el">  <a class="heading-anchor" style="display:none;" href="#org-page-in-your-init.el">    <i class="oi oi-link-intact"></i>  </a>Org-page in your init.el</h1><p>There are few things you&#39;ll need to set up in your Emacs config
 file to get things working correctly. Here&#39;s an annotated example:</p>
 <pre><code class="hljs lang-lisp">  <span class="hljs-list">(<span class="hljs-keyword">require</span> <span class="hljs-quoted">'org-page</span>)</span>
   <span class="hljs-list">(<span class="hljs-keyword">setq</span> op/repository-directory <span class="hljs-string">"~/workspace/play/newblog"</span>)</span>
@@ -50,7 +50,7 @@ file to get things working correctly. Here&#39;s an annotated example:</p>
    out things like the GitHub Link, it just won&#39;t show at all -
    perfect.</p>
 <p>   <em>Reload your Emacs config and let&#39;s move on</em></p>
-<h1 id="creating-a-new-post">  <a class="heading-anchor" style="display:none;" href="#creating-a-new-post">    <i class="fa fa-link"></i>  </a>Creating a new post</h1><p>You&#39;ll probably first want to fill out some of the generated
+<h1 id="creating-a-new-post">  <a class="heading-anchor" style="display:none;" href="#creating-a-new-post">    <i class="oi oi-link-intact"></i>  </a>Creating a new post</h1><p>You&#39;ll probably first want to fill out some of the generated
 pages, like <code>about.org</code> and <code>index.org</code>.</p>
 <blockquote class="blockquote"><p>Pro-tip: If you remove the =index.org= it will default to a list of
 posts, like mine. It&#39;s preferable since there is already an about page.</p>
@@ -61,7 +61,7 @@ writing articles, not boilerplate.</p>
 <pre><code class="hljs lang-sh">M-x op/new-post RET</code></pre><p>It will run you through a few steps to generate all of those fields
 for you post, and put your cursor where you can start writing.
 <a href="../img/op-new-post.gif">op/new-post gif example</a></p>
-<h1 id="publishing-your-new-blog">  <a class="heading-anchor" style="display:none;" href="#publishing-your-new-blog">    <i class="fa fa-link"></i>  </a>Publishing your new blog</h1><p>Yet again...built in to org-page. And since we&#39;re in Emacs, we can
+<h1 id="publishing-your-new-blog">  <a class="heading-anchor" style="display:none;" href="#publishing-your-new-blog">    <i class="oi oi-link-intact"></i>  </a>Publishing your new blog</h1><p>Yet again...built in to org-page. And since we&#39;re in Emacs, we can
 make it do whatever we want. First, make sure you set the remote in
 your blogs git repo:</p>
 <pre><code class="hljs lang-sh">    git remote add origin git@github.com:CodyReichert/CodyReichert.github.io
@@ -84,14 +84,14 @@ org-page will add and commit the compiled files to the mater branch.</p>
 seconds. <em>That&#39;s</em> the Emacs way.</p>
 <p><a href="../img/op-do-publication.gif">Here&#39;s a GIF</a> of how I published this
 blog, right after I wrote this part.</p>
-<h1 id="other-setup">  <a class="heading-anchor" style="display:none;" href="#other-setup">    <i class="fa fa-link"></i>  </a>Other setup</h1><p>I have a few other snippets for using a custom theme with org-page,
+<h1 id="other-setup">  <a class="heading-anchor" style="display:none;" href="#other-setup">    <i class="oi oi-link-intact"></i>  </a>Other setup</h1><p>I have a few other snippets for using a custom theme with org-page,
 and a couple other nice settings I&#39;ll share eventually.</p>
 <p>My recommendation is to <code>C-h f RET ___ RET</code> on some of the org-page
 functions, they&#39;re documented well.</p>
 <p>You can also view my org-page setup
 <a href="https://github.com/CodyReichert/dotfiles">on Github</a>.</p>
 <p>:: Cody Reichert</p>
-</div><div title="Blogging with Emacs and Org Mode"><div id="disqus_thread"></div><noscript><span>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></span></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by<span class="logo-disqus">Disqus</span></a></div></div></div><br/><footer class="navbar navbar-full navbar-dark bg-inverse"><div class="container"><div id="navbar"><ul class="nav navbar-nav pull-md-left"><li class="nav-item"><span class="nav-link">Cody Reichert - Copyright © 2016</span></li></ul><ul class="nav navbar-nav pull-md-right"><li class="nav-item"><a class="nav-link" target="_blank" href="https://github.com/CodyReichert"><i class="fa fa-github-alt" style="margin-right:5px;"></i></a></li><li class="nav-item"><a class="nav-link" target="_blank" href="https://twitter.com/CodyReichert"><i class="fa fa-twitter" style="margin-right:5px;"></i></a></li></ul></div></div></footer></div>
+</div><div title="Blogging with Emacs and Org Mode"><div id="disqus_thread"></div><noscript><span>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></span></noscript><a href="http://disqus.com" class="dsq-brlink">Blog comments powered by <span class="logo-disqus">Disqus</span>.</a></div></div></div><br/><footer class="navbar navbar-full navbar-dark bg-inverse"><div class="container"><div id="navbar"><ul class="nav navbar-nav pull-md-left"><li class="nav-item"><span class="nav-link">Cody Reichert - Copyright © 2016</span></li></ul><ul class="nav navbar-nav pull-md-right"><li class="nav-item"><a class="nav-link" target="_blank" href="https://github.com/CodyReichert"><i class="fa fa-github-alt" style="margin-right:5px;"></i></a></li><li class="nav-item"><a class="nav-link" target="_blank" href="https://twitter.com/CodyReichert"><i class="fa fa-twitter" style="margin-right:5px;"></i></a></li></ul></div></div></footer></div>
     <script type="text/javascript" src="/index.js">
     </script>
   </body>

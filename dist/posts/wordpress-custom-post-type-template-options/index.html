@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
-    <div id="outlet"><nav class="navbar navbar-full navbar-dark bg-inverse"><div class="container"><div id="navbar"><a class="navbar-brand" href="/">Cody Reichert <small>The one true blog</small></a><ul class="nav navbar-nav pull-md-right"><li class="nav-item"><a class="nav-link" href="/about">About</a></li><li class="nav-item"><a class="nav-link" href="/posts">Posts</a></li></ul></div></div></nav><div class="container"><div><h1 style="padding-top:25px;padding-bottom:10px;"><a href="/posts/wordpress-custom-post-type-template-options">Adding Template Options to a Wordpress Custom Post Type</a></h1><small class="text-muted"><span style="margin-right:10px;"><i class="fa fa-calendar" style="margin-right:5px;"></i>12/6/2014</span><span style="margin-right:10px;"><i class="fa fa-folder" style="margin-right:5px;"></i>wordpress, php</span><span style="margin-right:10px;"><i class="fa fa-pencil" style="margin-right:5px;"></i>Cody Reichert</span><span class="pull-xs-right"><a href="/posts">Back to blogs</a></span></small><hr/><div><h2 id="about-the-task">  <a class="heading-anchor" style="display:none;" href="#about-the-task">    <i class="fa fa-link"></i>  </a>About the Task</h2><p>I&#39;ve recently been working on a Wordpress plugin for a new service
+    <div id="outlet"><nav class="navbar navbar-full navbar-dark bg-inverse"><div class="container"><div id="navbar"><a class="navbar-brand" href="/">Cody Reichert <small>The one true blog</small></a><ul class="nav navbar-nav pull-md-right"><li class="nav-item"><a class="nav-link" href="/about">About</a></li><li class="nav-item"><a class="nav-link" href="/posts">Posts</a></li></ul></div></div></nav><div class="container"><div><h1 style="padding-top:25px;padding-bottom:10px;"><a href="/posts/wordpress-custom-post-type-template-options">Adding Template Options to a Wordpress Custom Post Type</a></h1><small class="text-muted"><span style="margin-right:10px;"><i class="fa fa-calendar" style="margin-right:5px;"></i>12/6/2014</span><span style="margin-right:10px;"><i class="fa fa-folder" style="margin-right:5px;"></i>wordpress, php</span><span style="margin-right:10px;"><i class="fa fa-pencil" style="margin-right:5px;"></i>Cody Reichert</span><span class="pull-xs-right"><a href="/posts">Back to blogs</a></span></small><hr/><div><h2 id="about-the-task">  <a class="heading-anchor" style="display:none;" href="#about-the-task">    <i class="oi oi-link-intact"></i>  </a>About the Task</h2><p>I&#39;ve recently been working on a Wordpress plugin for a new service
 we&#39;ll be releasing at Reichert Brothers in the next couple of
 months. Although I haven&#39;t ever done too much in Wordpress, it
 allows for some really cool things and lends itself well to rapid
 development. I ran into a couple of problems when developing out
 the plugin that I think might be valuable enough to get documented
 and help anyone else out that may come across the same issues.</p>
-<h3 id="background">  <a class="heading-anchor" style="display:none;" href="#background">    <i class="fa fa-link"></i>  </a>Background</h3><p>For the sake of making this easier to understand, I&#39;ll give a
+<h3 id="background">  <a class="heading-anchor" style="display:none;" href="#background">    <i class="oi oi-link-intact"></i>  </a>Background</h3><p>For the sake of making this easier to understand, I&#39;ll give a
 little background on what I needed my plugin to accomplish. In a
 nutshell, I ventured to write a &#39;simple&#39; plugin that would
 retrieve JSON from an external API, format it, and display it on a
@@ -33,7 +33,7 @@ be achieved:</p>
 </ul>
 <p>We&#39;ll be covering the third bullet - allowing the admin to pick a
 different template for each of our Custom Post Type pages.</p>
-<h3 id="the-problem">  <a class="heading-anchor" style="display:none;" href="#the-problem">    <i class="fa fa-link"></i>  </a>The Problem</h3><p>When creating a new custom post type, Wordpress does allow for authors
+<h3 id="the-problem">  <a class="heading-anchor" style="display:none;" href="#the-problem">    <i class="oi oi-link-intact"></i>  </a>The Problem</h3><p>When creating a new custom post type, Wordpress does allow for authors
 to add the <code>page-attributes</code> capabilities to their posts. But they don&#39;t
 include the Template dropdown (see fig 1.1). As a matter of fact, they
 explicity hardcode it to only be allowed on <code>page</code> post types. Well, I
@@ -52,15 +52,15 @@ smaller and thus doesn&#39;t need a &#39;full-width&#39; layout. But the dinner
 menu is large and the admin doesn&#39;t want anything else on that
 page. Now do you see why we might need the ability to choose a
 template on a page-by-page basis. At least this was my though process.</p>
-<h2 id="diving-in">  <a class="heading-anchor" style="display:none;" href="#diving-in">    <i class="fa fa-link"></i>  </a>Diving In</h2><p>Well in the end, I ended up figuring out what I think is a decent
+<h2 id="diving-in">  <a class="heading-anchor" style="display:none;" href="#diving-in">    <i class="oi oi-link-intact"></i>  </a>Diving In</h2><p>Well in the end, I ended up figuring out what I think is a decent
 solution. I don&#39;t think I &#39;invented&#39; this solution, because I bet
 there a many other people out there doing the same thing, but let&#39;s
 take a look.</p>
-<h3 id="tl;dr-solution">  <a class="heading-anchor" style="display:none;" href="#tl;dr-solution">    <i class="fa fa-link"></i>  </a>TL;DR Solution</h3><p>We&#39;ll leverage the use of Meta Boxes to provide our own dropdown
+<h3 id="tl;dr-solution">  <a class="heading-anchor" style="display:none;" href="#tl;dr-solution">    <i class="oi oi-link-intact"></i>  </a>TL;DR Solution</h3><p>We&#39;ll leverage the use of Meta Boxes to provide our own dropdown
 menu. Then we&#39;ll save that setting in our <code>post_meta</code>, retrieve that
 setting when our CPT pages are loaded, and show the correct
 template. Pretty simple!</p>
-<h3 id="registering-the-meta-box">  <a class="heading-anchor" style="display:none;" href="#registering-the-meta-box">    <i class="fa fa-link"></i>  </a>Registering the Meta Box</h3><p>First, we&#39;ll start off by creating our meta box for our Custom Post
+<h3 id="registering-the-meta-box">  <a class="heading-anchor" style="display:none;" href="#registering-the-meta-box">    <i class="oi oi-link-intact"></i>  </a>Registering the Meta Box</h3><p>First, we&#39;ll start off by creating our meta box for our Custom Post
 Type. If you&#39;ve never used meta boxes before, I recommend taking a
 look at the
 <a href="WP Codex
@@ -95,7 +95,7 @@ where the normal one would be.</li>
 <li><em>core</em>: This field is the &#39;priority&#39; of the meta box.</li>
 <li><em>add_action</em>: registers the meta box.</li>
 </ul>
-<h3 id="rendering-the-meta-box">  <a class="heading-anchor" style="display:none;" href="#rendering-the-meta-box">    <i class="fa fa-link"></i>  </a>Rendering the Meta Box</h3><p>Now that we have registered our Meta Box, it&#39;s time to give it
+<h3 id="rendering-the-meta-box">  <a class="heading-anchor" style="display:none;" href="#rendering-the-meta-box">    <i class="oi oi-link-intact"></i>  </a>Rendering the Meta Box</h3><p>Now that we have registered our Meta Box, it&#39;s time to give it
 some markup. Basically, we&#39;ll just generate one simple dropdown
 box that has a list of all the currently available
 templates. Since this part is a little more detailed than the
@@ -150,7 +150,7 @@ start persisting the selection. (See fig 1.2)</p>
 </div>
 
 
-<h3 id="persisting-the-meta-box-data">  <a class="heading-anchor" style="display:none;" href="#persisting-the-meta-box-data">    <i class="fa fa-link"></i>  </a>Persisting the Meta Box Data</h3><p>Wordpress makes saving the data from the Meta Box really
+<h3 id="persisting-the-meta-box-data">  <a class="heading-anchor" style="display:none;" href="#persisting-the-meta-box-data">    <i class="oi oi-link-intact"></i>  </a>Persisting the Meta Box Data</h3><p>Wordpress makes saving the data from the Meta Box really
 simple. In our case, it&#39;s going to see our select box and look for
 the =selected= option. Since this isn&#39;t a meta box tutorial, I&#39;ll
 leave out the details of how the saving works. All we need to know
@@ -178,7 +178,7 @@ is. Here&#39;s the code:</p>
 function when the post is saved. This saves a field called
 <code>cpt_page_templates</code> in our database for this specific post. We can
 access this field when the page is loaded.</p>
-<h3 id="retrieving-the-template-on-the-front-end">  <a class="heading-anchor" style="display:none;" href="#retrieving-the-template-on-the-front-end">    <i class="fa fa-link"></i>  </a>Retrieving the template on the front end</h3><p>This is the fun part. Now we have a shiny new meta box on our
+<h3 id="retrieving-the-template-on-the-front-end">  <a class="heading-anchor" style="display:none;" href="#retrieving-the-template-on-the-front-end">    <i class="oi oi-link-intact"></i>  </a>Retrieving the template on the front end</h3><p>This is the fun part. Now we have a shiny new meta box on our
 admin post pages, and a field in the database for each post
 telling us what template to show. So let&#39;s show it!</p>
 <p>Fortunately this part is also pretty straightforward, and only
@@ -218,7 +218,7 @@ we intercept the query, run a function to see which template we had
 saved, and load that instead. Also notice that we set a default
 template. So if the post had no saved option, or something went wrong
 when trying to find it, it won&#39;t fail.</p>
-<h2 id="summary">  <a class="heading-anchor" style="display:none;" href="#summary">    <i class="fa fa-link"></i>  </a>Summary</h2><p>So that&#39;s about it. The new template should load with all of the
+<h2 id="summary">  <a class="heading-anchor" style="display:none;" href="#summary">    <i class="oi oi-link-intact"></i>  </a>Summary</h2><p>So that&#39;s about it. The new template should load with all of the
 regular post content in the body. The only problem I&#39;ve noticed is
 that some themes won&#39;t show the page&#39;s content on more specialized
 templates (like a Contact Page template), but this is pretty much
@@ -226,7 +226,7 @@ expected and it has always worked for the more commen Full Width, Left
 Sidebar, etc, templates. This code is a little out of context, but the
 general idea is there and easy to adapt to any plugin.</p>
 <p>:: Cody Reichert</p>
-</div><div title="Adding Template Options to a Wordpress Custom Post Type"><div id="disqus_thread"></div><noscript><span>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></span></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by<span class="logo-disqus">Disqus</span></a></div></div></div><br/><footer class="navbar navbar-full navbar-dark bg-inverse"><div class="container"><div id="navbar"><ul class="nav navbar-nav pull-md-left"><li class="nav-item"><span class="nav-link">Cody Reichert - Copyright © 2016</span></li></ul><ul class="nav navbar-nav pull-md-right"><li class="nav-item"><a class="nav-link" target="_blank" href="https://github.com/CodyReichert"><i class="fa fa-github-alt" style="margin-right:5px;"></i></a></li><li class="nav-item"><a class="nav-link" target="_blank" href="https://twitter.com/CodyReichert"><i class="fa fa-twitter" style="margin-right:5px;"></i></a></li></ul></div></div></footer></div>
+</div><div title="Adding Template Options to a Wordpress Custom Post Type"><div id="disqus_thread"></div><noscript><span>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></span></noscript><a href="http://disqus.com" class="dsq-brlink">Blog comments powered by <span class="logo-disqus">Disqus</span>.</a></div></div></div><br/><footer class="navbar navbar-full navbar-dark bg-inverse"><div class="container"><div id="navbar"><ul class="nav navbar-nav pull-md-left"><li class="nav-item"><span class="nav-link">Cody Reichert - Copyright © 2016</span></li></ul><ul class="nav navbar-nav pull-md-right"><li class="nav-item"><a class="nav-link" target="_blank" href="https://github.com/CodyReichert"><i class="fa fa-github-alt" style="margin-right:5px;"></i></a></li><li class="nav-item"><a class="nav-link" target="_blank" href="https://twitter.com/CodyReichert"><i class="fa fa-twitter" style="margin-right:5px;"></i></a></li></ul></div></div></footer></div>
     <script type="text/javascript" src="/index.js">
     </script>
   </body>
