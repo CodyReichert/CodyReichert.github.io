@@ -48,7 +48,7 @@ wanted my users to be able to pick a template offered by their active
 theme on a page-by-page basis.
 
 <div style="text-align:center">
-![*fig 1.1*](./images/wp-page-attributes.png)
+![*fig 1.1*](/images/wp-page-attributes.png)
 </div>
 
 The most common solution I found was to register a setting for the
@@ -83,7 +83,7 @@ First, we'll start off by creating our meta box for our Custom Post
 Type. If you've never used meta boxes before, I recommend taking a
 look at
 the
-[WP Codex Function Reference for =add_meta_box=](http://codex.wordpress.org/Function_Reference/add_meta_box). It
+[WP Codex Function Reference for `add_meta_box`](http://codex.wordpress.org/Function_Reference/add_meta_box). It
 gives some great examples and provides plenty of info on how to set
 one up. Keep in mind all of this is from a plugin. I won't go into
 setting all of that up in this blog, but that's where we'll be working
@@ -180,7 +180,7 @@ Post Type Pages. It's not saving any settings yet, but now we can
 start persisting the selection. (See fig 1.2)
 
 <div style="text-align:center">
-![*fig 1.2*](./images/wp-page-template-meta-box.png)
+![*fig 1.2*](/images/wp-page-template-meta-box.png)
 </div>
 
 
