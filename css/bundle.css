@@ -6211,7 +6211,7 @@ a.bg-danger:focus, a.bg-danger:hover {
 /*# sourceMappingURL=bootstrap.css.map */
 @charset "UTF-8";
 /*!
- *  Font Awesome 4.6.1 by @davegandy - http://fontawesome.io - @fontawesome
+ *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
  */
 /* FONT PATH
@@ -6219,7 +6219,7 @@ a.bg-danger:focus, a.bg-danger:hover {
 @font-face {
   font-family: 'FontAwesome';
   src: url(/fonts/fontawesome-webfont.eot);
-  src: url(/fonts/fontawesome-webfont.eot?#iefix&v=4.6.1) format("embedded-opentype"), url(/fonts/fontawesome-webfont.woff2) format("woff2"), url(/fonts/fontawesome-webfont.woff) format("woff"), url(/fonts/fontawesome-webfont.ttf) format("truetype"), url(/fonts/fontawesome-webfont.svg#fontawesomeregular) format("svg");
+  src: url(/fonts/fontawesome-webfont.eot?#iefix&v=4.7.0) format("embedded-opentype"), url(/fonts/fontawesome-webfont.woff2) format("woff2"), url(/fonts/fontawesome-webfont.woff) format("woff"), url(/fonts/fontawesome-webfont.ttf) format("truetype"), url(/fonts/fontawesome-webfont.svg#fontawesomeregular) format("svg");
   font-weight: normal;
   font-style: normal; }
 
@@ -7588,7 +7588,7 @@ a.bg-danger:focus, a.bg-danger:hover {
 .fa-digg:before {
   content: "\F1A6"; }
 
-.fa-pied-piper:before {
+.fa-pied-piper-pp:before {
   content: "\F1A7"; }
 
 .fa-pied-piper-alt:before {
@@ -7714,6 +7714,7 @@ a.bg-danger:focus, a.bg-danger:hover {
   content: "\F1CE"; }
 
 .fa-ra:before,
+.fa-resistance:before,
 .fa-rebel:before {
   content: "\F1D0"; }
 
@@ -8036,6 +8037,7 @@ a.bg-danger:focus, a.bg-danger:hover {
   content: "\F23E"; }
 
 .fa-battery-4:before,
+.fa-battery:before,
 .fa-battery-full:before {
   content: "\F240"; }
 
@@ -8361,6 +8363,163 @@ a.bg-danger:focus, a.bg-danger:hover {
 
 .fa-snapchat-square:before {
   content: "\F2AD"; }
+
+.fa-pied-piper:before {
+  content: "\F2AE"; }
+
+.fa-first-order:before {
+  content: "\F2B0"; }
+
+.fa-yoast:before {
+  content: "\F2B1"; }
+
+.fa-themeisle:before {
+  content: "\F2B2"; }
+
+.fa-google-plus-circle:before,
+.fa-google-plus-official:before {
+  content: "\F2B3"; }
+
+.fa-fa:before,
+.fa-font-awesome:before {
+  content: "\F2B4"; }
+
+.fa-handshake-o:before {
+  content: "\F2B5"; }
+
+.fa-envelope-open:before {
+  content: "\F2B6"; }
+
+.fa-envelope-open-o:before {
+  content: "\F2B7"; }
+
+.fa-linode:before {
+  content: "\F2B8"; }
+
+.fa-address-book:before {
+  content: "\F2B9"; }
+
+.fa-address-book-o:before {
+  content: "\F2BA"; }
+
+.fa-vcard:before,
+.fa-address-card:before {
+  content: "\F2BB"; }
+
+.fa-vcard-o:before,
+.fa-address-card-o:before {
+  content: "\F2BC"; }
+
+.fa-user-circle:before {
+  content: "\F2BD"; }
+
+.fa-user-circle-o:before {
+  content: "\F2BE"; }
+
+.fa-user-o:before {
+  content: "\F2C0"; }
+
+.fa-id-badge:before {
+  content: "\F2C1"; }
+
+.fa-drivers-license:before,
+.fa-id-card:before {
+  content: "\F2C2"; }
+
+.fa-drivers-license-o:before,
+.fa-id-card-o:before {
+  content: "\F2C3"; }
+
+.fa-quora:before {
+  content: "\F2C4"; }
+
+.fa-free-code-camp:before {
+  content: "\F2C5"; }
+
+.fa-telegram:before {
+  content: "\F2C6"; }
+
+.fa-thermometer-4:before,
+.fa-thermometer:before,
+.fa-thermometer-full:before {
+  content: "\F2C7"; }
+
+.fa-thermometer-3:before,
+.fa-thermometer-three-quarters:before {
+  content: "\F2C8"; }
+
+.fa-thermometer-2:before,
+.fa-thermometer-half:before {
+  content: "\F2C9"; }
+
+.fa-thermometer-1:before,
+.fa-thermometer-quarter:before {
+  content: "\F2CA"; }
+
+.fa-thermometer-0:before,
+.fa-thermometer-empty:before {
+  content: "\F2CB"; }
+
+.fa-shower:before {
+  content: "\F2CC"; }
+
+.fa-bathtub:before,
+.fa-s15:before,
+.fa-bath:before {
+  content: "\F2CD"; }
+
+.fa-podcast:before {
+  content: "\F2CE"; }
+
+.fa-window-maximize:before {
+  content: "\F2D0"; }
+
+.fa-window-minimize:before {
+  content: "\F2D1"; }
+
+.fa-window-restore:before {
+  content: "\F2D2"; }
+
+.fa-times-rectangle:before,
+.fa-window-close:before {
+  content: "\F2D3"; }
+
+.fa-times-rectangle-o:before,
+.fa-window-close-o:before {
+  content: "\F2D4"; }
+
+.fa-bandcamp:before {
+  content: "\F2D5"; }
+
+.fa-grav:before {
+  content: "\F2D6"; }
+
+.fa-etsy:before {
+  content: "\F2D7"; }
+
+.fa-imdb:before {
+  content: "\F2D8"; }
+
+.fa-ravelry:before {
+  content: "\F2D9"; }
+
+.fa-eercast:before {
+  content: "\F2DA"; }
+
+.fa-microchip:before {
+  content: "\F2DB"; }
+
+.fa-snowflake-o:before {
+  content: "\F2DC"; }
+
+.fa-superpowers:before {
+  content: "\F2DD"; }
+
+.fa-wpexplorer:before {
+  content: "\F2DE"; }
+
+.fa-meetup:before {
+  content: "\F2E0"; }
 
 .sr-only {
   position: absolute;

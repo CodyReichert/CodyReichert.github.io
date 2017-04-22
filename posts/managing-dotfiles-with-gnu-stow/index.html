@@ -15,7 +15,7 @@ workplaces. There&#39;s a lot of (ok) solutions out there. However,
 they&#39;re all setup-specific bash scripts that aren&#39;t very reproducible.</p>
 <p>I wanted to write this to hopefully prevent people from maintaining
 their Makefiles, and to keep their dots pristine.</p>
-<h2 id="welcome-gnu-stow">  <a class="heading-anchor" style="display:none;" href="#welcome-gnu-stow">    <i class="fa fa-link"></i>  </a>Welcome GNU Stow</h2><p><a href="https://www.gnu.org/software/stow/">GNU Stow</a> is a symlink-farm
+<h2 id="welcome-gnu-stow">  <a class="heading-anchor" style="display:none;" href="#welcome-gnu-stow">    <i class="oi oi-link-intact"></i>  </a>Welcome GNU Stow</h2><p><a href="https://www.gnu.org/software/stow/">GNU Stow</a> is a symlink-farm
 manager. Wait, I thought we were talking about dotfiles? Well, we
 are. To quote the original site:</p>
 <blockquote class="blockquote"><p>GNU Stow is a symlink farm manager which takes distinct packages of
@@ -25,7 +25,7 @@ filesystem, and makes them appear to be installed in the same place</p>
 things like: create a directory anywhere on our system that
 imitates the structure of our <code>$HOME</code> directory, and then have Stow
 symlink them from the imitated directory, to the real <code>$HOME</code>.</p>
-<h2 id="directory-structure">  <a class="heading-anchor" style="display:none;" href="#directory-structure">    <i class="fa fa-link"></i>  </a>Directory Structure</h2><p>There&#39;s a lot of good examples out there, but one of the most
+<h2 id="directory-structure">  <a class="heading-anchor" style="display:none;" href="#directory-structure">    <i class="oi oi-link-intact"></i>  </a>Directory Structure</h2><p>There&#39;s a lot of good examples out there, but one of the most
 common questions I see is still, &quot;Wait, so how does it
 work?&quot;. Hopefully this will clarify.</p>
 <p>Create a directory anywhere on your system called <code>dotfiles/</code>, and
@@ -67,7 +67,7 @@ directory, we start placing files exactly where they should show up
 in our <code>$HOME</code> directory.</p>
 <p>Repeat those steps for any other configuration files you
 want to Stow away.</p>
-<h2 id="using-stow">  <a class="heading-anchor" style="display:none;" href="#using-stow">    <i class="fa fa-link"></i>  </a>Using Stow</h2><p>Now that the dotfiles folder is set up, we can actually use
+<h2 id="using-stow">  <a class="heading-anchor" style="display:none;" href="#using-stow">    <i class="oi oi-link-intact"></i>  </a>Using Stow</h2><p>Now that the dotfiles folder is set up, we can actually use
 Stow. Let&#39;s with only using the <code>.bashrc</code> from above.</p>
 <p>Remove, backup, rename, your original .bashrc (the one that&#39;s <em>not
 in your dotfiles</em>), because we need that name for Stow.</p>
@@ -79,7 +79,7 @@ place at home:</p>
   <span class="hljs-comment"># .bashrc -&gt; dotfiles/bash/.bashrc</span></code></pre><p>The stow command simply takes the name of the directory you wish to
 symlink. You can do the same for the other configurations in your
 dotfiles repo, and you successfully have them all managed.</p>
-<h2 id="advanced-usage">  <a class="heading-anchor" style="display:none;" href="#advanced-usage">    <i class="fa fa-link"></i>  </a>Advanced Usage</h2><p>Using Stow in combination with git (or any other VC) is really the
+<h2 id="advanced-usage">  <a class="heading-anchor" style="display:none;" href="#advanced-usage">    <i class="oi oi-link-intact"></i>  </a>Advanced Usage</h2><p>Using Stow in combination with git (or any other VC) is really the
 best part. It allows you to have your entire configuration on any
 system in just a matter of seconds.</p>
 <p>And when you leave, if you don&#39;t want to leave your config files
@@ -91,7 +91,7 @@ to help them understand Stow little better without needing to actually
 set it up. If you&#39;ve found any other cool uses for this tool, or some
 other programs manange your dotfiles - leave it in the comments!</p>
 <p>:: Cody Reichert</p>
-</div><div title="Managing Your Dotfiles with GNU Stow"><div id="disqus_thread"></div><noscript><span>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></span></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by<span class="logo-disqus">Disqus</span></a></div></div></div><br/><footer class="navbar navbar-full navbar-dark bg-inverse"><div class="container"><div id="navbar"><ul class="nav navbar-nav pull-md-left"><li class="nav-item"><span class="nav-link">Cody Reichert - Copyright © 2016</span></li></ul><ul class="nav navbar-nav pull-md-right"><li class="nav-item"><a class="nav-link" target="_blank" href="https://github.com/CodyReichert"><i class="fa fa-github-alt" style="margin-right:5px;"></i></a></li><li class="nav-item"><a class="nav-link" target="_blank" href="https://twitter.com/CodyReichert"><i class="fa fa-twitter" style="margin-right:5px;"></i></a></li></ul></div></div></footer></div>
+</div><div title="Managing Your Dotfiles with GNU Stow"><div id="disqus_thread"></div><noscript><span>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></span></noscript><a href="http://disqus.com" class="dsq-brlink">Blog comments powered by <span class="logo-disqus">Disqus</span>.</a></div></div></div><br/><footer class="navbar navbar-full navbar-dark bg-inverse"><div class="container"><div id="navbar"><ul class="nav navbar-nav pull-md-left"><li class="nav-item"><span class="nav-link">Cody Reichert - Copyright © 2016</span></li></ul><ul class="nav navbar-nav pull-md-right"><li class="nav-item"><a class="nav-link" target="_blank" href="https://github.com/CodyReichert"><i class="fa fa-github-alt" style="margin-right:5px;"></i></a></li><li class="nav-item"><a class="nav-link" target="_blank" href="https://twitter.com/CodyReichert"><i class="fa fa-twitter" style="margin-right:5px;"></i></a></li></ul></div></div></footer></div>
     <script type="text/javascript" src="/index.js">
     </script>
   </body>

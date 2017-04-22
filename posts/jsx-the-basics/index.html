@@ -18,7 +18,7 @@ JavaScript. Remeber all those string template you to write with
 <li><a href="#passing-props">Passing Props</a></li>
 <li><a href="#boolean-props">Boolean Props</a></li>
 </ul>
-<h3 id="what-is-jsx">  <a class="heading-anchor" style="display:none;" href="#what-is-jsx">    <i class="fa fa-link"></i>  </a>What is JSX</h3><blockquote class="blockquote"><p>JSX is a JavaScript syntax extension that looks similar to XML. You
+<h3 id="what-is-jsx">  <a class="heading-anchor" style="display:none;" href="#what-is-jsx">    <i class="oi oi-link-intact"></i>  </a>What is JSX</h3><blockquote class="blockquote"><p>JSX is a JavaScript syntax extension that looks similar to XML. You
 can use a simple JSX syntactic transform with React.</p>
 </blockquote><p>Picture this. Instead of writing HTML strings within your code, you
 can use a preprocessor that allow you to write (basically) pure HTML
@@ -31,9 +31,9 @@ post:</p>
 <pre><code class="hljs lang-javascript">&lt;a href=<span class="hljs-string">"https://facebook.github.io/react/"</span>&gt;Hello!<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span></span></code></pre><p>Great! We&#39;ve improved readability by 10,000%.</p>
 <p>Now that we&#39;ve got a solid introduction<sup>;)</sup> to JSX, let&#39;s
 take a look at some common gotchas.</p>
-<h2 id="comments-in-jsx">  <a class="heading-anchor" style="display:none;" href="#comments-in-jsx">    <i class="fa fa-link"></i>  </a>Comments in JSX</h2><p>It&#39;s common to want to write comments within your markup. Inside of
+<h2 id="comments-in-jsx">  <a class="heading-anchor" style="display:none;" href="#comments-in-jsx">    <i class="oi oi-link-intact"></i>  </a>Comments in JSX</h2><p>It&#39;s common to want to write comments within your markup. Inside of
 JSX, there are a couple of &#39;rules&#39; to follow:</p>
-<h3 id="in-between-jsx-elements,-wrap-your-comments-in">  <a class="heading-anchor" style="display:none;" href="#in-between-jsx-elements,-wrap-your-comments-in">    <i class="fa fa-link"></i>  </a>In between JSX elements, wrap your comments in <code>{}</code></h3><p><em>valid</em>:</p>
+<h3 id="in-between-jsx-elements,-wrap-your-comments-in">  <a class="heading-anchor" style="display:none;" href="#in-between-jsx-elements,-wrap-your-comments-in">    <i class="oi oi-link-intact"></i>  </a>In between JSX elements, wrap your comments in <code>{}</code></h3><p><em>valid</em>:</p>
 <pre><code class="hljs lang-javascript">&lt;div&gt;
     {/** A comment about the component below */}
     &lt;span&gt;Hello, JSX&lt;/span&gt;
@@ -41,7 +41,7 @@ JSX, there are a couple of &#39;rules&#39; to follow:</p>
 <pre><code class="hljs lang-javascript">&lt;div&gt;
     /** A comment about the component below */
     &lt;span&gt;Hello, JSX&lt;/span&gt;
-&lt;/div&gt;</code></pre><h3 id="inside-of-a-jsx-tag-you-can-use-normal-comments:">  <a class="heading-anchor" style="display:none;" href="#inside-of-a-jsx-tag-you-can-use-normal-comments:">    <i class="fa fa-link"></i>  </a>Inside of a JSX tag you can use normal comments:</h3><p><em>valid</em>:</p>
+&lt;/div&gt;</code></pre><h3 id="inside-of-a-jsx-tag-you-can-use-normal-comments:">  <a class="heading-anchor" style="display:none;" href="#inside-of-a-jsx-tag-you-can-use-normal-comments:">    <i class="oi oi-link-intact"></i>  </a>Inside of a JSX tag you can use normal comments:</h3><p><em>valid</em>:</p>
 <pre><code class="hljs lang-javascript">&lt;div&gt;
     <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">AwesomeComponent</span>
         /** <span class="hljs-attribute">Some</span> <span class="hljs-attribute">commentsabout</span> <span class="hljs-attribute">the</span> <span class="hljs-attribute">props</span> <span class="hljs-attribute">below</span> */
@@ -55,17 +55,17 @@ JSX, there are a couple of &#39;rules&#39; to follow:</p>
         <span class="hljs-attribute">prop1</span>=<span class="hljs-value">"jsxRocks"</span>
         <span class="hljs-attribute">booly</span>=<span class="hljs-value">{true}</span>
     /&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span></span></code></pre><h2 id="passing-props">  <a class="heading-anchor" style="display:none;" href="#passing-props">    <i class="fa fa-link"></i>  </a>Passing Props</h2><p>JSX also makes passing <code>props</code> (arguments) to other components with
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span></span></code></pre><h2 id="passing-props">  <a class="heading-anchor" style="display:none;" href="#passing-props">    <i class="oi oi-link-intact"></i>  </a>Passing Props</h2><p>JSX also makes passing <code>props</code> (arguments) to other components with
 simple HTML-like syntax. If you&#39;re not familiar with nesting
 components and receiving components, you should check out
 <a href="https://facebook.github.io/react/docs/jsx-in-depth.html">JSX In Depth</a>
 first.</p>
-<h3 id="string-props">  <a class="heading-anchor" style="display:none;" href="#string-props">    <i class="fa fa-link"></i>  </a>String Props</h3><p>Normal, string value props are easy to pass to child components:</p>
+<h3 id="string-props">  <a class="heading-anchor" style="display:none;" href="#string-props">    <i class="oi oi-link-intact"></i>  </a>String Props</h3><p>Normal, string value props are easy to pass to child components:</p>
 <pre><code class="hljs lang-javascript">&lt;AwesomeComponent
     name=<span class="hljs-string">"jsxRocks"</span>
 /&gt;</code></pre><p>Now inside of <code>AwesomeComponent</code> you have access to <code>this.props.name</code>
 that references the value <code>jsxRocks</code>.</p>
-<h3 id="functions">  <a class="heading-anchor" style="display:none;" href="#functions">    <i class="fa fa-link"></i>  </a>Functions</h3><p>Passing functions as callback is also common practice when writing JSX components.
+<h3 id="functions">  <a class="heading-anchor" style="display:none;" href="#functions">    <i class="oi oi-link-intact"></i>  </a>Functions</h3><p>Passing functions as callback is also common practice when writing JSX components.
 A basic example would look like:</p>
 <pre><code class="hljs lang-javascript">&lt;AwesomeComponent
     handleNameChange={data =&gt; myAction(data)}
@@ -87,7 +87,7 @@ When using expressions as a value to a prop, you don&#39;t need to do
 any fancy string interpolation - React will take care of rendering
 the result of the expression.</li>
 </ul>
-<h3 id="basic-function-optimizations">  <a class="heading-anchor" style="display:none;" href="#basic-function-optimizations">    <i class="fa fa-link"></i>  </a>Basic function optimizations</h3><p>Keep in mind that when creating functions inside of components
+<h3 id="basic-function-optimizations">  <a class="heading-anchor" style="display:none;" href="#basic-function-optimizations">    <i class="oi oi-link-intact"></i>  </a>Basic function optimizations</h3><p>Keep in mind that when creating functions inside of components
 <code>render</code> method (like we&#39;re doing with the expressions in props), that
 a new function is created on each re-render.</p>
 <p>This is a pretty minor thing for most apps, but as the size of
@@ -112,7 +112,7 @@ of re-computing the value:</p>
             /&gt;</span>
         )</span>
     }
-}</code></pre><h3 id="function-reference-vs-function-unwrapping">  <a class="heading-anchor" style="display:none;" href="#function-reference-vs-function-unwrapping">    <i class="fa fa-link"></i>  </a>Function reference vs Function unwrapping</h3><p>When the <code>render</code> method of a component is called, functions inside of
+}</code></pre><h3 id="function-reference-vs-function-unwrapping">  <a class="heading-anchor" style="display:none;" href="#function-reference-vs-function-unwrapping">    <i class="oi oi-link-intact"></i>  </a>Function reference vs Function unwrapping</h3><p>When the <code>render</code> method of a component is called, functions inside of
 the JSX are executed and their return values are used in place of the
 props. That brings up two common use-cases for using expression in
 components:</p>
@@ -150,7 +150,7 @@ the render is:</p>
             /&gt;
         )
     }
-}</code></pre><h2 id="boolean-props">  <a class="heading-anchor" style="display:none;" href="#boolean-props">    <i class="fa fa-link"></i>  </a>Boolean Props</h2><p>Passing boolean properties to JSX components is simple. The only thing
+}</code></pre><h2 id="boolean-props">  <a class="heading-anchor" style="display:none;" href="#boolean-props">    <i class="oi oi-link-intact"></i>  </a>Boolean Props</h2><p>Passing boolean properties to JSX components is simple. The only thing
 you need to know is that they are <em>JavaScript Booleans</em>, not <em>String
 Booleans</em>. In other words:</p>
 <p>This is correct:</p>
@@ -163,14 +163,14 @@ Booleans</em>. In other words:</p>
 <em>Just a quick note that the second one actually <em>is</em> valid, but it&#39;s
 not considered a <code>boolean</code> it&#39;s considered a <code>string</code>.</em>
 </small></p>
-<h3 id="alternative-syntax">  <a class="heading-anchor" style="display:none;" href="#alternative-syntax">    <i class="fa fa-link"></i>  </a>Alternative syntax</h3><p>An alternative for passing <code>true</code> is to simply provide the prop name without a value:</p>
+<h3 id="alternative-syntax">  <a class="heading-anchor" style="display:none;" href="#alternative-syntax">    <i class="oi oi-link-intact"></i>  </a>Alternative syntax</h3><p>An alternative for passing <code>true</code> is to simply provide the prop name without a value:</p>
 <pre><code class="hljs lang-javascript">&lt;Input disabled/&gt;</code></pre><p>My professional opinion is to always use the full <code>true</code> or <code>false</code>
 value for the sake of readability.</p>
-<h2 id="final-thoughts">  <a class="heading-anchor" style="display:none;" href="#final-thoughts">    <i class="fa fa-link"></i>  </a>Final Thoughts</h2><p>Are there any pieces of JSX where you got caught up first starting?
+<h2 id="final-thoughts">  <a class="heading-anchor" style="display:none;" href="#final-thoughts">    <i class="oi oi-link-intact"></i>  </a>Final Thoughts</h2><p>Are there any pieces of JSX where you got caught up first starting?
 Let&#39;s chat - shoot me a message on twitter
 <a href="https://twitter.com/CodyReichert">@CodyReichert</a> and I&#39;ll add it!</p>
 <p>:: Cody Reichert</p>
-</div><div title="JSX - The Basics"><div id="disqus_thread"></div><noscript><span>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></span></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by<span class="logo-disqus">Disqus</span></a></div></div></div><br/><footer class="navbar navbar-full navbar-dark bg-inverse"><div class="container"><div id="navbar"><ul class="nav navbar-nav pull-md-left"><li class="nav-item"><span class="nav-link">Cody Reichert - Copyright © 2016</span></li></ul><ul class="nav navbar-nav pull-md-right"><li class="nav-item"><a class="nav-link" target="_blank" href="https://github.com/CodyReichert"><i class="fa fa-github-alt" style="margin-right:5px;"></i></a></li><li class="nav-item"><a class="nav-link" target="_blank" href="https://twitter.com/CodyReichert"><i class="fa fa-twitter" style="margin-right:5px;"></i></a></li></ul></div></div></footer></div>
+</div><div title="JSX - The Basics"><div id="disqus_thread"></div><noscript><span>Please enable JavaScript to view the<a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></span></noscript><a href="http://disqus.com" class="dsq-brlink">Blog comments powered by <span class="logo-disqus">Disqus</span>.</a></div></div></div><br/><footer class="navbar navbar-full navbar-dark bg-inverse"><div class="container"><div id="navbar"><ul class="nav navbar-nav pull-md-left"><li class="nav-item"><span class="nav-link">Cody Reichert - Copyright © 2016</span></li></ul><ul class="nav navbar-nav pull-md-right"><li class="nav-item"><a class="nav-link" target="_blank" href="https://github.com/CodyReichert"><i class="fa fa-github-alt" style="margin-right:5px;"></i></a></li><li class="nav-item"><a class="nav-link" target="_blank" href="https://twitter.com/CodyReichert"><i class="fa fa-twitter" style="margin-right:5px;"></i></a></li></ul></div></div></footer></div>
     <script type="text/javascript" src="/index.js">
     </script>
   </body>

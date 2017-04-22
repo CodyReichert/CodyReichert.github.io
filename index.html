@@ -84,7 +84,7 @@ JavaScript. Remeber all those string template you to write with
 <li><a href="#passing-props">Passing Props</a></li>
 <li><a href="#boolean-props">Boolean Props</a></li>
 </ul>
-<h3 id="what-is-jsx">  <a class="heading-anchor" style="display:none;" href="#what-is-jsx">    <i class="fa fa-link"></i>  </a>What is JSX</h3><blockquote class="blockquote"><p>JSX is a JavaScript syntax extension that looks similar to XML. You
+<h3 id="what-is-jsx">  <a class="heading-anchor" style="display:none;" href="#what-is-jsx">    <i class="oi oi-link-intact"></i>  </a>What is JSX</h3><blockquote class="blockquote"><p>JSX is a JavaScript syntax extension that looks similar to XML. You
 can use a simple JSX syntactic transform with React.</p>
 </blockquote><p>Picture this. Instead of writing HTML strings within your code, you
 can use a preprocessor that allow you to write (basically) pure HTML
@@ -97,9 +97,9 @@ post:</p>
 <pre><code class="hljs lang-javascript">&lt;a href=<span class="hljs-string">"https://facebook.github.io/react/"</span>&gt;Hello!<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-title">a</span>&gt;</span></span></code></pre><p>Great! We&#39;ve improved readability by 10,000%.</p>
 <p>Now that we&#39;ve got a solid introduction<sup>;)</sup> to JSX, let&#39;s
 take a look at some common gotchas.</p>
-<h2 id="comments-in-jsx">  <a class="heading-anchor" style="display:none;" href="#comments-in-jsx">    <i class="fa fa-link"></i>  </a>Comments in JSX</h2><p>It&#39;s common to want to write comments within your markup. Inside of
+<h2 id="comments-in-jsx">  <a class="heading-anchor" style="display:none;" href="#comments-in-jsx">    <i class="oi oi-link-intact"></i>  </a>Comments in JSX</h2><p>It&#39;s common to want to write comments within your markup. Inside of
 JSX, there are a couple of &#39;rules&#39; to follow:</p>
-<h3 id="in-between-jsx-elements,-wrap-your-comments-in">  <a class="heading-anchor" style="display:none;" href="#in-between-jsx-elements,-wrap-your-comments-in">    <i class="fa fa-link"></i>  </a>In between JSX elements, wrap your comments in <code>{}</code></h3><p><em>valid</em>:</p>
+<h3 id="in-between-jsx-elements,-wrap-your-comments-in">  <a class="heading-anchor" style="display:none;" href="#in-between-jsx-elements,-wrap-your-comments-in">    <i class="oi oi-link-intact"></i>  </a>In between JSX elements, wrap your comments in <code>{}</code></h3><p><em>valid</em>:</p>
 <pre><code class="hljs lang-javascript">&lt;div&gt;
     {/** A comment about the component below */}
     &lt;span&gt;Hello, JSX&lt;/span&gt;
@@ -107,7 +107,7 @@ JSX, there are a couple of &#39;rules&#39; to follow:</p>
 <pre><code class="hljs lang-javascript">&lt;div&gt;
     /** A comment about the component below */
     &lt;span&gt;Hello, JSX&lt;/span&gt;
-&lt;/div&gt;</code></pre><h3 id="inside-of-a-jsx-tag-you-can-use-normal-comments:">  <a class="heading-anchor" style="display:none;" href="#inside-of-a-jsx-tag-you-can-use-normal-comments:">    <i class="fa fa-link"></i>  </a>Inside of a JSX tag you can use normal comments:</h3><p><em>valid</em>:</p>
+&lt;/div&gt;</code></pre><h3 id="inside-of-a-jsx-tag-you-can-use-normal-comments:">  <a class="heading-anchor" style="display:none;" href="#inside-of-a-jsx-tag-you-can-use-normal-comments:">    <i class="oi oi-link-intact"></i>  </a>Inside of a JSX tag you can use normal comments:</h3><p><em>valid</em>:</p>
 <pre><code class="hljs lang-javascript">&lt;div&gt;
     <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">AwesomeComponent</span>
         /** <span class="hljs-attribute">Some</span> <span class="hljs-attribute">commentsabout</span> <span class="hljs-attribute">the</span> <span class="hljs-attribute">props</span> <span class="hljs-attribute">below</span> */
@@ -121,17 +121,17 @@ JSX, there are a couple of &#39;rules&#39; to follow:</p>
         <span class="hljs-attribute">prop1</span>=<span class="hljs-value">"jsxRocks"</span>
         <span class="hljs-attribute">booly</span>=<span class="hljs-value">{true}</span>
     /&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span></span></code></pre><h2 id="passing-props">  <a class="heading-anchor" style="display:none;" href="#passing-props">    <i class="fa fa-link"></i>  </a>Passing Props</h2><p>JSX also makes passing <code>props</code> (arguments) to other components with
+<span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span></span></code></pre><h2 id="passing-props">  <a class="heading-anchor" style="display:none;" href="#passing-props">    <i class="oi oi-link-intact"></i>  </a>Passing Props</h2><p>JSX also makes passing <code>props</code> (arguments) to other components with
 simple HTML-like syntax. If you&#39;re not familiar with nesting
 components and receiving components, you should check out
 <a href="https://facebook.github.io/react/docs/jsx-in-depth.html">JSX In Depth</a>
 first.</p>
-<h3 id="string-props">  <a class="heading-anchor" style="display:none;" href="#string-props">    <i class="fa fa-link"></i>  </a>String Props</h3><p>Normal, string value props are easy to pass to child components:</p>
+<h3 id="string-props">  <a class="heading-anchor" style="display:none;" href="#string-props">    <i class="oi oi-link-intact"></i>  </a>String Props</h3><p>Normal, string value props are easy to pass to child components:</p>
 <pre><code class="hljs lang-javascript">&lt;AwesomeComponent
     name=<span class="hljs-string">"jsxRocks"</span>
 /&gt;</code></pre><p>Now inside of <code>AwesomeComponent</code> you have access to <code>this.props.name</code>
 that references the value <code>jsxRocks</code>.</p>
-<h3 id="functions">  <a class="heading-anchor" style="display:none;" href="#functions">    <i class="fa fa-link"></i>  </a>Functions</h3><p>Passing functions as callback is also common practice when writing JSX components.
+<h3 id="functions">  <a class="heading-anchor" style="display:none;" href="#functions">    <i class="oi oi-link-intact"></i>  </a>Functions</h3><p>Passing functions as callback is also common practice when writing JSX components.
 A basic example would look like:</p>
 <pre><code class="hljs lang-javascript">&lt;AwesomeComponent
     handleNameChange={data =&gt; myAction(data)}
@@ -153,7 +153,7 @@ When using expressions as a value to a prop, you don&#39;t need to do
 any fancy string interpolation - React will take care of rendering
 the result of the expression.</li>
 </ul>
-<h3 id="basic-function-optimizations">  <a class="heading-anchor" style="display:none;" href="#basic-function-optimizations">    <i class="fa fa-link"></i>  </a>Basic function optimizations</h3><p>Keep in mind that when creating functions inside of components
+<h3 id="basic-function-optimizations">  <a class="heading-anchor" style="display:none;" href="#basic-function-optimizations">    <i class="oi oi-link-intact"></i>  </a>Basic function optimizations</h3><p>Keep in mind that when creating functions inside of components
 <code>render</code> method (like we&#39;re doing with the expressions in props), that
 a new function is created on each re-render.</p>
 <p>This is a pretty minor thing for most apps, but as the size of
@@ -178,7 +178,7 @@ of re-computing the value:</p>
             /&gt;</span>
         )</span>
     }
-}</code></pre><h3 id="function-reference-vs-function-unwrapping">  <a class="heading-anchor" style="display:none;" href="#function-reference-vs-function-unwrapping">    <i class="fa fa-link"></i>  </a>Function reference vs Function unwrapping</h3><p>When the <code>render</code> method of a component is called, functions inside of
+}</code></pre><h3 id="function-reference-vs-function-unwrapping">  <a class="heading-anchor" style="display:none;" href="#function-reference-vs-function-unwrapping">    <i class="oi oi-link-intact"></i>  </a>Function reference vs Function unwrapping</h3><p>When the <code>render</code> method of a component is called, functions inside of
 the JSX are executed and their return values are used in place of the
 props. That brings up two common use-cases for using expression in
 components:</p>
@@ -216,7 +216,7 @@ the render is:</p>
             /&gt;
         )
     }
-}</code></pre><h2 id="boolean-props">  <a class="heading-anchor" style="display:none;" href="#boolean-props">    <i class="fa fa-link"></i>  </a>Boolean Props</h2><p>Passing boolean properties to JSX components is simple. The only thing
+}</code></pre><h2 id="boolean-props">  <a class="heading-anchor" style="display:none;" href="#boolean-props">    <i class="oi oi-link-intact"></i>  </a>Boolean Props</h2><p>Passing boolean properties to JSX components is simple. The only thing
 you need to know is that they are <em>JavaScript Booleans</em>, not <em>String
 Booleans</em>. In other words:</p>
 <p>This is correct:</p>
@@ -229,10 +229,10 @@ Booleans</em>. In other words:</p>
 <em>Just a quick note that the second one actually <em>is</em> valid, but it&#39;s
 not considered a <code>boolean</code> it&#39;s considered a <code>string</code>.</em>
 </small></p>
-<h3 id="alternative-syntax">  <a class="heading-anchor" style="display:none;" href="#alternative-syntax">    <i class="fa fa-link"></i>  </a>Alternative syntax</h3><p>An alternative for passing <code>true</code> is to simply provide the prop name without a value:</p>
+<h3 id="alternative-syntax">  <a class="heading-anchor" style="display:none;" href="#alternative-syntax">    <i class="oi oi-link-intact"></i>  </a>Alternative syntax</h3><p>An alternative for passing <code>true</code> is to simply provide the prop name without a value:</p>
 <pre><code class="hljs lang-javascript">&lt;Input disabled/&gt;</code></pre><p>My professional opinion is to always use the full <code>true</code> or <code>false</code>
 value for the sake of readability.</p>
-<h2 id="final-thoughts">  <a class="heading-anchor" style="display:none;" href="#final-thoughts">    <i class="fa fa-link"></i>  </a>Final Thoughts</h2><p>Are there any pieces of JSX where you got caught up first starting?
+<h2 id="final-thoughts">  <a class="heading-anchor" style="display:none;" href="#final-thoughts">    <i class="oi oi-link-intact"></i>  </a>Final Thoughts</h2><p>Are there any pieces of JSX where you got caught up first starting?
 Let&#39;s chat - shoot me a message on twitter
 <a href="https://twitter.com/CodyReichert">@CodyReichert</a> and I&#39;ll add it!</p>
 <p>:: Cody Reichert</p>
@@ -240,13 +240,13 @@ Let&#39;s chat - shoot me a message on twitter
 business, startups, psychology, history, etc, are all fair game.</p>
 <p>Last month, January, I picked up a few new books. Some I really like
 and others were OK. In no particular order:</p>
-<h1 id="completed">  <a class="heading-anchor" style="display:none;" href="#completed">    <i class="fa fa-link"></i>  </a>Completed</h1><h2 id="a-href="http://www.amazon.com/rework-jason-fried/dp/0307463745"">  <a class="heading-anchor" style="display:none;" href="#a-href="http://www.amazon.com/rework-jason-fried/dp/0307463745"">    <i class="fa fa-link"></i>  </a><a href="http://www.amazon.com/Rework-Jason-Fried/dp/0307463745">Rework - Jason Fried</a></h2><p>Reading <em>Rework</em> was a breath of fresh air. Brilliantly put together,
+<h1 id="completed">  <a class="heading-anchor" style="display:none;" href="#completed">    <i class="oi oi-link-intact"></i>  </a>Completed</h1><h2 id="a-href="http://www.amazon.com/rework-jason-fried/dp/0307463745"">  <a class="heading-anchor" style="display:none;" href="#a-href="http://www.amazon.com/rework-jason-fried/dp/0307463745"">    <i class="oi oi-link-intact"></i>  </a><a href="http://www.amazon.com/Rework-Jason-Fried/dp/0307463745">Rework - Jason Fried</a></h2><p>Reading <em>Rework</em> was a breath of fresh air. Brilliantly put together,
 blunt no-fluff advice, and wittingly accurate illustrations and
 metaphors made this my #1 book this month.</p>
 <p>If you&#39;re new to startups, veteran to startups, interested in the
 culture, or anywhere in between, then go to your local Amazon and pick
 this up immediately. You won&#39;t regret it.</p>
-<h2 id="a-href="http://www.amazon.com/zero-one-notes-startups-future/dp/0804139296/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737377&amp;sr=1-1&amp;keywords=zero+to+one"">  <a class="heading-anchor" style="display:none;" href="#a-href="http://www.amazon.com/zero-one-notes-startups-future/dp/0804139296/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737377&amp;sr=1-1&amp;keywords=zero+to+one"">    <i class="fa fa-link"></i>  </a><a href="http://www.amazon.com/Zero-One-Notes-Startups-Future/dp/0804139296/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1455737377&amp;sr=1-1&amp;keywords=zero+to+one">Zero to One - Peter Thiel</a></h2><p>Zero to One is filled with interesting insight from one of our
+<h2 id="a-href="http://www.amazon.com/zero-one-notes-startups-future/dp/0804139296/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737377&amp;sr=1-1&amp;keywords=zero+to+one"">  <a class="heading-anchor" style="display:none;" href="#a-href="http://www.amazon.com/zero-one-notes-startups-future/dp/0804139296/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737377&amp;sr=1-1&amp;keywords=zero+to+one"">    <i class="oi oi-link-intact"></i>  </a><a href="http://www.amazon.com/Zero-One-Notes-Startups-Future/dp/0804139296/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1455737377&amp;sr=1-1&amp;keywords=zero+to+one">Zero to One - Peter Thiel</a></h2><p>Zero to One is filled with interesting insight from one of our
 startup culture&#39;s very own, Peter Thiel. There&#39;s no denying that
 Thiel is a smart businessman - so that alone is reason enough to
 read anything he writes.</p>
@@ -254,7 +254,7 @@ read anything he writes.</p>
 competing with your competition and how major technilogical
 advances occur. Every chapter of this book got me pumped up to
 build something world-changing.</p>
-<h2 id="a-href="http://www.amazon.com/virgin-way-its-worth-doing/dp/1591847982/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737278&amp;sr=1-1&amp;keywords=the+virgin+way"">  <a class="heading-anchor" style="display:none;" href="#a-href="http://www.amazon.com/virgin-way-its-worth-doing/dp/1591847982/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737278&amp;sr=1-1&amp;keywords=the+virgin+way"">    <i class="fa fa-link"></i>  </a><a href="http://www.amazon.com/Virgin-Way-Its-Worth-Doing/dp/1591847982/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1455737278&amp;sr=1-1&amp;keywords=the+virgin+way">The Virgin Way - Richard Branson</a></h2><p>I didn&#39;t have many expectations going into this book - but I came
+<h2 id="a-href="http://www.amazon.com/virgin-way-its-worth-doing/dp/1591847982/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737278&amp;sr=1-1&amp;keywords=the+virgin+way"">  <a class="heading-anchor" style="display:none;" href="#a-href="http://www.amazon.com/virgin-way-its-worth-doing/dp/1591847982/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737278&amp;sr=1-1&amp;keywords=the+virgin+way"">    <i class="oi oi-link-intact"></i>  </a><a href="http://www.amazon.com/Virgin-Way-Its-Worth-Doing/dp/1591847982/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1455737278&amp;sr=1-1&amp;keywords=the+virgin+way">The Virgin Way - Richard Branson</a></h2><p>I didn&#39;t have many expectations going into this book - but I came
 out with nothing but praise for Sir Branson and The Virgin Way. The
 book is funny, thought-provoking, and riddled with real life
 anecdotes about Virgin and other mega-corps (Netflix, Microsoft,
@@ -264,16 +264,16 @@ Branson, or what it&#39;s like running hundreds of businesses. His
 writing is easy to read and intriguing, it&#39;s hard to put down!</p>
 <p>After this one, I&#39;ll be looking to pick up a couple more of Richard
 Bransons books.</p>
-<h2 id="a-href="http://www.amazon.com/how-win-friends-influence-people/dp/0671027034/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737210&amp;sr=1-1&amp;keywords=how+to+win+friends"">  <a class="heading-anchor" style="display:none;" href="#a-href="http://www.amazon.com/how-win-friends-influence-people/dp/0671027034/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737210&amp;sr=1-1&amp;keywords=how+to+win+friends"">    <i class="fa fa-link"></i>  </a><a href="http://www.amazon.com/How-Win-Friends-Influence-People/dp/0671027034/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1455737210&amp;sr=1-1&amp;keywords=how+to+win+friends">How to Win Friends and Influence Peopl - Dale Carnegie</a></h2><p>A classic. Anyone who has read any of Dale Carnegie&#39;s books (then
+<h2 id="a-href="http://www.amazon.com/how-win-friends-influence-people/dp/0671027034/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737210&amp;sr=1-1&amp;keywords=how+to+win+friends"">  <a class="heading-anchor" style="display:none;" href="#a-href="http://www.amazon.com/how-win-friends-influence-people/dp/0671027034/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737210&amp;sr=1-1&amp;keywords=how+to+win+friends"">    <i class="oi oi-link-intact"></i>  </a><a href="http://www.amazon.com/How-Win-Friends-Influence-People/dp/0671027034/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1455737210&amp;sr=1-1&amp;keywords=how+to+win+friends">How to Win Friends and Influence Peopl - Dale Carnegie</a></h2><p>A classic. Anyone who has read any of Dale Carnegie&#39;s books (then
 you&#39;ve probably read this one) would tell you that is writing style
 is one of a kind and hilariously interstesting. How to Win Friends
 is a must read (and re-read) for anyone in a leadership role.</p>
 <p>I&#39;ll keep this one on the shelf and read it again.</p>
-<h1 id="in-progress">  <a class="heading-anchor" style="display:none;" href="#in-progress">    <i class="fa fa-link"></i>  </a>In Progress</h1><h2 id="a-href="http://www.amazon.com/lincoln-dale-carnegie/dp/160796550x/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737421&amp;sr=1-1&amp;keywords=lincoln+the+unknown"">  <a class="heading-anchor" style="display:none;" href="#a-href="http://www.amazon.com/lincoln-dale-carnegie/dp/160796550x/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737421&amp;sr=1-1&amp;keywords=lincoln+the+unknown"">    <i class="fa fa-link"></i>  </a><a href="http://www.amazon.com/Lincoln-Dale-Carnegie/dp/160796550X/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1455737421&amp;sr=1-1&amp;keywords=lincoln+the+unknown">Lincoln the Unknown - Dale Carnegie</a></h2><p>I picked Up Lincoln the Unknown after finishing Carnegie&#39;s other
+<h1 id="in-progress">  <a class="heading-anchor" style="display:none;" href="#in-progress">    <i class="oi oi-link-intact"></i>  </a>In Progress</h1><h2 id="a-href="http://www.amazon.com/lincoln-dale-carnegie/dp/160796550x/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737421&amp;sr=1-1&amp;keywords=lincoln+the+unknown"">  <a class="heading-anchor" style="display:none;" href="#a-href="http://www.amazon.com/lincoln-dale-carnegie/dp/160796550x/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737421&amp;sr=1-1&amp;keywords=lincoln+the+unknown"">    <i class="oi oi-link-intact"></i>  </a><a href="http://www.amazon.com/Lincoln-Dale-Carnegie/dp/160796550X/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1455737421&amp;sr=1-1&amp;keywords=lincoln+the+unknown">Lincoln the Unknown - Dale Carnegie</a></h2><p>I picked Up Lincoln the Unknown after finishing Carnegie&#39;s other
 book, How to Win Friends. Lincoln the Unknown is an interesting
 tale of Abraham Lincoln&#39;s life and upbringing.</p>
 <p>I haven&#39;t quite finished it, so let&#39;s hope for an update next month.</p>
-<h2 id="a-href="http://www.amazon.com/hard-thing-about-things-building/dp/0062273205/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737458&amp;sr=1-1&amp;keywords=the+hard+thing+about+hard+things"">  <a class="heading-anchor" style="display:none;" href="#a-href="http://www.amazon.com/hard-thing-about-things-building/dp/0062273205/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737458&amp;sr=1-1&amp;keywords=the+hard+thing+about+hard+things"">    <i class="fa fa-link"></i>  </a><a href="http://www.amazon.com/Hard-Thing-About-Things-Building/dp/0062273205/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1455737458&amp;sr=1-1&amp;keywords=the+hard+thing+about+hard+things">The Hard Thing About Hard Things - Ben Horowitz</a></h2><p>At this point in time, the most I&#39;ve read of this book is the
+<h2 id="a-href="http://www.amazon.com/hard-thing-about-things-building/dp/0062273205/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737458&amp;sr=1-1&amp;keywords=the+hard+thing+about+hard+things"">  <a class="heading-anchor" style="display:none;" href="#a-href="http://www.amazon.com/hard-thing-about-things-building/dp/0062273205/ref=sr_1_1?s=books&amp;ie=utf8&amp;qid=1455737458&amp;sr=1-1&amp;keywords=the+hard+thing+about+hard+things"">    <i class="oi oi-link-intact"></i>  </a><a href="http://www.amazon.com/Hard-Thing-About-Things-Building/dp/0062273205/ref=sr_1_1?s=books&amp;ie=UTF8&amp;qid=1455737458&amp;sr=1-1&amp;keywords=the+hard+thing+about+hard+things">The Hard Thing About Hard Things - Ben Horowitz</a></h2><p>At this point in time, the most I&#39;ve read of this book is the
 inside cover. Horowitz&#39;s book is highly recommened across the
 industry as a guide for managing a startup.</p>
 <p>:: Cody Reichert</p>
@@ -288,7 +288,7 @@ check how our API&#39;s are holding up. Naturally, I wanted to automate
 some of that and send out an email when reports are generated.</p>
 <p>In case you don&#39;t want to read the rest:
 <a href="https://github.com/CodyReichert/cl-ses">Here&#39;s the code</a></p>
-<h2 id="options">  <a class="heading-anchor" style="display:none;" href="#options">    <i class="fa fa-link"></i>  </a>Options</h2><p>There are a few AWS libraries out there for Common Lisp<sup>1</sup>, but I
+<h2 id="options">  <a class="heading-anchor" style="display:none;" href="#options">    <i class="oi oi-link-intact"></i>  </a>Options</h2><p>There are a few AWS libraries out there for Common Lisp<sup>1</sup>, but I
 couldn&#39;t find one that supported SES - except for
 <a href="http://www.obrezan.com/lisp/aws-ses/">aws-ses</a>. The problem I had
 with aws-ses is that it only works with LispWorks - which is perfectly
@@ -297,7 +297,7 @@ flexibility.</p>
 <p>One a side note, if you <em>are</em> using LispWorks - <code>aws-ses</code> is really
 cool since the author wrote his own hmac, sha1, and base64 algorithms
 with 0 dependencies.</p>
-<h2 id="cl-ses">  <a class="heading-anchor" style="display:none;" href="#cl-ses">    <i class="fa fa-link"></i>  </a>CL-SES</h2><p>The app I wanted to send email from was running in SBCL - so I decided
+<h2 id="cl-ses">  <a class="heading-anchor" style="display:none;" href="#cl-ses">    <i class="oi oi-link-intact"></i>  </a>CL-SES</h2><p>The app I wanted to send email from was running in SBCL - so I decided
 a port of aws-ses would be the right thing to do.</p>
 <p>I put up <a href="https://github.com/CodyReichert/cl-ses">cl-ses</a> on GithHub
 the other day after porting all of the LispWorks specific
@@ -309,7 +309,7 @@ between Lisp implementations.</p>
 <p>Losing the &quot;no dependency&quot; badge and adding the &quot;1 dependency, but
 multiple implementations&quot; badge was the best route - especially since
 there seems to be a lack of any high level email libraries.</p>
-<h3 id="usage">  <a class="heading-anchor" style="display:none;" href="#usage">    <i class="fa fa-link"></i>  </a>Usage</h3><p>I changed up a bit of code in order to get the signing algorthims to
+<h3 id="usage">  <a class="heading-anchor" style="display:none;" href="#usage">    <i class="oi oi-link-intact"></i>  </a>Usage</h3><p>I changed up a bit of code in order to get the signing algorthims to
 work with Drakma&#39;s headers, but the library stayed very simple - only
 exposing one <code>send-email</code> function. Here&#39;s all it takes to send an
 email:</p>
@@ -330,7 +330,7 @@ error reporting.</p>
 for a lot of the obvious settings (like the AWS region), provide
 better error hanlding, and built in support for HTML emails - but
 other than that it&#39;s working great so far.</p>
-<h2 id="footnotes">  <a class="heading-anchor" style="display:none;" href="#footnotes">    <i class="fa fa-link"></i>  </a>Footnotes</h2><p>1 - <a href="https://github.com/xach/zpb-aws">zpb-aws</a> and
+<h2 id="footnotes">  <a class="heading-anchor" style="display:none;" href="#footnotes">    <i class="oi oi-link-intact"></i>  </a>Footnotes</h2><p>1 - <a href="https://github.com/xach/zpb-aws">zpb-aws</a> and
 <a href="https://github.com/hargettp/hh-aws">hh-aws</a> are the two I found.</p>
 <p>:: Cody Reichert</p>
 </div></div><div><h1 style="padding-top:25px;padding-bottom:10px;"><a href="/posts/managing-dotfiles-with-gnu-stow">Managing Your Dotfiles with GNU Stow</a></h1><small class="text-muted"><span style="margin-right:10px;"><i class="fa fa-calendar" style="margin-right:5px;"></i>7/1/2015</span><span style="margin-right:10px;"><i class="fa fa-folder" style="margin-right:5px;"></i>programming</span><span style="margin-right:10px;"><i class="fa fa-pencil" style="margin-right:5px;"></i>Cody Reichert</span></small><hr/><div><p>I see questions and posts almost every day (Eg,
@@ -342,7 +342,7 @@ workplaces. There&#39;s a lot of (ok) solutions out there. However,
 they&#39;re all setup-specific bash scripts that aren&#39;t very reproducible.</p>
 <p>I wanted to write this to hopefully prevent people from maintaining
 their Makefiles, and to keep their dots pristine.</p>
-<h2 id="welcome-gnu-stow">  <a class="heading-anchor" style="display:none;" href="#welcome-gnu-stow">    <i class="fa fa-link"></i>  </a>Welcome GNU Stow</h2><p><a href="https://www.gnu.org/software/stow/">GNU Stow</a> is a symlink-farm
+<h2 id="welcome-gnu-stow">  <a class="heading-anchor" style="display:none;" href="#welcome-gnu-stow">    <i class="oi oi-link-intact"></i>  </a>Welcome GNU Stow</h2><p><a href="https://www.gnu.org/software/stow/">GNU Stow</a> is a symlink-farm
 manager. Wait, I thought we were talking about dotfiles? Well, we
 are. To quote the original site:</p>
 <blockquote class="blockquote"><p>GNU Stow is a symlink farm manager which takes distinct packages of
@@ -352,7 +352,7 @@ filesystem, and makes them appear to be installed in the same place</p>
 things like: create a directory anywhere on our system that
 imitates the structure of our <code>$HOME</code> directory, and then have Stow
 symlink them from the imitated directory, to the real <code>$HOME</code>.</p>
-<h2 id="directory-structure">  <a class="heading-anchor" style="display:none;" href="#directory-structure">    <i class="fa fa-link"></i>  </a>Directory Structure</h2><p>There&#39;s a lot of good examples out there, but one of the most
+<h2 id="directory-structure">  <a class="heading-anchor" style="display:none;" href="#directory-structure">    <i class="oi oi-link-intact"></i>  </a>Directory Structure</h2><p>There&#39;s a lot of good examples out there, but one of the most
 common questions I see is still, &quot;Wait, so how does it
 work?&quot;. Hopefully this will clarify.</p>
 <p>Create a directory anywhere on your system called <code>dotfiles/</code>, and
@@ -394,7 +394,7 @@ directory, we start placing files exactly where they should show up
 in our <code>$HOME</code> directory.</p>
 <p>Repeat those steps for any other configuration files you
 want to Stow away.</p>
-<h2 id="using-stow">  <a class="heading-anchor" style="display:none;" href="#using-stow">    <i class="fa fa-link"></i>  </a>Using Stow</h2><p>Now that the dotfiles folder is set up, we can actually use
+<h2 id="using-stow">  <a class="heading-anchor" style="display:none;" href="#using-stow">    <i class="oi oi-link-intact"></i>  </a>Using Stow</h2><p>Now that the dotfiles folder is set up, we can actually use
 Stow. Let&#39;s with only using the <code>.bashrc</code> from above.</p>
 <p>Remove, backup, rename, your original .bashrc (the one that&#39;s <em>not
 in your dotfiles</em>), because we need that name for Stow.</p>
@@ -406,7 +406,7 @@ place at home:</p>
   <span class="hljs-comment"># .bashrc -&gt; dotfiles/bash/.bashrc</span></code></pre><p>The stow command simply takes the name of the directory you wish to
 symlink. You can do the same for the other configurations in your
 dotfiles repo, and you successfully have them all managed.</p>
-<h2 id="advanced-usage">  <a class="heading-anchor" style="display:none;" href="#advanced-usage">    <i class="fa fa-link"></i>  </a>Advanced Usage</h2><p>Using Stow in combination with git (or any other VC) is really the
+<h2 id="advanced-usage">  <a class="heading-anchor" style="display:none;" href="#advanced-usage">    <i class="oi oi-link-intact"></i>  </a>Advanced Usage</h2><p>Using Stow in combination with git (or any other VC) is really the
 best part. It allows you to have your entire configuration on any
 system in just a matter of seconds.</p>
 <p>And when you leave, if you don&#39;t want to leave your config files
@@ -439,17 +439,17 @@ the
 <li>Tags, RSS Feed, and all the other blog goodies.</li>
 <li>Never have to leave Emacs</li>
 </ul>
-<h1 id="installation">  <a class="heading-anchor" style="display:none;" href="#installation">    <i class="fa fa-link"></i>  </a>Installation</h1><p>Org-page is <a href="http://melpa.org/#/org-page">available on MELPA</a>, so the
+<h1 id="installation">  <a class="heading-anchor" style="display:none;" href="#installation">    <i class="oi oi-link-intact"></i>  </a>Installation</h1><p>Org-page is <a href="http://melpa.org/#/org-page">available on MELPA</a>, so the
 install is simple:</p>
 <pre><code class="hljs lang-sh">  M-x package-install RET org-page RET</code></pre><p>That will give you org-page and a few commands (which is all you need)
 to create a repo, add a new post, and publish.</p>
 <p><em>For manual installation, see the
 <a href="https://github.com/kelvinh/org-page/wiki/Quick-Guide-to-Org-page">documentation</a></em></p>
-<h1 id="set-up-a-repo">  <a class="heading-anchor" style="display:none;" href="#set-up-a-repo">    <i class="fa fa-link"></i>  </a>Set up a repo</h1><p>Org-page also handles this for you, with the available command
+<h1 id="set-up-a-repo">  <a class="heading-anchor" style="display:none;" href="#set-up-a-repo">    <i class="oi oi-link-intact"></i>  </a>Set up a repo</h1><p>Org-page also handles this for you, with the available command
 <code>op/new-repository</code>. So find a place on your system you want</p>
 <pre><code class="hljs lang-emacs-lisp">M-x op/new-repository RET /path/to/new/blog RET</code></pre><p>This sets up a new git repository, with a few pages already laid
 out for you (index.org, about.org, readme, etc).</p>
-<h1 id="org-page-in-your-init.el">  <a class="heading-anchor" style="display:none;" href="#org-page-in-your-init.el">    <i class="fa fa-link"></i>  </a>Org-page in your init.el</h1><p>There are few things you&#39;ll need to set up in your Emacs config
+<h1 id="org-page-in-your-init.el">  <a class="heading-anchor" style="display:none;" href="#org-page-in-your-init.el">    <i class="oi oi-link-intact"></i>  </a>Org-page in your init.el</h1><p>There are few things you&#39;ll need to set up in your Emacs config
 file to get things working correctly. Here&#39;s an annotated example:</p>
 <pre><code class="hljs lang-lisp">  <span class="hljs-list">(<span class="hljs-keyword">require</span> <span class="hljs-quoted">'org-page</span>)</span>
   <span class="hljs-list">(<span class="hljs-keyword">setq</span> op/repository-directory <span class="hljs-string">"~/workspace/play/newblog"</span>)</span>
@@ -462,7 +462,7 @@ file to get things working correctly. Here&#39;s an annotated example:</p>
    out things like the GitHub Link, it just won&#39;t show at all -
    perfect.</p>
 <p>   <em>Reload your Emacs config and let&#39;s move on</em></p>
-<h1 id="creating-a-new-post">  <a class="heading-anchor" style="display:none;" href="#creating-a-new-post">    <i class="fa fa-link"></i>  </a>Creating a new post</h1><p>You&#39;ll probably first want to fill out some of the generated
+<h1 id="creating-a-new-post">  <a class="heading-anchor" style="display:none;" href="#creating-a-new-post">    <i class="oi oi-link-intact"></i>  </a>Creating a new post</h1><p>You&#39;ll probably first want to fill out some of the generated
 pages, like <code>about.org</code> and <code>index.org</code>.</p>
 <blockquote class="blockquote"><p>Pro-tip: If you remove the =index.org= it will default to a list of
 posts, like mine. It&#39;s preferable since there is already an about page.</p>
@@ -473,7 +473,7 @@ writing articles, not boilerplate.</p>
 <pre><code class="hljs lang-sh">M-x op/new-post RET</code></pre><p>It will run you through a few steps to generate all of those fields
 for you post, and put your cursor where you can start writing.
 <a href="../img/op-new-post.gif">op/new-post gif example</a></p>
-<h1 id="publishing-your-new-blog">  <a class="heading-anchor" style="display:none;" href="#publishing-your-new-blog">    <i class="fa fa-link"></i>  </a>Publishing your new blog</h1><p>Yet again...built in to org-page. And since we&#39;re in Emacs, we can
+<h1 id="publishing-your-new-blog">  <a class="heading-anchor" style="display:none;" href="#publishing-your-new-blog">    <i class="oi oi-link-intact"></i>  </a>Publishing your new blog</h1><p>Yet again...built in to org-page. And since we&#39;re in Emacs, we can
 make it do whatever we want. First, make sure you set the remote in
 your blogs git repo:</p>
 <pre><code class="hljs lang-sh">    git remote add origin git@github.com:CodyReichert/CodyReichert.github.io
@@ -496,7 +496,7 @@ org-page will add and commit the compiled files to the mater branch.</p>
 seconds. <em>That&#39;s</em> the Emacs way.</p>
 <p><a href="../img/op-do-publication.gif">Here&#39;s a GIF</a> of how I published this
 blog, right after I wrote this part.</p>
-<h1 id="other-setup">  <a class="heading-anchor" style="display:none;" href="#other-setup">    <i class="fa fa-link"></i>  </a>Other setup</h1><p>I have a few other snippets for using a custom theme with org-page,
+<h1 id="other-setup">  <a class="heading-anchor" style="display:none;" href="#other-setup">    <i class="oi oi-link-intact"></i>  </a>Other setup</h1><p>I have a few other snippets for using a custom theme with org-page,
 and a couple other nice settings I&#39;ll share eventually.</p>
 <p>My recommendation is to <code>C-h f RET ___ RET</code> on some of the org-page
 functions, they&#39;re documented well.</p>
@@ -513,7 +513,7 @@ CoffeeScript, LESS, and pretty much anything else you can think of.</p>
 large one is for <em>multi</em> page applications. Loading a large JavaScript
 bundle on every page is not ideal, so let&#39;s set up Webpack to create
 multiple bundles for us.</p>
-<h2 id="a-basic-setup">  <a class="heading-anchor" style="display:none;" href="#a-basic-setup">    <i class="fa fa-link"></i>  </a>A basic setup</h2><p>So let&#39;s say the front-end JavaScript/Stylesheets structure of our
+<h2 id="a-basic-setup">  <a class="heading-anchor" style="display:none;" href="#a-basic-setup">    <i class="oi oi-link-intact"></i>  </a>A basic setup</h2><p>So let&#39;s say the front-end JavaScript/Stylesheets structure of our
 site looks like this:</p>
 <pre><code class="hljs lang-text">    └── static
         ├── dist
@@ -531,7 +531,7 @@ Account.</p>
 <code>account-bundle.js</code> bundle. The advantage here is that new visitors
 who aren&#39;t logged in don&#39;t need to load a huge JavaScript bundle
 just for visiting the homepage.</p>
-<h2 id="single-entry-point">  <a class="heading-anchor" style="display:none;" href="#single-entry-point">    <i class="fa fa-link"></i>  </a>Single Entry Point</h2><p>With a goal in mind, we can dig into Webpack and see what it offers.
+<h2 id="single-entry-point">  <a class="heading-anchor" style="display:none;" href="#single-entry-point">    <i class="oi oi-link-intact"></i>  </a>Single Entry Point</h2><p>With a goal in mind, we can dig into Webpack and see what it offers.
 By default, Webpack makes you define an <code>entry-point</code>, basically the
 root JavaScript file for you app:</p>
 <pre><code class="hljs lang-js">    <span class="hljs-built_in">module</span>.exports = {
@@ -545,7 +545,7 @@ root JavaScript file for you app:</p>
     };</code></pre><p>Our site structure doesn&#39;t match up with that. With this, we would
 have to load all the account panel JavaScript on the homepage too -
 which is far from ideal.</p>
-<h2 id="multiple-entry-points">  <a class="heading-anchor" style="display:none;" href="#multiple-entry-points">    <i class="fa fa-link"></i>  </a>Multiple Entry Points</h2><p>Webpack supports
+<h2 id="multiple-entry-points">  <a class="heading-anchor" style="display:none;" href="#multiple-entry-points">    <i class="oi oi-link-intact"></i>  </a>Multiple Entry Points</h2><p>Webpack supports
 <a href="http://webpack.github.io/docs/multiple-entry-points.html">multiple entry points</a>
 for this reason. Here&#39;s a new configuration more suited to our site
 structure:</p>
@@ -571,7 +571,7 @@ tag to each page and we&#39;re done!</p>
 libraries/modules that we use in both Front and Account. So, what
 about the use-case where a new user <em>does</em> end up logging in?</p>
 <p>We wouldn&#39;t want to make them re-download the same JavaScript!</p>
-<h2 id="common-chunks">  <a class="heading-anchor" style="display:none;" href="#common-chunks">    <i class="fa fa-link"></i>  </a>Common Chunks</h2><p>While the solution above is good, it can be better.</p>
+<h2 id="common-chunks">  <a class="heading-anchor" style="display:none;" href="#common-chunks">    <i class="oi oi-link-intact"></i>  </a>Common Chunks</h2><p>While the solution above is good, it can be better.</p>
 <p>Ideally, we have Front-bundle.js and Account-bundle.js - but we
 also have a Common-bundle.js that contains the modules we use
 <em>everywhere</em>. The browser will cache Common-bundle.js, so when a
@@ -579,7 +579,7 @@ user transitions from the Front to the Account, they&#39;ve already got
 most of what they need.</p>
 <p>Say hello to the
 <a href="http://webpack.github.io/docs/list-of-plugins.html#1-commons-chunk-for-entries">CommonChunksPlugin</a>*.</p>
-<h2 id="configuring-commonchunksplugin">  <a class="heading-anchor" style="display:none;" href="#configuring-commonchunksplugin">    <i class="fa fa-link"></i>  </a>Configuring CommonChunksPlugin</h2><p>The common chunks plugin will look for and find all common modules
+<h2 id="configuring-commonchunksplugin">  <a class="heading-anchor" style="display:none;" href="#configuring-commonchunksplugin">    <i class="oi oi-link-intact"></i>  </a>Configuring CommonChunksPlugin</h2><p>The common chunks plugin will look for and find all common modules
 and dependencies between your entry points, and automatically
 bundle them. All we need to is a little configuration:</p>
 <pre><code class="hljs lang-js">      <span class="hljs-keyword">let</span> commonsPlugin = <span class="hljs-keyword">new</span> webpack.optimize.CommonsChunkPlugin(
@@ -604,7 +604,7 @@ a couple parameters (annotated). After that, the Webpack will do
 the rest.</p>
 <p>The <code>commons</code> bundle will also be output to <code>static/dist/</code>, with
 the name that we gave it (<code>common.js</code>).</p>
-<h2 id="wrapping-up">  <a class="heading-anchor" style="display:none;" href="#wrapping-up">    <i class="fa fa-link"></i>  </a>Wrapping Up</h2><p><em>Now</em> we&#39;re done! Remeber to add the <code>&lt;script&gt;</code> for both the entry
+<h2 id="wrapping-up">  <a class="heading-anchor" style="display:none;" href="#wrapping-up">    <i class="oi oi-link-intact"></i>  </a>Wrapping Up</h2><p><em>Now</em> we&#39;re done! Remeber to add the <code>&lt;script&gt;</code> for both the entry
 bundle and the common bundle to the correct pages, and Webpack will
 do the rest.</p>
 <p>It&#39;s a powerful tool, and I think does a great job of cleaning up
@@ -612,14 +612,14 @@ the mess that is front-end dependency management. There&#39;s an endless
 amount of plugins and extentions already out there, so we&#39;ll see
 where Webpack ends up in 6 months to a year.</p>
 <p>:: Cody Reichert</p>
-</div></div><div><h1 style="padding-top:25px;padding-bottom:10px;"><a href="/posts/wordpress-custom-post-type-template-options">Adding Template Options to a Wordpress Custom Post Type</a></h1><small class="text-muted"><span style="margin-right:10px;"><i class="fa fa-calendar" style="margin-right:5px;"></i>12/6/2014</span><span style="margin-right:10px;"><i class="fa fa-folder" style="margin-right:5px;"></i>wordpress, php</span><span style="margin-right:10px;"><i class="fa fa-pencil" style="margin-right:5px;"></i>Cody Reichert</span></small><hr/><div><h2 id="about-the-task">  <a class="heading-anchor" style="display:none;" href="#about-the-task">    <i class="fa fa-link"></i>  </a>About the Task</h2><p>I&#39;ve recently been working on a Wordpress plugin for a new service
+</div></div><div><h1 style="padding-top:25px;padding-bottom:10px;"><a href="/posts/wordpress-custom-post-type-template-options">Adding Template Options to a Wordpress Custom Post Type</a></h1><small class="text-muted"><span style="margin-right:10px;"><i class="fa fa-calendar" style="margin-right:5px;"></i>12/6/2014</span><span style="margin-right:10px;"><i class="fa fa-folder" style="margin-right:5px;"></i>wordpress, php</span><span style="margin-right:10px;"><i class="fa fa-pencil" style="margin-right:5px;"></i>Cody Reichert</span></small><hr/><div><h2 id="about-the-task">  <a class="heading-anchor" style="display:none;" href="#about-the-task">    <i class="oi oi-link-intact"></i>  </a>About the Task</h2><p>I&#39;ve recently been working on a Wordpress plugin for a new service
 we&#39;ll be releasing at Reichert Brothers in the next couple of
 months. Although I haven&#39;t ever done too much in Wordpress, it
 allows for some really cool things and lends itself well to rapid
 development. I ran into a couple of problems when developing out
 the plugin that I think might be valuable enough to get documented
 and help anyone else out that may come across the same issues.</p>
-<h3 id="background">  <a class="heading-anchor" style="display:none;" href="#background">    <i class="fa fa-link"></i>  </a>Background</h3><p>For the sake of making this easier to understand, I&#39;ll give a
+<h3 id="background">  <a class="heading-anchor" style="display:none;" href="#background">    <i class="oi oi-link-intact"></i>  </a>Background</h3><p>For the sake of making this easier to understand, I&#39;ll give a
 little background on what I needed my plugin to accomplish. In a
 nutshell, I ventured to write a &#39;simple&#39; plugin that would
 retrieve JSON from an external API, format it, and display it on a
@@ -639,7 +639,7 @@ be achieved:</p>
 </ul>
 <p>We&#39;ll be covering the third bullet - allowing the admin to pick a
 different template for each of our Custom Post Type pages.</p>
-<h3 id="the-problem">  <a class="heading-anchor" style="display:none;" href="#the-problem">    <i class="fa fa-link"></i>  </a>The Problem</h3><p>When creating a new custom post type, Wordpress does allow for authors
+<h3 id="the-problem">  <a class="heading-anchor" style="display:none;" href="#the-problem">    <i class="oi oi-link-intact"></i>  </a>The Problem</h3><p>When creating a new custom post type, Wordpress does allow for authors
 to add the <code>page-attributes</code> capabilities to their posts. But they don&#39;t
 include the Template dropdown (see fig 1.1). As a matter of fact, they
 explicity hardcode it to only be allowed on <code>page</code> post types. Well, I
@@ -658,15 +658,15 @@ smaller and thus doesn&#39;t need a &#39;full-width&#39; layout. But the dinner
 menu is large and the admin doesn&#39;t want anything else on that
 page. Now do you see why we might need the ability to choose a
 template on a page-by-page basis. At least this was my though process.</p>
-<h2 id="diving-in">  <a class="heading-anchor" style="display:none;" href="#diving-in">    <i class="fa fa-link"></i>  </a>Diving In</h2><p>Well in the end, I ended up figuring out what I think is a decent
+<h2 id="diving-in">  <a class="heading-anchor" style="display:none;" href="#diving-in">    <i class="oi oi-link-intact"></i>  </a>Diving In</h2><p>Well in the end, I ended up figuring out what I think is a decent
 solution. I don&#39;t think I &#39;invented&#39; this solution, because I bet
 there a many other people out there doing the same thing, but let&#39;s
 take a look.</p>
-<h3 id="tl;dr-solution">  <a class="heading-anchor" style="display:none;" href="#tl;dr-solution">    <i class="fa fa-link"></i>  </a>TL;DR Solution</h3><p>We&#39;ll leverage the use of Meta Boxes to provide our own dropdown
+<h3 id="tl;dr-solution">  <a class="heading-anchor" style="display:none;" href="#tl;dr-solution">    <i class="oi oi-link-intact"></i>  </a>TL;DR Solution</h3><p>We&#39;ll leverage the use of Meta Boxes to provide our own dropdown
 menu. Then we&#39;ll save that setting in our <code>post_meta</code>, retrieve that
 setting when our CPT pages are loaded, and show the correct
 template. Pretty simple!</p>
-<h3 id="registering-the-meta-box">  <a class="heading-anchor" style="display:none;" href="#registering-the-meta-box">    <i class="fa fa-link"></i>  </a>Registering the Meta Box</h3><p>First, we&#39;ll start off by creating our meta box for our Custom Post
+<h3 id="registering-the-meta-box">  <a class="heading-anchor" style="display:none;" href="#registering-the-meta-box">    <i class="oi oi-link-intact"></i>  </a>Registering the Meta Box</h3><p>First, we&#39;ll start off by creating our meta box for our Custom Post
 Type. If you&#39;ve never used meta boxes before, I recommend taking a
 look at the
 <a href="WP Codex
@@ -701,7 +701,7 @@ where the normal one would be.</li>
 <li><em>core</em>: This field is the &#39;priority&#39; of the meta box.</li>
 <li><em>add_action</em>: registers the meta box.</li>
 </ul>
-<h3 id="rendering-the-meta-box">  <a class="heading-anchor" style="display:none;" href="#rendering-the-meta-box">    <i class="fa fa-link"></i>  </a>Rendering the Meta Box</h3><p>Now that we have registered our Meta Box, it&#39;s time to give it
+<h3 id="rendering-the-meta-box">  <a class="heading-anchor" style="display:none;" href="#rendering-the-meta-box">    <i class="oi oi-link-intact"></i>  </a>Rendering the Meta Box</h3><p>Now that we have registered our Meta Box, it&#39;s time to give it
 some markup. Basically, we&#39;ll just generate one simple dropdown
 box that has a list of all the currently available
 templates. Since this part is a little more detailed than the
@@ -756,7 +756,7 @@ start persisting the selection. (See fig 1.2)</p>
 </div>
 
 
-<h3 id="persisting-the-meta-box-data">  <a class="heading-anchor" style="display:none;" href="#persisting-the-meta-box-data">    <i class="fa fa-link"></i>  </a>Persisting the Meta Box Data</h3><p>Wordpress makes saving the data from the Meta Box really
+<h3 id="persisting-the-meta-box-data">  <a class="heading-anchor" style="display:none;" href="#persisting-the-meta-box-data">    <i class="oi oi-link-intact"></i>  </a>Persisting the Meta Box Data</h3><p>Wordpress makes saving the data from the Meta Box really
 simple. In our case, it&#39;s going to see our select box and look for
 the =selected= option. Since this isn&#39;t a meta box tutorial, I&#39;ll
 leave out the details of how the saving works. All we need to know
@@ -784,7 +784,7 @@ is. Here&#39;s the code:</p>
 function when the post is saved. This saves a field called
 <code>cpt_page_templates</code> in our database for this specific post. We can
 access this field when the page is loaded.</p>
-<h3 id="retrieving-the-template-on-the-front-end">  <a class="heading-anchor" style="display:none;" href="#retrieving-the-template-on-the-front-end">    <i class="fa fa-link"></i>  </a>Retrieving the template on the front end</h3><p>This is the fun part. Now we have a shiny new meta box on our
+<h3 id="retrieving-the-template-on-the-front-end">  <a class="heading-anchor" style="display:none;" href="#retrieving-the-template-on-the-front-end">    <i class="oi oi-link-intact"></i>  </a>Retrieving the template on the front end</h3><p>This is the fun part. Now we have a shiny new meta box on our
 admin post pages, and a field in the database for each post
 telling us what template to show. So let&#39;s show it!</p>
 <p>Fortunately this part is also pretty straightforward, and only
@@ -824,7 +824,7 @@ we intercept the query, run a function to see which template we had
 saved, and load that instead. Also notice that we set a default
 template. So if the post had no saved option, or something went wrong
 when trying to find it, it won&#39;t fail.</p>
-<h2 id="summary">  <a class="heading-anchor" style="display:none;" href="#summary">    <i class="fa fa-link"></i>  </a>Summary</h2><p>So that&#39;s about it. The new template should load with all of the
+<h2 id="summary">  <a class="heading-anchor" style="display:none;" href="#summary">    <i class="oi oi-link-intact"></i>  </a>Summary</h2><p>So that&#39;s about it. The new template should load with all of the
 regular post content in the body. The only problem I&#39;ve noticed is
 that some themes won&#39;t show the page&#39;s content on more specialized
 templates (like a Contact Page template), but this is pretty much
