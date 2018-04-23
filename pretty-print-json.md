@@ -5,7 +5,7 @@ date: 2016-05-19
 title: Pretty Printing JSON in JavaScript
 ---
 
-I frequently look up how to pretty pring JSON in JavaScript. Whether it be
+I frequently look up how to pretty print JSON in JavaScript. Whether it be
 for debugging in the console, to display some output to the user, or any other
 reason.
 

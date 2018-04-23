@@ -67,9 +67,10 @@ which is far from ideal.
 
 ## Multiple Entry Points
 
-Webpack supports
-[multiple entry points](http://webpack.github.io/docs/multiple-entry-points.html)
-for this reason. Here's a new configuration more suited to our site
+Webpack
+supports
+[multiple entry points](https://webpack.js.org/concepts/entry-points/#multi-page-application) for
+this reason. Here's a new configuration more suited to our site
 structure:
 
 ```js
@@ -113,8 +114,9 @@ also have a Common-bundle.js that contains the modules we use
 user transitions from the Front to the Account, they've already got
 most of what they need.
 
-Say hello to the
-[CommonChunksPlugin](http://webpack.github.io/docs/list-of-plugins.html#1-commons-chunk-for-entries)*.
+Say hello to
+the
+[CommonChunksPlugin](https://webpack.js.org/plugins/commons-chunk-plugin/).
 
 ## Configuring CommonChunksPlugin
 The common chunks plugin will look for and find all common modules

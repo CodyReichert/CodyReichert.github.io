@@ -48,9 +48,10 @@ root JavaScript file for you app:</p>
     };</code></pre><p>Our site structure doesn&#39;t match up with that. With this, we would
 have to load all the account panel JavaScript on the homepage too -
 which is far from ideal.</p>
-<h2 id="multiple-entry-points">  <a class="heading-anchor" style="display:none;" href="#multiple-entry-points">    <i class="oi oi-link-intact"></i>  </a>Multiple Entry Points</h2><p>Webpack supports
-<a href="http://webpack.github.io/docs/multiple-entry-points.html">multiple entry points</a>
-for this reason. Here&#39;s a new configuration more suited to our site
+<h2 id="multiple-entry-points">  <a class="heading-anchor" style="display:none;" href="#multiple-entry-points">    <i class="oi oi-link-intact"></i>  </a>Multiple Entry Points</h2><p>Webpack
+supports
+<a href="https://webpack.js.org/concepts/entry-points/#multi-page-application">multiple entry points</a> for
+this reason. Here&#39;s a new configuration more suited to our site
 structure:</p>
 <pre><code class="hljs lang-js">     <span class="hljs-built_in">module</span>.exports = {
          entry: {
@@ -80,8 +81,9 @@ also have a Common-bundle.js that contains the modules we use
 <em>everywhere</em>. The browser will cache Common-bundle.js, so when a
 user transitions from the Front to the Account, they&#39;ve already got
 most of what they need.</p>
-<p>Say hello to the
-<a href="http://webpack.github.io/docs/list-of-plugins.html#1-commons-chunk-for-entries">CommonChunksPlugin</a>*.</p>
+<p>Say hello to
+the
+<a href="https://webpack.js.org/plugins/commons-chunk-plugin/">CommonChunksPlugin</a>.</p>
 <h2 id="configuring-commonchunksplugin">  <a class="heading-anchor" style="display:none;" href="#configuring-commonchunksplugin">    <i class="oi oi-link-intact"></i>  </a>Configuring CommonChunksPlugin</h2><p>The common chunks plugin will look for and find all common modules
 and dependencies between your entry points, and automatically
 bundle them. All we need to is a little configuration:</p>
