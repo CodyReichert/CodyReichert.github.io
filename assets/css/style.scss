@@ -1,0 +1,21 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+header {
+  display: none;
+}
+
+div#content-wrapper {
+  padding-top: 75px;
+}
+
+section#main-content {
+  float: none;
+  margin: auto;
+}
+
+aside#sidebar {
+  display: none;
+}
