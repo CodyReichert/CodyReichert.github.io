@@ -1,24 +1,20 @@
 <div align="center">
-  <h2>codys.club</h2>
+  <h1><a href="https://codys.club">codys.club</a></h1>
 </div>
 
 ## :wave: About me
 
-Hey there, I'm Cody Reichert. This is my club.
+Hey there, I'm Cody. This is my club.
 
-I build [assertible.com](https://asertible.com),
-[simplyrets.com](https://simplyrets.com),
-[identibyte](https://identibyte.com), and other things.
+I build [Assertible](https://asertible.com),
+[SimplyRETS](https://simplyrets.com),
+[Identibyte](https://identibyte.com), and other things.
 
 My main interests are software development, interaction design, and
-iterating and planning on early stage products to refine and assess
-product market fit. **JavaScript**, **Haskell**, and **Common Lisp**
-are my programming languages of choice, and it probably goes without
-saying that **Emacs** is my favorite tool for the job.
+building products and tools that (and hopefully others) find useful.
 
-If you have any questions or comments on one of my businesses or
-products, feel free to [reach out or connect](#find-me-around) to stay
-updated.
+If you want to chat about any of my work, feel free
+to [reach out or connect](#find-me-around) to stay updated.
 
 ## :briefcase: What I work on
 
@@ -42,7 +38,7 @@ updated.
 
 ---
 
-> Let's connect  &nbsp;&middot;&nbsp;
-> [Medium](http://medium.com/@CodyReichert) &nbsp;&middot;&nbsp;
-> [GitHub](https://github.com/CodyReichert) &nbsp;&middot;&nbsp;
-> [Twitter](https://twitter.com/CodyReichert)
+Let's connect  &nbsp;&middot;&nbsp;
+[Medium](http://medium.com/@CodyReichert) &nbsp;&middot;&nbsp;
+[GitHub](https://github.com/CodyReichert) &nbsp;&middot;&nbsp;
+[Twitter](https://twitter.com/CodyReichert)
