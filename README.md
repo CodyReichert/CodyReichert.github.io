@@ -12,8 +12,8 @@ I build [Assertible](https://asertible.com),
 interests are software development, interaction design, and
 building products and tools that (and hopefully others) find useful.
 
-If you want to chat about any of my work, feel free
-to [reach out or connect](#find-me-around) to stay updated.
+If you want to stay updated or chat about any of my work, check out
+the links at the bottom.
 
 ## :briefcase: What I work on
 
