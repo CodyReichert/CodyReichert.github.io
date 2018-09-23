@@ -32,7 +32,7 @@ to [reach out or connect](#find-me-around) to stay updated.
   you check your flow types
 - [flowtype-webpack-loader](https://codys.club/flowtype-webpack-loader) -
   Check flow types in your Webpack builds!
-- [assertible/lambda-cloudwatch-slack](https://github.com/assertible/lambda-cloudwatch-slack) -
+- [lambda-cloudwatch-slack](https://github.com/assertible/lambda-cloudwatch-slack) -
   Send AWS CloudWatch notifications to a Slack channel using Lambda
 - [...and many more](https://github.com/CodyReichert?tab=repositories&type=source)
 
