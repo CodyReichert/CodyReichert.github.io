@@ -8,9 +8,8 @@ Hey there, I'm Cody. This is my club.
 
 I build [Assertible](https://asertible.com),
 [SimplyRETS](https://simplyrets.com),
-[Identibyte](https://identibyte.com), and other things.
-
-My main interests are software development, interaction design, and
+[Identibyte](https://identibyte.com), and other things. My main
+interests are software development, interaction design, and
 building products and tools that (and hopefully others) find useful.
 
 If you want to chat about any of my work, feel free
@@ -22,7 +21,7 @@ to [reach out or connect](#find-me-around) to stay updated.
 - [SimplyRETS](https://simplyrets.com) - Your real estate listings on your website. Simply.
 - [Identibyte](https://identibyte.com) - Make your onboarding forms intelligent.
 
-## :pencil2: What I build
+## :wrench: What I build
 
 - [awesome-cl](https://awesome-cl.com) - A curated list of awesome
   Common Lisp frameworks, libraries and other shiny stuff.
