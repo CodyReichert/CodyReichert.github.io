@@ -27,9 +27,10 @@ the links at the bottom.
   Common Lisp frameworks, libraries and other shiny stuff.
 - [qi](https://github.com/CodyReichert/qi) - A Package Manager for Common Lisp
 - [dotfiles](https://github.com/CodyReichert/dotfiles) - dotfiles
+- [Open Iconic Search](https://codys.club/open-iconic-search) - An Open Iconic search tool to find your icon hotness.
 - [flowmacs](https://codys.club/flowmacs) - Emacs minor mode to help
   you check your flow types
-- [flowtype-webpack-loader](https://codys.club/flowtype-webpack-loader) -
+- [flowtype-webpack-plugin](https://codys.club/flowtype-webpack-plugin) -
   Check flow types in your Webpack builds!
 - [lambda-cloudwatch-slack](https://github.com/assertible/lambda-cloudwatch-slack) -
   Send AWS CloudWatch notifications to a Slack channel using Lambda
