@@ -1,6 +1,6 @@
-<div align="center">
-  <h1><a href="https://codys.club">codys.club</a></h1>
-</div>
+---
+layout: default
+---
 
 ## :wave: About me
 
@@ -35,11 +35,3 @@ the links at the bottom.
 - [lambda-cloudwatch-slack](https://github.com/assertible/lambda-cloudwatch-slack) -
   Send AWS CloudWatch notifications to a Slack channel using Lambda
 - [...and many more](https://github.com/CodyReichert?tab=repositories&type=source)
-
----
-
-Let's connect  &nbsp;&middot;&nbsp;
-[Medium](http://medium.com/@CodyReichert) &nbsp;&middot;&nbsp;
-[GitHub](https://github.com/CodyReichert) &nbsp;&middot;&nbsp;
-[LinkedIn](https://www.linkedin.com/in/codyreichert) &nbsp;&middot;&nbsp;
-[Twitter](https://twitter.com/CodyReichert)

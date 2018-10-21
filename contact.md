@@ -1,6 +1,5 @@
 ---
 layout: default
-comments: true
 ---
 
 ## Contact me
@@ -14,6 +13,6 @@ communicate, so leaving a public comment here will be the best way to
 get in touch. However, if you'd rather reach out privately, check out
 the [other ways to contact me](/).
 
-#### Q&A
+## Q&A
 
 {% include disqus.html %}
