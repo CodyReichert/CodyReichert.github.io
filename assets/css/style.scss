@@ -3,10 +3,6 @@
 
 @import "{{ site.theme }}";
 
-header {
-  display: none;
-}
-
 div#content-wrapper {
   padding-top: 75px;
 }
@@ -14,8 +10,4 @@ div#content-wrapper {
 section#main-content {
   float: none;
   margin: auto;
-}
-
-aside#sidebar {
-  display: none;
 }
