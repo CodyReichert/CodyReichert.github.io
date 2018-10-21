@@ -1,7 +1,5 @@
 title: codys.club
 theme: jekyll-theme-architect
-description: |
-  Welcome to codys.club! This is the website for Cody Reichert, here
-  you'll find various information on my projects, businesses, and more.
+description: Welcome to codys.club! This is the website for Cody Reichert, here you'll find various information on my projects, businesses, and more.
 plugins:
   - jemoji

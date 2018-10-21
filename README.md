@@ -1,7 +1,3 @@
----
-layout: default
----
-
 ## :wave: About me
 
 Hey there, I'm Cody. This is my club.
@@ -21,7 +17,7 @@ the links at the bottom.
 - [SimplyRETS](https://simplyrets.com) - Your real estate listings on your website. Simply.
 - [Identibyte](https://identibyte.com) - Make your onboarding forms intelligent.
 
-## :wrench: What I build
+## :wrench: Projects I build
 
 - [awesome-cl](https://awesome-cl.com) - A curated list of awesome
   Common Lisp frameworks, libraries and other shiny stuff.
