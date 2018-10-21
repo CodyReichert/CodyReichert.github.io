@@ -3,6 +3,10 @@
 
 @import "{{ site.theme }}";
 
+.header#title {
+    text-align: center;
+}
+
 div#content-wrapper {
   padding-top: 75px;
 }
