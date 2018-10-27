@@ -2,7 +2,7 @@
 
 Hey there, I'm Cody. This is my club.
 
-I build [Assertible](https://asertible.com),
+I build [Assertible](https://assertible.com),
 [SimplyRETS](https://simplyrets.com),
 [Identibyte](https://identibyte.com), and other things. My main
 interests are software development, interaction design, and
