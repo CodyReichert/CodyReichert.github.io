@@ -42,4 +42,4 @@ bottom.
 - [Quora](https://www.quora.com/profile/Cody-Reichert-1)
 - [Medium](https://medium.com/@CodyReichert)
 
-- [...and many more](https://github.com/CodyReichert?tab=repositories&type=source)
+[...and many more](https://github.com/CodyReichert?tab=repositories&type=source).
