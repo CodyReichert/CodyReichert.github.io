@@ -5,11 +5,12 @@ Hey there, I'm Cody. This is my club.
 I build [Assertible](https://assertible.com),
 [SimplyRETS](https://simplyrets.com),
 [Identibyte](https://identibyte.com), and other things. My main
-interests are software development, interaction design, and
-building products and tools that (and hopefully others) find useful.
+interests are software development, interaction design, and building
+products and tools that I (and hopefully others) find useful.
 
 If you want to stay updated or chat about any of my work, check out
-the links at the bottom.
+the links at the bottom. And sometime I write on
+[Medium](https://medium.com/@CodyReichert).
 
 ## :briefcase: What I work on
 
