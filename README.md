@@ -21,14 +21,24 @@ the links at the bottom. And sometime I write on
 ## :wrench: Projects I build
 
 - [awesome-cl](https://awesome-cl.com) - A curated list of awesome
-  Common Lisp frameworks, libraries and other shiny stuff.
-- [qi](https://github.com/CodyReichert/qi) - A Package Manager for Common Lisp
+  awesome Common Lisp code.
+- [qi](https://github.com/CodyReichert/qi) - A Package Manager for Common Lisp.
 - [dotfiles](https://github.com/CodyReichert/dotfiles) - dotfiles
-- [Open Iconic Search](https://codys.club/open-iconic-search) - An Open Iconic search tool to find your icon hotness.
 - [flowmacs](https://codys.club/flowmacs) - Emacs minor mode to help
-  you check your flow types
+  you check your flow types.
 - [flowtype-webpack-plugin](https://codys.club/flowtype-webpack-plugin) -
   Check flow types in your Webpack builds!
+- [Open Iconic Search](https://codys.club/open-iconic-search) - An Open Iconic search tool to find your icon hotness.
 - [lambda-cloudwatch-slack](https://github.com/assertible/lambda-cloudwatch-slack) -
-  Send AWS CloudWatch notifications to a Slack channel using Lambda
-- [...and many more](https://github.com/CodyReichert?tab=repositories&type=source)
+  Send AWS CloudWatch notifications to Slack.
+- [...and more](https://github.com/CodyReichert?tab=repositories&type=source)
+
+## :pencil: Articles
+<ul>
+  {% for post in site.posts %}
+    <li style="list-style:none">
+      <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+      <p>{{ post.excerpt }}</p>
+    </li>
+  {% endfor %}
+</ul>

@@ -13,6 +13,14 @@
               <h1 id="title">codys.club</h1>
             </a>
           </div>
+          <br>
+          <div>
+            <h2>{{ page.title }}</h2>
+            <small>
+              {{ page.date | date_to_string }} &middot; {{ page.author }}
+            </small>
+          </div>
+          <br>
 
           {{ content }}
 
