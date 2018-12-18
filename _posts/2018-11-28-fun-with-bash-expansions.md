@@ -10,7 +10,7 @@ up over the years that are helpful for being more efficient on the
 command line:
 
 - [Repeat the last command](#repeat-the-last-command)
-  - [Appending to the last command](#pro-tip-1-prependappend-to-the-last-command)
+  - [Prepend/append to the last command](#pro-tip-1-prependappend-to-the-last-command)
   - [Edit the last command before executing](#pro-tip-2-edit-the-last-command-before-executing)
 - [Replace part of the last command](#replace-part-of-the-last-command)
 - [Execute a command in the Bash history](#execute-a-command-in-the-bash-history)
@@ -32,7 +32,7 @@ You can add more arguments before and after the last command like this:
 $ !! <and more things here>
 ```
 
-#### **Pro-tip 2** edit command before executing
+#### **Pro-tip 2** edit the last command before executing
 There's an option you can set in your bash settings that allows you to
 edit the command before executing it:
 
