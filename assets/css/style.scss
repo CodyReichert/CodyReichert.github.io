@@ -3,6 +3,10 @@
 
 @import "{{ site.theme }}";
 
+body {
+    font-family: 'Ubuntu', 'Helvetica Neue', Helvetica, Arial, serif;
+}
+
 .header#title {
     text-align: center;
 }
