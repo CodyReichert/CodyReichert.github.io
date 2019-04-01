@@ -9,7 +9,7 @@ interests are software development, interaction design, and building
 products and tools that I (and hopefully others) find useful.
 
 If you want to stay updated or chat about any of my work, check out
-the links at the bottom. And sometime I write on
+the links at the bottom. And sometimes I write on
 [Medium](https://medium.com/@CodyReichert).
 
 ## :briefcase: What I work on
