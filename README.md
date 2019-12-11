@@ -43,3 +43,7 @@ the links at the bottom. And sometimes I write on
     </li>
   {% endfor %}
 </ul>
+
+## :book: What I'm reading
+
+{%- include goodreads-widget.html -%}

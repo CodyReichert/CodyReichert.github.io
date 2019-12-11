@@ -19,3 +19,17 @@ section#main-content {
   float: none;
   margin: auto;
 }
+
+/** Goodreads widgets */
+
+.gr_grid_book_container {
+    float: left;
+    width: 98px;
+    height: 160px;
+    padding: 0px 0px;
+    overflow: hidden;
+}
+
+.gr_widget_block {
+    max-width: 33%;
+}
