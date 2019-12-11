@@ -22,14 +22,16 @@ section#main-content {
 
 /** Goodreads widgets */
 
-.gr_grid_book_container {
-    float: left;
-    width: 98px;
-    height: 160px;
-    padding: 0px 0px;
-    overflow: hidden;
+.gr_widget_block {
+    display: inline-block;
+    max-width: 50%;
+    width: 50%;
 }
 
 .gr_widget_block {
-    max-width: 33%;
+    text-decoration: none;
+    color: #aaa;
+    font-family: georgia,serif;
+    font-style:italic;
+    font-size: 1.1em;
 }
