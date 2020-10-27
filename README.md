@@ -34,12 +34,17 @@ the links at the bottom. And sometimes I write on
   Send AWS CloudWatch notifications to Slack.
 - [...and more](https://github.com/CodyReichert?tab=repositories&type=source)
 
-## :pencil: Articles
+## :pencil: Top posts
+
 <ul>
   {% for post in site.posts %}
     <li style="list-style:none">
-      <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+      <p><a href="{{ post.url }}"><strong>{{ post.title }}</strong></a></p>
       <p>{{ post.excerpt }}</p>
     </li>
   {% endfor %}
 </ul>
+
+## :book: My bookshelf
+
+{% include goodreads-widget.html %}

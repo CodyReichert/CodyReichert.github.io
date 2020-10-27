@@ -20,7 +20,7 @@ section#main-content {
   margin: auto;
 }
 
-/** Goodreads widgets */
+/** Goodreads widget */
 
 .gr_widget_block {
     display: inline-block;
@@ -34,4 +34,11 @@ section#main-content {
     font-family: georgia,serif;
     font-style:italic;
     font-size: 1.1em;
+}
+
+.gr_grid_book_container {
+    display: inline-block;
+    text-align: center;
+    width: 15%;
+    margin: auto;
 }
