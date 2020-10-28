@@ -36,9 +36,17 @@ section#main-content {
     font-size: 1.1em;
 }
 
+.gr_grid_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+}
+
 .gr_grid_book_container {
-    display: inline-block;
-    text-align: center;
-    width: 15%;
     margin: auto;
+    a > img {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
 }
